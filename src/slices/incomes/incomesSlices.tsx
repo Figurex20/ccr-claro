@@ -10,23 +10,60 @@ import Swal from 'sweetalert2'
 //     x_access_token: sessionStorage.getItem('token')
 //   }
 
-//   return headers
-// }
-
 export interface IncomeState {
-    listincomes: []
+ saveIncomes:{
+  docs: [{
+  '_id': string,
+  'name': string,
+  'site': string,
+  'whatdo': string,
+  'rda': string,
+  'exit': boolean,
+  'nameEnter': string,
+  'dateEnter': string,
+  'comments': string,
+  'createdAt': string,
+  'updatedAt': string,
+  '__v': 0
+}
+],
+  hasPrevious: boolean,
+  hasNext: boolean,
+  totalDocs: number
+},
+
 }
 
 const initialState: IncomeState = {
-  listincomes: []
-}
+  saveIncomes: {
+    docs: [
+      {
+        _id: '',
+        name: '',
+        site: '',
+        whatdo: '',
+        rda: '',
+        exit: false,
+        nameEnter: '',
+        dateEnter: '',
+        comments: '',
+        createdAt: '',
+        updatedAt: '',
+        __v: 0
+      }
+    ],
+    hasPrevious: false,
+    hasNext: false,
+    totalDocs: 1
+  }
 
+}
 export const incomeSlice = createSlice({
   name: 'incomes',
   initialState,
   reducers: {
     setiIncomeList: (state, action) => {
-      state.listincomes = action.payload
+      state.saveIncomes = action.payload
     }
   }
 })
@@ -44,8 +81,7 @@ export class incomesController {
   static fetchAllIncomes = async (props:any, data?:string, numberPage?:string) => {
     try {
       const result = await axios.get(`${BACKEND}/income/`)
-      console.log(result)
-      console.log(typeof props)
+      console.log(result.data)
       props(setiIncomeList(result.data))
       const success = true
       return success
@@ -54,8 +90,7 @@ export class incomesController {
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: result,
-        footer: '<a href="">Why do I have this issue?</a>'
+        text: result
       })
     }
   }

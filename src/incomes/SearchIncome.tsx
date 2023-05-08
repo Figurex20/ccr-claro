@@ -3,8 +3,8 @@ import { useForm } from 'react-hook-form'
 import { useState } from 'react'
 
 // redux
-import { useDispatch, useSelector } from 'react-redux'
-import { incomesController, selectValueIncomes } from '../slices/incomes/incomesSlices'
+import { useDispatch } from 'react-redux'
+import { incomesController } from '../slices/incomes/incomesSlices'
 
 // Components
 import Button from 'react-bootstrap/Button'
@@ -15,9 +15,6 @@ const SearchIncome = () => {
   const dispatch = useDispatch()
   const [dateStart, setDateStart] = useState(null)
   const [dateEnd, setDateEnd] = useState(null)
-  const listiIcomes = useSelector(selectValueIncomes)
-
-  console.log(listiIcomes)
 
   const {
     register,
