@@ -1,37 +1,17 @@
 import { BACKEND } from '@/const/backend'
+import { IncomeState, SaveDataNewIncome } from '@/interface/interfaces'
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 
-// const headers = () => {
-//   const headers: {} = {
-//     'Content-Type': 'application/json',
-//     x_access_token: sessionStorage.getItem('token')
-//   }
+const headers = () => {
+  const headers: {} = {
+    'Content-Type': 'application/json',
+    x_access_token: sessionStorage.getItem('token')
 
-export interface IncomeState {
- saveIncomes:{
-  docs: [{
-  '_id': string,
-  'name': string,
-  'site': string,
-  'whatdo': string,
-  'rda': string,
-  'exit': boolean,
-  'nameEnter': string,
-  'dateEnter': string,
-  'comments': string,
-  'createdAt': string,
-  'updatedAt': string,
-  '__v': 0
-}
-],
-  hasPrevious: boolean,
-  hasNext: boolean,
-  totalDocs: number
-},
-
+  }
+  return headers
 }
 
 const initialState: IncomeState = {
@@ -92,6 +72,43 @@ export class incomesController {
         title: 'Oops...',
         text: result
       })
+    }
+  }
+
+  static newIncome = async (data: SaveDataNewIncome) => {
+    try {
+      const headers1 = headers()
+
+      const saveNewIncome:SaveDataNewIncome = {
+        name: data.name.toUpperCase(),
+        site: data.site.toUpperCase(),
+        whatdo: data.whatdo.toUpperCase(),
+        rda: data.rda,
+        exit: data.exit,
+        nameEnter: sessionStorage.getItem('user') || 'CCR',
+        comments: data.comments,
+        dateEnter: data.dateEnter
+      }
+
+      await axios.post(`${BACKEND}/income`, saveNewIncome, {
+        headers: headers1
+      })
+      Swal.fire({
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      const success = 'success'
+      return success
+    } catch (error) {
+      const result = (error as DOMException).message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: result
+      })
+      return result
     }
   }
 }

@@ -8,6 +8,7 @@ import { Navigation } from '@/generalComponents/navigation'
 import { Spinner } from 'react-bootstrap'
 
 import { useState, useEffect } from 'react'
+import Head from 'next/head'
 export default function App ({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -17,6 +18,12 @@ export default function App ({ Component, pageProps }: AppProps) {
     return (
       <Provider store={store}>
         <SSRProvider>
+          <Head>
+            <title>CCR</title>
+            <meta name='description' content='Claro page' />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            <link rel='icon' href='/favicon.ico' />
+          </Head>
           <Navigation />
           <Component {...pageProps} />
         </SSRProvider>

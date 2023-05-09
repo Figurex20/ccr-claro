@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
-import DatePicker from 'react-datepicker'
+import DatePicker, { registerLocale } from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.css'
+import es from 'date-fns/locale/es'
 
+registerLocale('es', es)
 export const Calendar = (props:any) => {
   const { setDate, newDate } = props
 
