@@ -32,3 +32,8 @@ export interface SaveDataNewIncome {
     comments:string
     dateEnter:string
 }
+
+export interface Login{
+  userName:string,
+  password:string
+}

@@ -61,7 +61,6 @@ export class incomesController {
   static fetchAllIncomes = async (props:any, data?:string, numberPage?:string) => {
     try {
       const result = await axios.get(`${BACKEND}/income/`)
-      console.log(result.data)
       props(setiIncomeList(result.data))
       const success = true
       return success

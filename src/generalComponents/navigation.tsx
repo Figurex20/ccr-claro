@@ -28,7 +28,7 @@ const Navigation = () => {
             )
           : (
             <>
-              <Link className='navbar-brand' href='/user'>
+              <Link className='navbar-brand' href='/user/login'>
                 Usuario
               </Link>
               {router.pathname === '/' ? <SearchIncome /> : null}

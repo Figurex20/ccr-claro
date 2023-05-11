@@ -1,1 +1,4 @@
-GET http://127.0.0.1:4001/api/income/
+POST  http://127.0.0.1:4000/api/user/signin
+content-type: application/json
+
+{ "userName": "ccr-cr", "password": "Claro+2023" }
