@@ -7,7 +7,7 @@ export class userController {
   static login = async (newLogin:Login) => {
     try {
       const result = await axios.post(`${BACKEND}/user/signin`, newLogin)
-      console.log(result)
+      console.log()
       Swal.fire({
         icon: 'success',
         title: 'Acceso concedido',
