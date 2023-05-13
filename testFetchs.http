@@ -1,4 +1,4 @@
-POST  http://127.0.0.1:3000/api/user/signin
+POST  http://127.0.0.1:3000/api/auth/login
 content-type: application/json
 
 { "userName": "ccr-cr", "password": "Claro+2023" }

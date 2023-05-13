@@ -83,12 +83,11 @@ export class AuthController {
       sameSite: 'strict',
       secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 30,
-      path: '/user/login'
+      path: '/'
     })
 
-    res.setHeader('set-cookie', serealized)
-
-    res.json({
+    res.setHeader('Set-Cookie', serealized)
+    return res.status(200).json({
       // token,
       user: userFound
       // role: userFound.role,
