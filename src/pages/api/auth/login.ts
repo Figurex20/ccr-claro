@@ -1,26 +1,8 @@
-// import { NextRequest, NextResponse } from 'next/server'
-import jwt from 'jsonwebtoken'
-import { serialize } from 'cookie'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { dbConnect } from '../utils'
+import { AuthController } from '../controllers/auth.controllers'
 
-export default function login (req: any, res: any) {
-  const { userName, password } = req.body
-
-  if (userName === 'ccr-cr' && password === 'Claro+2023') {
-    const token = jwt.sign({
-      exp: Math.floor(Date.now() / 1000) * 24 * 60 * 60,
-      userName
-    },
-    'secret')
-
-    const serealized = serialize('userLogin', token, {
-      httpOnly: true,
-      sameSite: 'strict',
-      secure: false,
-      maxAge: 1000 * 60 * 60 * 24 * 30,
-      path: '/user/login'
-    })
-
-    res.setHeader('set-cookie', serealized)
-    return res.json('login route')
-  }
+export default async function GET (req: NextApiRequest, res:NextApiResponse) {
+  await dbConnect()
+  AuthController.signNin(req, res)
 }

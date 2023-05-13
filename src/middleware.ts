@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 export async function middleware (req:NextRequest) {
-  console.log(req)
   const jwt = req.cookies.get('mytoken')
 
   if (jwt === undefined) {

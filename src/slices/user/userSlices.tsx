@@ -6,7 +6,7 @@ import Swal from 'sweetalert2'
 export class userController {
   static login = async (newLogin:Login) => {
     try {
-      const result = await axios.post(`${BACKEND}/user/signin`, newLogin)
+      const result = await axios.post(`${BACKEND}/auth/login`, newLogin)
       console.log()
       Swal.fire({
         icon: 'success',

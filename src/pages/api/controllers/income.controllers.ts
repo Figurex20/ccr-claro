@@ -105,10 +105,10 @@ export class IncomeController {
     try {
       const incomes = await IncomeModel.paginate({}, options)
       if (incomes.docs.length === 0) throw Error('There are no docs')
-      return res.status(200).json(incomes)
+      return incomes
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return result
     }
   }
 

@@ -1,5 +1,4 @@
 import jwt from 'jsonwebtoken'
-import { secretWotds } from '../config'
 import { UserModel } from '../models/modelUser'
 import { RoleModel } from '../models/modelRole'
 // import { Response, Request } from 'express'
@@ -54,11 +53,8 @@ export class AuthController {
       }
 
       await newUser.save()
-      const token = jwt.sign({ id: 'pepe' }, secretWotds.LOGIN, {
-        expiresIn: 84600 // 24h
-      })
 
-      return res.status(200).json({ message: 'Succes to create User', newUser: token })
+      return res.status(200).json({ message: 'Succes to create User' })
       // return res.status(200).json({ message: 'Succes to create User', newUser: saveUser });
     } catch (error) {
       const result = (error as DOMException).message
@@ -69,15 +65,17 @@ export class AuthController {
   static signNin = async (req: NextApiRequest, res: NextApiResponse) => {
     const userFound = await UserModel.findOne({ userName: req.body.userName }).populate('roles')
 
-    if (!userFound) return res.status(404).json({ message: 'User no found' })
+    if (!userFound) return res.status(404).json({ message: 'Incorrect username or password' })
 
     const userPassword = String(userFound.password)
 
     const matchPassword = await UserModel.comparePassword(req.body.password, userPassword)
 
-    if (!matchPassword) return res.status(401).json({ token: null, message: 'Invalid Password' })
+    if (!matchPassword) return res.status(401).json({ message: 'Invalid Password' })
 
-    const token = jwt.sign({ userFound }, secretWotds.LOGIN, {
+    if (!process.env.LOGIN) return res.status(401).json({ message: 'Invalid Password' })
+
+    const token = jwt.sign({ userFound }, process.env.LOGIN, {
       expiresIn: 84600 // 24h
     })
     const serealized = serialize('userLogin', token, {

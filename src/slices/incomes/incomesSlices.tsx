@@ -60,7 +60,7 @@ export { incomeRedux }
 export class incomesController {
   static fetchAllIncomes = async (props:any, data?:string, numberPage?:string) => {
     try {
-      const result = await axios.get(`${BACKEND}/income/`)
+      const result = await axios.get(`${BACKEND}/incomes`)
       props(setiIncomeList(result.data))
       const success = true
       return success
