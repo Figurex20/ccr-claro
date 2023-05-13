@@ -65,15 +65,15 @@ export class AuthController {
   static signNin = async (req: NextApiRequest, res: NextApiResponse) => {
     const userFound = await UserModel.findOne({ userName: req.body.userName }).populate('roles')
 
-    if (!userFound) return res.status(404).json({ message: 'Incorrect username or password' })
+    if (!userFound) return { message: 'Incorrect username or password' }
 
     const userPassword = String(userFound.password)
 
     const matchPassword = await UserModel.comparePassword(req.body.password, userPassword)
 
-    if (!matchPassword) return res.status(401).json({ message: 'Invalid Password' })
+    if (!matchPassword) return { message: 'Incorrect username or password' }
 
-    if (!process.env.LOGIN) return res.status(401).json({ message: 'Invalid Password' })
+    if (!process.env.LOGIN) return { message: 'Incorrect username or password' }
 
     const token = jwt.sign({ userFound }, process.env.LOGIN, {
       expiresIn: 84600 // 24h
@@ -85,15 +85,6 @@ export class AuthController {
       maxAge: 1000 * 60 * 60 * 24 * 30,
       path: '/'
     })
-
-    res.setHeader('Set-Cookie', serealized)
-    return res.status(200).json({
-      // token,
-      user: userFound
-      // role: userFound.role,
-      // user: userFound.userName,
-      // id: userFound._id,
-      // resetPassword: userFound.resetPassword,
-    })
+    return { serealized, user: userFound }
   }
 }

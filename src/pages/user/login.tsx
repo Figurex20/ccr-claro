@@ -6,11 +6,18 @@ import { Badge, Button } from 'react-bootstrap'
 import { Login } from '@/interface/interfaces'
 import { userController } from '@/slices/user/userSlices'
 // import { Calendar } from '@/generalComponents/Calendar'
+import { useRouter } from 'next/router'
 
 export default function edit () {
+  const router = useRouter()
   const { register, handleSubmit, reset, formState: { errors } } = useForm<Login>()
+
   const onSubmit: SubmitHandler<Login> = async data => {
-    userController.login(data).then(() => { reset() })
+    userController.login(data)
+      .then(() => {
+        router.push('/')
+        reset()
+      })
   }
 
   return (
