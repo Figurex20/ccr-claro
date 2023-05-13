@@ -37,3 +37,8 @@ export interface Login{
   userName:string,
   password:string
 }
+
+export interface OpecionsPaginateIncome {
+  sort:{}
+  page:number
+}
