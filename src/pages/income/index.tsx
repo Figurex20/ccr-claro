@@ -6,6 +6,7 @@ import { Badge, Button } from 'react-bootstrap'
 import { Calendar } from '@/generalComponents/Calendar'
 import { incomesController } from '@/slices/incomes/incomesSlices'
 import { SaveDataNewIncome } from '@/interface/interfaces'
+import Swal from 'sweetalert2'
 // import { Calendar } from '@/generalComponents/Calendar'
 
 export default function edit () {
@@ -14,7 +15,14 @@ export default function edit () {
   const { register, handleSubmit, reset, formState: { errors } } = useForm<SaveDataNewIncome>()
   const onSubmit: SubmitHandler<SaveDataNewIncome> = async data => {
     data.dateEnter = dateStart
-    data.nameEnter = sessionStorage.getItem('user') || 'CCR'
+    if (data.rda.length > 7) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La RDA es debe de ser de 7 digitos'
+      })
+      return
+    }
     incomesController.newIncome(data).then(() => { reset() })
   }
 

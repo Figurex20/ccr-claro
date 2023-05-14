@@ -21,7 +21,7 @@ const Navigation = () => {
               <Link className='navbar-brand me-3' href='/'>
                 <h5>Lista de ingresos</h5>
               </Link>
-              <Link className='navbar-brand ' href='/createincome'>
+              <Link className='navbar-brand ' href='/income'>
                 <h5>Guardar ingresos</h5>
               </Link>
             </>

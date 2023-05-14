@@ -28,7 +28,6 @@ export interface SaveDataNewIncome {
     whatdo:string
     rda:string
     exit:boolean
-    nameEnter:string
     comments:string
     dateEnter:string
 }

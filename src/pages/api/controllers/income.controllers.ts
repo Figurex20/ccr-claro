@@ -1,6 +1,7 @@
 import { OpecionsPaginateIncome } from '@/interface/interfaces'
 import { IncomeModel } from '../models/modelIncome'
 import type { NextApiRequest, NextApiResponse } from 'next'
+import { getTokenJose } from '@/getTokenJose'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
     const numberPage = req.query.numberPage
@@ -114,10 +115,17 @@ export class IncomeController {
 
   static createIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const { name, site, whatdo, rda, exit, nameEnter, nameExit, dateEnter, comments } = req.body
+      const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
+      console.log(req.body)
+      const token = req.cookies
+      if (!token) {
+        return { message: 'Debe de haber un token' }
+      }
+      const respond = await getTokenJose(token)
+      const nameEnter = respond.userName
 
       if (rda.length !== 7) {
-        return res.status(400).json({ message: 'RDA invalida, tiene que ser de 7 numeros' })
+        return { message: 'RDA invalida, tiene que ser de 7 numeros' }
       }
 
       const newIncome = new IncomeModel({
@@ -132,10 +140,10 @@ export class IncomeController {
         comments
       })
       await newIncome.save()
-      return res.status(201).json({ status: 'Income saved' })
+      return { message: 'Income saved' }
     } catch (error) {
     //   const result = (error as DOMException).message
-      return res.status(404).json({ message: 'somting wrong in createIcome' })
+      return { message: 'somting wrong in createIcome' }
     }
   }
 

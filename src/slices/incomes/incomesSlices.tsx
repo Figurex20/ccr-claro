@@ -84,12 +84,11 @@ export class incomesController {
         whatdo: data.whatdo.toUpperCase(),
         rda: data.rda,
         exit: data.exit,
-        nameEnter: sessionStorage.getItem('user') || 'CCR',
         comments: data.comments,
         dateEnter: data.dateEnter
       }
 
-      await axios.post(`${BACKEND}/income`, saveNewIncome, {
+      await axios.post(`${BACKEND}/incomes`, saveNewIncome, {
         headers: headers1
       })
       Swal.fire({
