@@ -73,11 +73,15 @@ export class AuthController {
 
     if (!process.env.LOGIN) return { message: 'Incorrect username or password' }
 
-    const token = jwt.sign({ userFound }, process.env.LOGIN, {
+    const token = jwt.sign({
+      userName: userFound.userName,
+      role: userFound.role,
+      name: userFound.name
+    }, process.env.LOGIN, {
       expiresIn: 7200 // 2h
     })
     const serealized = serialize('userLogin', token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'strict',
       secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 30,
