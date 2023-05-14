@@ -4,7 +4,8 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { getTokenJose } from '@/getTokenJose'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
-    const numberPage = req.query.numberPage
+    // const numberPage = req.query.numberPage
+    const numberPage = '1'
 
     const options:OpecionsPaginateIncome = {
       sort: { dateEnter: -1 },
@@ -116,7 +117,6 @@ export class IncomeController {
   static createIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
-      console.log(req.body)
       const token = req.cookies
       if (!token) {
         return { message: 'Debe de haber un token' }
@@ -142,7 +142,6 @@ export class IncomeController {
       await newIncome.save()
       return { message: 'Income saved' }
     } catch (error) {
-    //   const result = (error as DOMException).message
       return { message: 'somting wrong in createIcome' }
     }
   }
