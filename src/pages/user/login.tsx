@@ -15,7 +15,7 @@ export default function edit () {
   const onSubmit: SubmitHandler<Login> = async data => {
     userController.login(data)
       .then(() => {
-        router.push('/')
+        router.replace('/')
         reset()
       })
   }

@@ -6,7 +6,6 @@ import SSRProvider from 'react-bootstrap/SSRProvider'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import { Navigation } from '@/generalComponents/navigation'
 import { Spinner } from 'react-bootstrap'
-import { CookiesProvider } from 'react-cookie'
 
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
@@ -21,20 +20,16 @@ export default function App ({ Component, pageProps }: AppProps) {
 
         <SSRProvider>
 
-          <CookiesProvider>
+          <Head>
+            <title>CCR</title>
+            <meta name='description' content='Claro page' />
+            <meta name='viewport' content='width=device-width, initial-scale=1' />
+            <link rel='icon' href='/favicon.ico' />
+          </Head>
 
-            <Head>
-              <title>CCR</title>
-              <meta name='description' content='Claro page' />
-              <meta name='viewport' content='width=device-width, initial-scale=1' />
-              <link rel='icon' href='/favicon.ico' />
-            </Head>
+          <Navigation />
 
-            <Navigation />
-
-            <Component {...pageProps} />
-
-          </CookiesProvider>
+          <Component {...pageProps} />
 
         </SSRProvider>
 

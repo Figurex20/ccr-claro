@@ -79,7 +79,7 @@ export class AuthController {
       expiresIn: 84600 // 24h
     })
     const serealized = serialize('userLogin', token, {
-      httpOnly: true,
+      httpOnly: false,
       sameSite: 'strict',
       secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 30,
