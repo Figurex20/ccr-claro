@@ -1,10 +1,8 @@
 import jwt from 'jsonwebtoken'
 import { UserModel } from '../models/modelUser'
 import { RoleModel } from '../models/modelRole'
-// import { Response, Request } from 'express'
 import { serialize } from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
-
 export class AuthController {
   static signUp = async (req: NextApiRequest, res: NextApiResponse) => {
     const { userName, email, password, role, name, lastname, confirmPassword } = req.body
@@ -76,10 +74,10 @@ export class AuthController {
     if (!process.env.LOGIN) return { message: 'Incorrect username or password' }
 
     const token = jwt.sign({ userFound }, process.env.LOGIN, {
-      expiresIn: 84600 // 24h
+      expiresIn: 7200 // 2h
     })
     const serealized = serialize('userLogin', token, {
-      httpOnly: false,
+      httpOnly: true,
       sameSite: 'strict',
       secure: false,
       maxAge: 1000 * 60 * 60 * 24 * 30,
