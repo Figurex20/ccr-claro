@@ -1,18 +1,22 @@
+import { deleteCookie } from 'cookies-next'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import React from 'react'
 import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
+import Swal from 'sweetalert2'
 
 export const DropdownNavigationUser = () => {
+  const router = useRouter()
   const closeLogin = () => {
-    sessionStorage.removeItem('token')
-    sessionStorage.removeItem('user')
-    sessionStorage.removeItem('idUser')
-    sessionStorage.removeItem('role')
-    sessionStorage.removeItem('resetPassword')
-    alert('logout')
-    window.location.replace('')
+    deleteCookie('userLogin')
+    Swal.fire({
+      icon: 'success',
+      title: 'Logout',
+      text: 'Exito al cerrar seccion'
+    })
+    router.replace('./')
   }
   return (
     <DropdownButton id='Usuario' title='Usuario' variant='info'>

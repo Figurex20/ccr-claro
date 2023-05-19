@@ -1,7 +1,8 @@
-import { OpecionsPaginateIncome } from '@/interface/interfaces'
+import { OpecionsPaginateIncome, token } from '@/interface/interfaces'
 import { IncomeModel } from '../models/modelIncome'
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getTokenJose } from '@/getTokenJose'
+import { valitadeCookies } from '../utils/valitadedToken'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
     // const numberPage = req.query.numberPage
@@ -117,12 +118,12 @@ export class IncomeController {
   static createIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
-      const token = req.cookies
-      if (!token) {
-        return { message: 'Debe de haber un token' }
-      }
-      const respond = await getTokenJose(token)
-      const nameEnter = respond.userName
+
+      const data: any = await valitadeCookies(req.cookies)
+
+      if (data.message) throw Error(data.message)
+
+      const nameEnter = data.token!.userName.toUpperCase()
 
       if (rda.length !== 7) {
         return { message: 'RDA invalida, tiene que ser de 7 numeros' }
@@ -150,10 +151,10 @@ export class IncomeController {
     try {
       const incomes = await IncomeModel.findById(req.query.id)
       if (!incomes) throw Error('There are no docs')
-      res.status(200).json(incomes)
+      return incomes
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result }
     }
   }
 
@@ -169,6 +170,17 @@ export class IncomeController {
 
   static updateIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+      const token: token = await valitadeCookies(req.cookies)
+
+      if (token.message) throw Error(token.message)
+
+      if (token) throw Error('Someting went wrong with find by date')
+
+      const respond = await getTokenJose(token)
+      const nameExit = respond.userName
+
+      req.body.nameExit = nameExit
+
       await IncomeModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
       res.status(201).json({ status: 'Income updated' })
     } catch (error) {

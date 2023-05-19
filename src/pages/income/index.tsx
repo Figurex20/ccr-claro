@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Form from 'react-bootstrap/Form'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Badge, Button } from 'react-bootstrap'
@@ -7,24 +7,53 @@ import { Calendar } from '@/generalComponents/Calendar'
 import { incomesController } from '@/slices/incomes/incomesSlices'
 import { SaveDataNewIncome } from '@/interface/interfaces'
 import Swal from 'sweetalert2'
-// import { Calendar } from '@/generalComponents/Calendar'
+import { useRouter } from 'next/router'
 
-export default function edit () {
+export default function income () {
   const [dateStart, setDateStart] = useState('')
 
-  const { register, handleSubmit, reset, formState: { errors } } = useForm<SaveDataNewIncome>()
+  const { setValue, register, handleSubmit, reset, formState: { errors } } = useForm<SaveDataNewIncome>()
+
+  const router = useRouter()
+  const IdParam = router.query.id
+
+  /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
+
   const onSubmit: SubmitHandler<SaveDataNewIncome> = async data => {
-    data.dateEnter = dateStart
-    if (data.rda.length > 7) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'La RDA es debe de ser de 7 digitos'
-      })
-      return
+    if (!IdParam) {
+      data.dateEnter = dateStart
+      if (data.rda.length > 7) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'La RDA es debe de ser de 7 digitos'
+        })
+        return
+      }
+      incomesController.newIncome(data).then(() => { reset() }).catch(() => { router.replace('/') })
     }
-    incomesController.newIncome(data).then(() => { reset() })
   }
+
+  /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
+
+  useEffect(() => {
+    if (IdParam) {
+      const updateIncome = async (id: string) => {
+        const response = await incomesController.getDataIncome(id)
+        if (response) {
+          setValue('name', response.data.name)
+          setValue('site', response.data.site)
+          setValue('whatdo', response.data.whatdo)
+          setValue('rda', response.data.rda)
+          setValue('exit', response.data.exit)
+          setValue('comments', response.data.comments)
+          console.log(response.data.whatdo)
+        }
+      }
+      updateIncome(IdParam.toLocaleString())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className='col-md-6 offset-md-3'>
@@ -65,23 +94,21 @@ export default function edit () {
               <option value='Mantenimiento preventivo TELECOM'>
                 Mantenimiento preventivo TELECOM
               </option>
-              <option value='Mantenimiento preventivo INFRA'>Mantenimiento preventivo INFRA</option>
-              <option value='Instalacion de equipos (previas'>
-                Instalacion de equipos (previas)
-              </option>
-              <option value='Desistalacion de equipos'>Desistalacion de equipos</option>
-              <option value='Instalacion de equipos'>Instalacion de equipos</option>
-              <option value='Mantenimiento de MG'>Mantenimiento de MG</option>
-              <option value='Reparacion de quiepos'>Reparacion de equipos</option>
-              <option value='Colocacion de viñetas'>Colocacion de viñetas</option>
-              <option value='Migracion de equipos'>Migracion de equipos</option>
+              <option value='MANTENIMIENTO PREVENTIVO INFRA'>Mantenimiento preventivo INFRA</option>
+              <option value='INSTALACION DE EQUIPOS (PREVIAS)'>Instalacion de equipos (previas)</option>
+              <option value='DESISTALACION DE EQUIPOS'>Desistalacion de equipos</option>
+              <option value='INSTALACION DE EQUIPOS'>Instalacion de equipos</option>
+              <option value='MANTENIMIENTO DE MG'>Mantenimiento de MG</option>
+              <option value='REPARACION DE QUIEPOS'>Reparacion de equipos</option>
+              <option value='COLOCACION DE VIÑETASs'>Colocacion de viñetas</option>
+              <option value='MIGRACION DE EQUIPOS'>Migracion de equipos</option>
               <option value='Intalacion de tierras'>Intalacion de tierras</option>
               <option value='Certificacion de FO'>Certificacion de FO</option>
-              <option value='Revision de sitio'>Revision de sitio</option>
-              <option value='Cambio de IP'>Cambio de IP</option>
-              <option value='Site Survey'>Site Survey</option>
-              <option value='Auditoria'>Auditoria</option>
-              <option value='Baterias'>Baterias</option>
+              <option value='CERTIFICACION DE FO'>Revision de sitio</option>
+              <option value='CAMBIO DE IP'>Cambio de IP</option>
+              <option value='SITE SURVEY'>Site Survey</option>
+              <option value='AUDITORIA'>Auditoria</option>
+              <option value='BATERIAS'>Baterias</option>
               <option value='ATP'>ATP</option>
             </Form.Select>
           </Form.Group>
@@ -109,10 +136,9 @@ export default function edit () {
           <Form.Group className='mb-3' controlId='exit'>
             <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
           </Form.Group>
-
-          <Button variant='primary' type='submit'>
-            Save
-          </Button>
+          {IdParam
+            ? (<Button variant='primary' type='submit'>Actualizar</Button>)
+            : (<Button variant='primary' type='submit'>Guardar</Button>)}
 
         </Form>
 

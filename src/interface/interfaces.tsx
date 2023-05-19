@@ -1,3 +1,5 @@
+import { JWTPayload } from 'jose'
+
 export interface IncomeState {
     saveIncomes:{
      docs: [{
@@ -30,6 +32,7 @@ export interface SaveDataNewIncome {
     exit:boolean
     comments:string
     dateEnter:string
+    dateExit?:string
 }
 
 export interface Login{
@@ -40,4 +43,13 @@ export interface Login{
 export interface OpecionsPaginateIncome {
   sort:{}
   page:number
+}
+
+export interface token{
+  token?: {
+    userName?: string,
+    role?: string,
+    name?: string
+  } | string | JWTPayload,
+  message?: string
 }

@@ -2,7 +2,7 @@ import { BACKEND } from '@/const/backend'
 import { IncomeState, SaveDataNewIncome } from '@/interface/interfaces'
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import Swal from 'sweetalert2'
 
 const headers = () => {
@@ -107,6 +107,42 @@ export class incomesController {
         text: result
       })
       return result
+    }
+  }
+
+  static getDataIncome = async (id:string) => {
+    try {
+      const result = await axios.get(`${BACKEND}/incomes/${id}`)
+      return result
+    } catch (error) {
+      const result:any = (error as AxiosError).response?.data
+      if (result.message) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: result.message,
+          footer: result.status
+        })
+      }
+    }
+  }
+
+  static updateDataIncome = async (id:string, updatedOldIncome:SaveDataNewIncome) => {
+    try {
+      const headers1 = headers()
+      await axios.put(`${BACKEND}/income/${id}`, updatedOldIncome, {
+        headers: headers1
+      })
+      alert('Successfully updated')
+      const success = true
+      return success
+    } catch (error) {
+      const result = (error as DOMException).message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: result
+      })
     }
   }
 }

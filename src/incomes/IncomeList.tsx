@@ -3,6 +3,7 @@ import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
+import { hasCookie } from 'cookies-next'
 
 interface Income {
         '_id': string,
@@ -39,11 +40,6 @@ export const IncomeList = () => {
       )
       return day
     }
-  }
-
-  const ifsessionStorage = () => {
-    const session = sessionStorage.getItem('token')
-    return session
   }
 
   return (
@@ -86,12 +82,12 @@ export const IncomeList = () => {
               <th className='border border-success'>{income.nameEnter}</th>
               <th className='border border-success'>{income.nameExit}</th>
               <th className='border border-success'>{income.comments}</th>
-              {ifsessionStorage()
+              {hasCookie('userLogin')
                 ? (
                   <>
 
                     <th className='border border-success'>
-                      <Link className='btn btn-primary m-1' href='/editIncome/id'>
+                      <Link className='btn btn-primary m-1' href={`/income/${income._id}`}>
                         Actualizar
                       </Link>
                     </th>
