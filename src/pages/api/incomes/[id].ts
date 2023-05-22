@@ -21,7 +21,7 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   if (method === 'PUT') {
     try {
       const response:any = await IncomeController.updateIncome(req, res)
-      if (!response) {
+      if (response) {
         res.status(200).json(response)
       }
     } catch (error) {

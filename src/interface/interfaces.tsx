@@ -31,7 +31,7 @@ export interface SaveDataNewIncome {
     rda:string
     exit:boolean
     comments:string
-    dateEnter:string
+    dateEnter?:string
     dateExit?:string
 }
 

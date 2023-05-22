@@ -130,11 +130,17 @@ export class incomesController {
   static updateDataIncome = async (id:string, updatedOldIncome:SaveDataNewIncome) => {
     try {
       const headers1 = headers()
-      await axios.put(`${BACKEND}/income/${id}`, updatedOldIncome, {
+      await axios.put(`${BACKEND}/incomes/${id}`, updatedOldIncome, {
         headers: headers1
       })
-      alert('Successfully updated')
-      const success = true
+      console.log('hola')
+      Swal.fire({
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      const success = 'success'
       return success
     } catch (error) {
       const result = (error as DOMException).message

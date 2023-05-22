@@ -10,7 +10,7 @@ import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 
 export default function income () {
-  const [dateStart, setDateStart] = useState('')
+  const [dateStart, setDateStart] = useState<null | string>(null)
 
   const { setValue, register, handleSubmit, reset, formState: { errors } } = useForm<SaveDataNewIncome>()
 
@@ -21,35 +21,41 @@ export default function income () {
 
   const onSubmit: SubmitHandler<SaveDataNewIncome> = async data => {
     if (!IdParam) {
-      data.dateEnter = dateStart
+      data.dateEnter = dateStart!
       if (data.rda.length > 7) {
         Swal.fire({
           icon: 'error',
           title: 'Oops...',
           text: 'La RDA es debe de ser de 7 digitos'
         })
-        return
       }
-      incomesController.newIncome(data).then(() => { reset() }).catch(() => { router.replace('/') })
+      incomesController.newIncome(data).then(() => {
+        reset()
+        router.replace('/')
+      }).catch(() => { router.replace('/') })
+    } else {
+      console.log('first')
+      data.dateExit = dateStart!
+      incomesController.updateDataIncome(IdParam.toLocaleString(), data).then(() => { reset() })
     }
   }
 
+  const updateIncome = async (id: string) => {
+    const response = await incomesController.getDataIncome(id)
+    if (response) {
+      setValue('name', response.data.name)
+      setValue('site', response.data.site)
+      setValue('whatdo', response.data.whatdo)
+      setValue('rda', response.data.rda)
+      setValue('exit', response.data.exit)
+      setValue('comments', response.data.comments)
+      setDateStart(response.data.dateEnter)
+    }
+  }
   /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
 
   useEffect(() => {
     if (IdParam) {
-      const updateIncome = async (id: string) => {
-        const response = await incomesController.getDataIncome(id)
-        if (response) {
-          setValue('name', response.data.name)
-          setValue('site', response.data.site)
-          setValue('whatdo', response.data.whatdo)
-          setValue('rda', response.data.rda)
-          setValue('exit', response.data.exit)
-          setValue('comments', response.data.comments)
-          console.log(response.data.whatdo)
-        }
-      }
       updateIncome(IdParam.toLocaleString())
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -97,6 +103,7 @@ export default function income () {
               <option value='MANTENIMIENTO PREVENTIVO INFRA'>Mantenimiento preventivo INFRA</option>
               <option value='INSTALACION DE EQUIPOS (PREVIAS)'>Instalacion de equipos (previas)</option>
               <option value='DESISTALACION DE EQUIPOS'>Desistalacion de equipos</option>
+              <option value='INSTALACION, MEDICION O PRUEBAS DE FO'>Intalacion, medicion o pruebas de FO</option>
               <option value='INSTALACION DE EQUIPOS'>Instalacion de equipos</option>
               <option value='MANTENIMIENTO DE MG'>Mantenimiento de MG</option>
               <option value='REPARACION DE QUIEPOS'>Reparacion de equipos</option>
@@ -128,17 +135,16 @@ export default function income () {
             <Form.Control type='text' placeholder='Comentarios' {...register('comments')} />
           </Form.Group>
 
-          <Form.Group className='mb-3' controlId='calendar'>
-            <Form.Label>Calandario</Form.Label>
-            <Calendar setDate={setDateStart} newDate={new Date()} />
+          <Form.Group className='mb-3' controlId='dateEnter'>
+            <Form.Label>{IdParam ? ('Fecha de salida') : ('Fecha de ingreso')}</Form.Label>
+            <Calendar setDate={setDateStart} test={dateStart} newDate={new Date()} />
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='exit'>
             <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
           </Form.Group>
-          {IdParam
-            ? (<Button variant='primary' type='submit'>Actualizar</Button>)
-            : (<Button variant='primary' type='submit'>Guardar</Button>)}
+
+          <Button variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
 
         </Form>
 

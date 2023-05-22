@@ -1,7 +1,6 @@
-import { OpecionsPaginateIncome, token } from '@/interface/interfaces'
+import { OpecionsPaginateIncome } from '@/interface/interfaces'
 import { IncomeModel } from '../models/modelIncome'
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getTokenJose } from '@/getTokenJose'
 import { valitadeCookies } from '../utils/valitadedToken'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -119,11 +118,11 @@ export class IncomeController {
     try {
       const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
 
-      const data: any = await valitadeCookies(req.cookies)
+      const dataToken: any = await valitadeCookies(req.cookies)
 
-      if (data.message) throw Error(data.message)
+      if (dataToken.message) throw Error(dataToken.message)
 
-      const nameEnter = data.token!.userName.toUpperCase()
+      const nameEnter = dataToken.token!.userName.toUpperCase()
 
       if (rda.length !== 7) {
         return { message: 'RDA invalida, tiene que ser de 7 numeros' }
@@ -170,22 +169,19 @@ export class IncomeController {
 
   static updateIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const token: token = await valitadeCookies(req.cookies)
+      const dataToken: any = await valitadeCookies(req.cookies)
 
-      if (token.message) throw Error(token.message)
+      if (dataToken.message) throw Error(dataToken.message)
 
-      if (token) throw Error('Someting went wrong with find by date')
-
-      const respond = await getTokenJose(token)
-      const nameExit = respond.userName
+      const nameExit = dataToken.token!.userName.toUpperCase()
 
       req.body.nameExit = nameExit
 
       await IncomeModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
-      res.status(201).json({ status: 'Income updated' })
+      return { message: 'Income updated' }
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result }
     }
   }
 }
