@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 import { IncomeController } from '../controllers/income.controllers'
 import { dbConnect } from '../utils'
 import NextCors from 'nextjs-cors'
+import { respondeIncomes } from '@/interface/interfaces'
 
 export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   const { method } = req
@@ -14,9 +15,9 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
       optionsSuccessStatus: 200
     })
     try {
-      const response = await IncomeController.getIncomes(req, res)
-      if (response !== 'There are no doc') {
-        res.status(200).json(response)
+      const response:respondeIncomes = await IncomeController.getIncomes(req, res)
+      if (response.status === 200) {
+        res.status(200).json(response.incomes)
       }
     } catch (error) {
       const result = (error as DOMException).message

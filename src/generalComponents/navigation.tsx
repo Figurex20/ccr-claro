@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { DropdownNavigationUser } from './DropdownNavigationUser'
-import { SearchIncome } from '../incomes/SearchIncome'
+import { SearchIncome } from '../pages/income/SearchIncome'
 import { hasCookie } from 'cookies-next'
 const Navigation = () => {
   const router = useRouter()

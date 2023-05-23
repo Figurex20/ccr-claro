@@ -53,3 +53,9 @@ export interface token{
   } | string | JWTPayload,
   message?: string
 }
+
+export interface respondeIncomes {
+  incomes?: any,
+  status?: number,
+  message?: string,
+}

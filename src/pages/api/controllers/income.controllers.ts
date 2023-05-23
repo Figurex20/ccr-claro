@@ -11,106 +11,106 @@ export class IncomeController {
       sort: { dateEnter: -1 },
       page: Number(numberPage)
     }
+
+    console.log('INCOME,CONTROLLES, LINE 15: ', req.query)
     if (req.query.onlyEnd) {
       const onlyEnd = req.query.onlyEnd
       if (onlyEnd === 'true') {
         try {
           const incomes = await IncomeModel.paginate({
-            exit: false
+            exit: true
           }, options)
-          if (incomes.docs.length === 0) throw Error('Someting went wrong with finde by onlyEnd  ')
-          return res.status(200).json(incomes)
+          if (incomes.docs.length === 0) throw Error('There are no docs')
+          return { incomes, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
-          return res.status(404).json({ message: result })
+          return { message: result }
         }
       } else {
-        return res.status(400).json({ message: 'the onlyEnd must be true' })
+        return { message: 'the onlyEnd must be true' }
       }
     }
 
     // find by onlyEnter
     if (req.query.onlyEnter) {
       const onlyEnter = req.query.onlyEnter
-      //   const site = req.query.site
-
       if (onlyEnter === 'true') {
         try {
           const incomes = await IncomeModel.paginate({
             exit: 'false'
           }, options)
           if (incomes.docs.length === 0) throw Error('Someting went wrong with onlyEnter')
-          return res.status(200).json(incomes)
+          return { incomes, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
-          return res.status(404).json({ message: result })
+          return { message: result }
         }
       } else {
-        return res.status(400).json({ message: 'the onlyEnter must be true' })
+        return { message: 'the onlyEnd must be true' }
       }
     }
 
     // find by date
-    if (req.query.startDate && req.query.endDate) {
-      try {
-        const startDate = req.query.startDate.toString()
-        const endDate = req.query.endDate.toString()
+    // if (req.query.startDate && req.query.endDate) {
+    //   try {
+    //     const startDate = req.query.startDate.toString()
+    //     const endDate = req.query.endDate.toString()
 
-        const neWstartDate = new Date(startDate)
-        const neWendDate = new Date(endDate)
+    //     const neWstartDate = new Date(startDate)
+    //     const neWendDate = new Date(endDate)
 
-        const isoStartDate = neWstartDate.toISOString()
-        const isoEndDate = neWendDate.toISOString()
+    //     const isoStartDate = neWstartDate.toISOString()
+    //     const isoEndDate = neWendDate.toISOString()
 
-        console.log(isoStartDate)
-        console.log(isoEndDate)
+    //     console.log(isoStartDate)
+    //     console.log(isoEndDate)
 
-        const incomes = await IncomeModel.paginate({
-          $and: [{ dateEnter: { $gte: isoStartDate } },
-            { dateEnter: { $lte: isoEndDate } }]
-        })
-        if (incomes.docs.length === 0) throw Error('Someting went wrong with find by date')
+    //     const incomes = await IncomeModel.paginate({
+    //       $and: [{ dateEnter: { $gte: isoStartDate } },
+    //         { dateEnter: { $lte: isoEndDate } }]
+    //     })
+    //     if (incomes.docs.length === 0) throw Error('Someting went wrong with find by date')
 
-        return res.status(200).json(incomes)
-      } catch (error) {
-        console.log(error)
-        const result = (error as DOMException).message
-        return res.status(404).json({ message: result })
-      }
-    }
+    //     return res.status(200).json(incomes)
+    //   } catch (error) {
+    //     console.log(error)
+    //     const result = (error as DOMException).message
+    //     return res.status(404).json({ message: result })
+    //   }
+    // }
 
     // find by site
-    if (req.query.site) {
-      try {
-        const incomes = await IncomeModel.paginate({ rda: req.query.site }, options)
-        if (incomes.docs.length === 0) throw Error('The SITE does not exist')
-        return res.status(200).json(incomes)
-      } catch (error) {
-        const result = (error as DOMException).message
-        return res.status(404).json({ message: result })
-      }
-    }
+    // if (req.query.site) {
+    //   try {
+    //     const incomes = await IncomeModel.paginate({ rda: req.query.site }, options)
+    //     if (incomes.docs.length === 0) throw Error('The SITE does not exist')
+    //     return res.status(200).json(incomes)
+    //   } catch (error) {
+    //     const result = (error as DOMException).message
+    //     return res.status(404).json({ message: result })
+    //   }
+    // }
 
     // find by RDA
-    if (req.query.rda) {
-      try {
-        const incomes = await IncomeModel.paginate({ rda: req.query.rda }, options)
-        if (incomes.docs.length === 0) throw Error('The RDA does not exist')
-        return res.status(200).json(incomes)
-      } catch (error) {
-        const result = (error as DOMException).message
-        return res.status(404).json({ message: result })
-      }
-    }
+    // if (req.query.rda) {
+    //   try {
+    //     const incomes = await IncomeModel.paginate({ rda: req.query.rda }, options)
+    //     if (incomes.docs.length === 0) throw Error('The RDA does not exist')
+    //     return res.status(200).json(incomes)
+    //   } catch (error) {
+    //     const result = (error as DOMException).message
+    //     return res.status(404).json({ message: result })
+    //   }
+    // }
 
     // normal find
     try {
       const incomes = await IncomeModel.paginate({}, options)
       if (incomes.docs.length === 0) throw Error('There are no docs')
-      return incomes
+      return { incomes, status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
-      return result
+      return { message: result }
     }
   }
 

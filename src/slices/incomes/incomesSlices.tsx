@@ -58,9 +58,56 @@ const incomeRedux = incomeSlice.reducer
 export { incomeRedux }
 
 export class incomesController {
-  static fetchAllIncomes = async (props:any, data?:string, numberPage?:string) => {
+  static fetchAllIncomes = async (props:any, data?:any, numberPage?:string) => {
     try {
+      if (data) {
+        const numberPage = 1
+        if (data.enter === true) {
+          const result = await axios.get(`${BACKEND}/incomes/?numberPage=${numberPage}&onlyEnter=true`)
+          props(setiIncomeList(result.data))
+          const success = true
+          return success
+        }
+        if (data.exit === true) {
+          const result = await axios.get(`${BACKEND}/incomes/?numberPage=${numberPage}&onlyEnd=true`)
+          props(setiIncomeList(result.data))
+          const success = true
+          return success
+        }
+
+        if (data.searchIncome) {
+          const regex = /\D/
+
+          if (regex.test(data.searchIncome)) {
+            const result = await axios.get(
+            `${BACKEND}/income/?numberPage=${numberPage}&site=${data.searchIncome}`
+            )
+            props(setiIncomeList(result.data))
+            const success = true
+            return success
+          } else {
+            console.log(regex.test(data.searchIncome))
+            const result = await axios.get(
+            `${BACKEND}/income/?numberPage=${numberPage}&rda=${data.searchIncome}`
+            )
+            props(setiIncomeList(result.data))
+            const success = true
+            return success
+          }
+        }
+
+        if (data.dateStart) {
+          const result = await axios.get(
+          `${BACKEND}/income/?numberPage=${numberPage}&startDate=${data.dateStart}&endDate=${data.dateEnd}`
+          )
+          console.log({ result })
+          props(setiIncomeList(result.data))
+          const success = true
+          return success
+        }
+      }
       const result = await axios.get(`${BACKEND}/incomes`)
+      console.log(result.data)
       props(setiIncomeList(result.data))
       const success = true
       return success

@@ -4,12 +4,12 @@ import { useState } from 'react'
 
 // redux
 import { useDispatch } from 'react-redux'
-import { incomesController } from '../slices/incomes/incomesSlices'
+import { incomesController } from '../../slices/incomes/incomesSlices'
 
 // Components
 import Button from 'react-bootstrap/Button'
 
-import { Calendar } from '../generalComponents/Calendar'
+import { Calendar } from '../../generalComponents/Calendar'
 
 const SearchIncome = () => {
   const dispatch = useDispatch()
@@ -28,7 +28,7 @@ const SearchIncome = () => {
     if (data.exit === true && data.enter === true) {
       return alert('Seleccione solo "Entrada" o "Salida"')
     }
-    incomesController.fetchAllIncomes(dispatch)
+    incomesController.fetchAllIncomes(dispatch, data)
   }
 
   return (
