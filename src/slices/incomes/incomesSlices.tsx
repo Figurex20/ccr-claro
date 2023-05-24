@@ -80,7 +80,7 @@ export class incomesController {
 
           if (regex.test(data.searchIncome)) {
             const result = await axios.get(
-            `${BACKEND}/income/?numberPage=${numberPage}&site=${data.searchIncome}`
+            `${BACKEND}/incomes/?numberPage=${numberPage}&site=${data.searchIncome}`
             )
             props(setiIncomeList(result.data))
             const success = true
@@ -88,7 +88,7 @@ export class incomesController {
           } else {
             console.log(regex.test(data.searchIncome))
             const result = await axios.get(
-            `${BACKEND}/income/?numberPage=${numberPage}&rda=${data.searchIncome}`
+            `${BACKEND}/incomes/?numberPage=${numberPage}&rda=${data.searchIncome}`
             )
             props(setiIncomeList(result.data))
             const success = true
@@ -98,7 +98,7 @@ export class incomesController {
 
         if (data.dateStart) {
           const result = await axios.get(
-          `${BACKEND}/income/?numberPage=${numberPage}&startDate=${data.dateStart}&endDate=${data.dateEnd}`
+          `${BACKEND}/incomes/?numberPage=${numberPage}&startDate=${data.dateStart}&endDate=${data.dateEnd}`
           )
           console.log({ result })
           props(setiIncomeList(result.data))
