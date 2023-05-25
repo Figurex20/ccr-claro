@@ -17,9 +17,15 @@ export interface IncomeState {
      '__v': 0
    }
    ],
-     hasPrevious: boolean,
-     hasNext: boolean,
-     totalDocs: number
+   totalDocs: number
+   limit: number
+   totalPages: number
+   page: number
+   pagingCounter: number
+   hasPrevPage:boolean
+   hasNextPage:boolean
+   prevPage:null | number
+   nextPage:null | number
    },
 
    }
@@ -43,6 +49,7 @@ export interface Login{
 export interface OpecionsPaginateIncome {
   sort:{}
   page:number
+  limit:number
 }
 
 export interface token{

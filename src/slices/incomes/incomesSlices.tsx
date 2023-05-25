@@ -32,9 +32,15 @@ const initialState: IncomeState = {
         __v: 0
       }
     ],
-    hasPrevious: false,
-    hasNext: false,
-    totalDocs: 1
+    totalDocs: 1,
+    limit: 0,
+    totalPages: 0,
+    page: 0,
+    pagingCounter: 0,
+    hasPrevPage: false,
+    hasNextPage: false,
+    prevPage: null,
+    nextPage: null
   }
 
 }
@@ -58,7 +64,7 @@ const incomeRedux = incomeSlice.reducer
 export { incomeRedux }
 
 export class incomesController {
-  static fetchAllIncomes = async (props:any, data?:any, numberPage?:string) => {
+  static fetchAllIncomes = async (props:any, data?:any, numberPage?:string | number) => {
     try {
       if (data) {
         const numberPage = 1

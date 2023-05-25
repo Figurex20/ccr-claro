@@ -4,7 +4,6 @@ import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 import SSRProvider from 'react-bootstrap/SSRProvider'
 import 'bootstrap/dist/css/bootstrap.min.css'
-import { Navigation } from '@/generalComponents/navigation'
 import { Spinner } from 'react-bootstrap'
 
 import { useState, useEffect } from 'react'
@@ -26,8 +25,6 @@ export default function App ({ Component, pageProps }: AppProps) {
             <meta name='viewport' content='width=device-width, initial-scale=1' />
             <link rel='icon' href='/favicon.ico' />
           </Head>
-
-          <Navigation />
 
           <Component {...pageProps} />
 
