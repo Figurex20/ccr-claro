@@ -25,7 +25,7 @@ export const IncomeList = () => {
   const listincomes = useSelector(selectValueIncomes)
   const dispatch = useDispatch()
 
-  useEffect(() => { incomesController.fetchAllIncomes(dispatch) }, [dispatch])
+  useEffect(() => { incomesController.fetchAllIncomes(dispatch, 1) }, [dispatch])
 
   const dates = (date: string | undefined) => {
     if (date) {
@@ -45,7 +45,7 @@ export const IncomeList = () => {
   return (
     <>
       <Table
-        className='text-center border border-primary'
+        className='text-center border border-primary overflow-auto'
         style={{ fontSize: '1rem', fontWeight: 'bold' }}
       >
         <thead>

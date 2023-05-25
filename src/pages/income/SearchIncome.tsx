@@ -10,6 +10,7 @@ import { incomesController } from '../../slices/incomes/incomesSlices'
 import Button from 'react-bootstrap/Button'
 
 import { Calendar } from '../../generalComponents/Calendar'
+import { dataReduxController } from '@/slices/incomes/dataSearch'
 
 const SearchIncome = () => {
   const dispatch = useDispatch()
@@ -25,10 +26,11 @@ const SearchIncome = () => {
   const onSubmit = async (data: any) => {
     data.dateStart = dateStart
     data.dateEnd = dateEnd
+    dataReduxController.saveDateSearch(dispatch, data)
     if (data.exit === true && data.enter === true) {
       return alert('Seleccione solo "Entrada" o "Salida"')
     }
-    incomesController.fetchAllIncomes(dispatch, data)
+    incomesController.fetchAllIncomes(dispatch, 1, data)
   }
 
   return (

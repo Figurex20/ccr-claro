@@ -1,9 +1,10 @@
 import { counterRedux } from '@/slices/conunterSlices'
+import { dataRedux } from '@/slices/incomes/dataSearch'
 import { incomeRedux } from '@/slices/incomes/incomesSlices'
 import { configureStore } from '@reduxjs/toolkit'
 
 export const store = configureStore({
-  reducer: { counter: counterRedux, incomes: incomeRedux }
+  reducer: { counter: counterRedux, incomes: incomeRedux, data: dataRedux }
 })
 
 // Infer the `RootState` and `AppDispatch` types from the store itself

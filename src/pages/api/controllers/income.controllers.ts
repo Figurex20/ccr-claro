@@ -4,8 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { valitadeCookies } from '../utils/valitadedToken'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
-    // const numberPage = req.query.numberPage
-    const numberPage = '1'
+    const numberPage = req.query.numberPage
 
     const options:OpecionsPaginateIncome = {
       sort: { dateEnter: -1 },
@@ -80,7 +79,6 @@ export class IncomeController {
       try {
         const incomes = await IncomeModel.paginate({ site: req.query.site }, options)
         if (incomes.docs.length === 0) throw Error('The SITE does not exist')
-        console.log('INCOME,CONTROLLES, LINE 86: ', incomes)
         return { incomes, status: 200 }
       } catch (error) {
         const result = (error as DOMException).message
