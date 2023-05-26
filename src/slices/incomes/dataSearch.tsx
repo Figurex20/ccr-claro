@@ -2,9 +2,6 @@ import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState: any = {
-  saveDataSearch: {
-
-  }
 
 }
 export const dataSlice = createSlice({
@@ -28,7 +25,6 @@ export { dataRedux }
 
 export class dataReduxController {
   static saveDateSearch = async (dispatch:any, data:any) => {
-    console.log(data)
     dispatch(setDateSearch(data))
   }
 }

@@ -64,10 +64,13 @@ const incomeRedux = incomeSlice.reducer
 export { incomeRedux }
 
 export class incomesController {
-  static fetchAllIncomes = async (props:any, numberPage: number, data?:any) => {
+  static fetchAllIncomes = async (props:any, numberPage: number, dataProp?:any) => {
     try {
       const nunPage: number = numberPage
-      if (data) {
+
+      if (dataProp) {
+        const data = dataProp.saveDataSearch ? dataProp.saveDataSearch : dataProp
+        console.log(data)
         if (data.enter === true) {
           const result = await axios.get(`${BACKEND}/incomes/?numberPage=${numberPage}&onlyEnter=true`)
           props(setiIncomeList(result.data))
@@ -110,8 +113,7 @@ export class incomesController {
           return success
         }
       }
-      const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}`)
-      console.log(result)
+      const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}&dataSearch=${dataProp}`)
       props(setiIncomeList(result.data))
       const success = true
       return success

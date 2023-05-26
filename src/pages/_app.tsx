@@ -8,6 +8,8 @@ import { Spinner } from 'react-bootstrap'
 
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
+import { Navigation } from '@/generalComponents/navigation'
+
 export default function App ({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -25,7 +27,9 @@ export default function App ({ Component, pageProps }: AppProps) {
             <meta name='viewport' content='width=device-width, initial-scale=1' />
             <link rel='icon' href='/favicon.ico' />
           </Head>
-
+          <footer className=' '>
+            <Navigation />
+          </footer>
           <Component {...pageProps} />
 
         </SSRProvider>

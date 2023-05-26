@@ -9,7 +9,7 @@ export class IncomeController {
     const options:OpecionsPaginateIncome = {
       sort: { dateEnter: -1 },
       page: Number(numberPage),
-      limit: 2
+      limit: 80
     }
 
     if (req.query.onlyEnd) {

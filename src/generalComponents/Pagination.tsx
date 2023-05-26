@@ -2,17 +2,19 @@ import React from 'react'
 import { Badge, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { incomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
+import { selectDateSearch } from '@/slices/incomes/dataSearch'
 
 export const Pagination = () => {
   const listincomes = useSelector(selectValueIncomes)
+  const dateSearch = useSelector(selectDateSearch)
 
   const dispatch = useDispatch()
 
   const nextPage = async (page:number) => {
-    incomesController.fetchAllIncomes(dispatch, page + 1)
+    incomesController.fetchAllIncomes(dispatch, page + 1, dateSearch)
   }
   const prevPage = async (page:number) => {
-    incomesController.fetchAllIncomes(dispatch, page - 1)
+    incomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
   }
   return (
     <div className='d-flex justify-content-center'>
