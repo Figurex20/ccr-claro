@@ -11,9 +11,8 @@ export async function middleware (req:NextRequest, res: NextApiResponse) {
     await getTokenJose(jwt)
     return NextResponse.next()
   } catch (err) {
-    res.status(401).json({ status: 'No tienes autirizacion' })
     return NextResponse.redirect(new URL('/user/login', req.url))
   }
 }
 
-export const config = { matcher: ['/income, /income/[id]'] }
+export const config = { matcher: ['/income', '/income/[id]', '/user/changepassword'] }

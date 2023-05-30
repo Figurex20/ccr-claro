@@ -39,7 +39,7 @@ export const DropdownNavigationUser = () => {
           )
         : (
           <Dropdown.Item>
-            <Link className='navbar-brand ms-4 mt-2 text-dark' href='/users'>
+            <Link className='navbar-brand ms-4 mt-2 text-dark' href='/user/changepassword'>
               cambiar Contraseña
             </Link>
           </Dropdown.Item>

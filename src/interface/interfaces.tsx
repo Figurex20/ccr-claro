@@ -45,6 +45,19 @@ export interface Login{
   userName:string,
   password:string
 }
+export interface ChangePassword{
+  oldPassword:string,
+  newPassword:string
+  confirmNewPassword:string
+}
+
+export interface BrowserToken {
+  exp: number
+  iat: number
+  name: string
+  role: string
+  _id:string
+}
 
 export interface OpecionsPaginateIncome {
   sort:{}
