@@ -7,6 +7,7 @@ import { Login } from '@/interface/interfaces'
 import { userController } from '@/slices/user/userSlices'
 // import { Calendar } from '@/generalComponents/Calendar'
 import { useRouter } from 'next/router'
+import styles from '@/styles/Home.module.css'
 
 export default function edit () {
   const router = useRouter()
@@ -19,11 +20,11 @@ export default function edit () {
         reset()
       })
   }
-
+  // className={`${styles.main} `}
   return (
-    <div className='col-md-6 offset-md-3'>
-      <div className='card card-body'>
-        <h2 className='text-center'>User</h2>
+    <div className={`${styles.user}`}>
+      <div className='border-top border-info border-3 bg-secondary p-4 '>
+        <h2 className='text-center'>Acceder a tu cuenta</h2>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className='mb-3' controlId='name'>
@@ -46,8 +47,8 @@ export default function edit () {
             />
           </Form.Group>
 
-          <Button variant='primary' type='submit'>
-            Save
+          <Button className='w-100 ' variant='info' type='submit'>
+            login
           </Button>
 
         </Form>
