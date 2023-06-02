@@ -139,10 +139,13 @@ export default function income () {
             <Form.Label>{IdParam ? ('Fecha de salida') : ('Fecha de ingreso')}</Form.Label>
             <Calendar setDate={setDateStart} test={dateStart} newDate={new Date()} />
           </Form.Group>
-
-          <Form.Group className='mb-3' controlId='exit'>
-            <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
-          </Form.Group>
+          {IdParam
+            ? (
+              <Form.Group className='mb-3' controlId='exit'>
+                <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
+              </Form.Group>
+              )
+            : null}
 
           <Button variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
 
