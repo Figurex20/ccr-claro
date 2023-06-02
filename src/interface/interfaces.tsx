@@ -57,6 +57,7 @@ export interface BrowserToken {
   name: string
   role: string
   _id:string
+  userName: string
 }
 
 export interface OpecionsPaginateIncome {

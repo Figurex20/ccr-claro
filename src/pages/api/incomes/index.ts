@@ -34,13 +34,14 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
     })
     try {
       const response = await IncomeController.createIncome(req, res)
-      if (response.message !== 'Income saved') {
+      if (response.status !== 200) throw Error(response.message)
+
+      if (response.status === 200) {
         res.status(200).json(response)
       }
-      res.status(200).json(response)
     } catch (error) {
       const result = (error as DOMException).message
-      res.status(500).json({ status: 'Internal server error', message: result })
+      res.status(500).json({ status: 500, message: result })
     }
   }
 }

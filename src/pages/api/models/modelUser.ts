@@ -21,7 +21,7 @@ class User {
   recoverpassword: string
 
 @prop()
-  esetPassword: boolean
+  resetPassword: boolean
 
 @prop({ type: String, required: true })
   role: string

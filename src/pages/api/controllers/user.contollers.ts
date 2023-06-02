@@ -2,6 +2,9 @@ import { UserModel } from '../models/modelUser'
 // import { utils } from '../middlewares/utils'
 import { RoleModel } from '../models/modelRole'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { utilChangePassword } from '../utils/utilChangePassword'
+import { valitadeCookies } from '../utils/valitadedToken'
+// import { token } from '../../../interface/interfaces'
 
 export class UserController {
   static getAllUsers = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -38,22 +41,23 @@ export class UserController {
 
   static userChangepassword = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      // if (req.body.option === 'changePassword') {
-      //   const respond = await utils.changePassword(req.body)
-      //   if (respond.status === 200) {
-      //     return res.status(200).json(respond.message)
-      //   } else {
-      //     return res
-      //       .status(400)
-      //       .json({ status: 'something wrong with changed password', message: respond.message })
-      //   }
-      // }
+      const dataToken: any = await valitadeCookies(req.cookies)
+
+      if (dataToken.message) throw Error(dataToken.message)
+      if (req.body.option === 'changePassword') {
+        const respond = await utilChangePassword.changePassword(dataToken.token.userName, req.body)
+        if (respond!.status === 200) {
+          return { message: respond!.message, status: 200 }
+        } else {
+          return { status: 400, message: respond!.message }
+        }
+      }
 
       await UserModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
-      res.status(200).json({ status: 'User updated' })
+      return { status: 200, message: 'password change' }
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result, status: 400 }
     }
   }
 

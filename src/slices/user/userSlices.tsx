@@ -31,7 +31,7 @@ export class userController {
     }
   }
 
-  static updateUser = async (data:any, option:any) => {
+  static updateUser = async (data:any, userName:any, option:any) => {
     try {
       const headers1 = headers()
       if (option === 'resetPassword') {
@@ -39,7 +39,7 @@ export class userController {
           option
         }
 
-        const respond = await axios.put(`${BACKEND}/users/${data}`, newUser, {
+        const respond = await axios.put(`${BACKEND}/users`, newUser, {
           headers: headers1
         })
 
@@ -52,21 +52,30 @@ export class userController {
       if (option === 'changePassword') {
         const changePassword = {
           option,
-          data
+          data,
+          userName
         }
 
         try {
-          await axios.put(`${BACKEND}/users/changepassword/${data._id}`, changePassword, {
+          await axios.put(`${BACKEND}/users`, changePassword, {
             headers: headers1
           })
-          alert('exito')
+          Swal.fire({
+            icon: 'success',
+            title: 'Confirmacion',
+            text: 'La contraseña se cambio'
+          })
           const success = true
           return success
         } catch (error) {
-          console.log(error)
-          // alert(error.response.data.message)
+          const result:any = (error as AxiosError).response?.data
+          console.log(result)
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: `${result.message} ${result.status}`
+          })
           return
-          // alert(respond.data.error);
         }
       }
 

@@ -31,7 +31,8 @@ export const createUserAdmin = async () => {
       password: await UserModel.encryptPassword('Claro+2023'),
       role: 'admin',
       name: 'ccr',
-      lastname: 'ccr'
+      lastname: 'ccr',
+      resetPassword: false
     })
 
     const roles = 'admin'

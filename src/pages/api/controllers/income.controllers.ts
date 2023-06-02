@@ -23,10 +23,10 @@ export class IncomeController {
           return { incomes, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
-          return { message: result }
+          return { message: result, status: 400 }
         }
       } else {
-        return { message: 'the onlyEnd must be true' }
+        return { message: 'the onlyEnd must be true', status: 400 }
       }
     }
 
@@ -42,10 +42,10 @@ export class IncomeController {
           return { incomes, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
-          return { message: result }
+          return { message: result, status: 400 }
         }
       } else {
-        return { message: 'the onlyEnd must be true' }
+        return { message: 'the onlyEnd must be true', status: 400 }
       }
     }
 
@@ -70,7 +70,7 @@ export class IncomeController {
         return { incomes, status: 200 }
       } catch (error) {
         const result = (error as DOMException).message
-        return { message: result }
+        return { message: result, status: 400 }
       }
     }
 
@@ -82,7 +82,7 @@ export class IncomeController {
         return { incomes, status: 200 }
       } catch (error) {
         const result = (error as DOMException).message
-        return { message: result }
+        return { message: result, status: 400 }
       }
     }
 
@@ -94,7 +94,7 @@ export class IncomeController {
         return { incomes, status: 200 }
       } catch (error) {
         const result = (error as DOMException).message
-        return { message: result }
+        return { message: result, status: 400 }
       }
     }
 
@@ -105,19 +105,19 @@ export class IncomeController {
       return { incomes, status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
-      return { message: result }
+      return { message: result, status: 400 }
     }
   }
 
   static createIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
-
       const dataToken: any = await valitadeCookies(req.cookies)
 
       if (dataToken.message) throw Error(dataToken.message)
 
       const nameEnter = dataToken.token!.userName.toUpperCase()
+
+      const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
 
       if (rda.length !== 7) {
         return { message: 'RDA invalida, tiene que ser de 7 numeros' }
@@ -135,30 +135,24 @@ export class IncomeController {
         comments
       })
       await newIncome.save()
-      return { message: 'Income saved' }
+      return { message: 'Income saved', status: 200 }
     } catch (error) {
-      return { message: 'somting wrong in createIcome' }
+      return { message: 'somting wrong in createIcome', status: 400 }
     }
   }
 
   static getIncome = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+      const dataToken: any = await valitadeCookies(req.cookies)
+
+      if (dataToken.message) throw Error(dataToken.message)
+
       const incomes = await IncomeModel.findById(req.query.id)
       if (!incomes) throw Error('There are no docs')
       return incomes
     } catch (error) {
       const result = (error as DOMException).message
-      return { message: result }
-    }
-  }
-
-  static deleteIncome = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      await IncomeModel.findByIdAndDelete(req.query.id)
-      res.status(200).json({ status: 'Income deleted' })
-    } catch (error) {
-      const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result, status: 400 }
     }
   }
 
@@ -173,10 +167,10 @@ export class IncomeController {
       req.body.nameExit = nameExit
 
       await IncomeModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
-      return { message: 'Income updated' }
+      return { message: 'Income updated', status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
-      return { message: result }
+      return { message: result, status: 400 }
     }
   }
 }
