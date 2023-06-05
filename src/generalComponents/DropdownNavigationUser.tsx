@@ -6,8 +6,11 @@ import Button from 'react-bootstrap/Button'
 import Dropdown from 'react-bootstrap/Dropdown'
 import DropdownButton from 'react-bootstrap/DropdownButton'
 import Swal from 'sweetalert2'
-
+import { decodeToken } from '@/decodeToken'
+import { BrowserToken } from '@/interface/interfaces'
 export const DropdownNavigationUser = () => {
+  const token: BrowserToken | null = decodeToken()
+
   const router = useRouter()
   const closeLogin = () => {
     deleteCookie('userLogin')
@@ -22,7 +25,7 @@ export const DropdownNavigationUser = () => {
     <DropdownButton id='Usuario' title='Usuario' variant='info'>
       <h5 className=' ms-5 mt-2'>{sessionStorage.getItem('user')}</h5>
 
-      {sessionStorage.getItem('role') === 'admin'
+      {token?.role === 'admin'
         ? (
           <>
             <Dropdown.Item>

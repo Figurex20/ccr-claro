@@ -21,10 +21,10 @@ export default function Changepassword () {
     if (data.confirmNewPassword === data.newPassword) {
       const option = 'changePassword'
       userController.updateUser(data, userName, option)
-      // .then(() => {
-      //   router.replace('/')
-      //   reset()
-      // })
+        .then(() => {
+          router.replace('/')
+          reset()
+        })
       return
     }
 
