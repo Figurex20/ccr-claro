@@ -1,3 +1,6 @@
+
+import { RootState } from '@/redux/store'
+import { createSlice } from '@reduxjs/toolkit'
 import { BACKEND } from '@/const/backend'
 import { Login } from '@/interface/interfaces'
 import axios, { AxiosError } from 'axios'
@@ -10,7 +13,35 @@ const headers = () => {
   }
   return headers
 }
+
+const initialState: any = {
+
+}
+export const userSlice = createSlice({
+  name: 'users',
+  initialState,
+  reducers: {
+    setUsers: (state, action) => {
+      state.saveUsers = action.payload
+    }
+  }
+})
+
+// Action creators are generated for each case reducer function
+export const { setUsers } = userSlice.actions
+
+export const selectUsers = (state: RootState) => state.users
+
+const usersRedux = userSlice.reducer
+
+export { usersRedux }
+
 export class userController {
+  static fetchAllUsers = async (dispatch:any) => {
+    const users:any = []
+    return users
+  }
+
   static login = async (newLogin:Login) => {
     try {
       await axios.post(`${BACKEND}/auth/login`, newLogin)
@@ -97,5 +128,11 @@ export class userController {
     } catch (err) {
       console.log(err)
     }
+  }
+
+  static createUser = async (data:any) => {
+    const createUser:any = data
+    const success = !!createUser
+    return success
   }
 }
