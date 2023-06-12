@@ -11,10 +11,10 @@ export class UserController {
     try {
       const users = await UserModel.find()
       if (!users) throw Error('Users not found')
-      res.status(200).send(users)
+      return { message: users, status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result, status: 400 }
     }
   }
 

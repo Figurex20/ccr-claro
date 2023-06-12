@@ -4,6 +4,5 @@ import { ListUsers } from './ListUsers'
 export default function index () {
   return (
     <div><ListUsers /></div>
-    // <><div>hola</div></>
   )
 }

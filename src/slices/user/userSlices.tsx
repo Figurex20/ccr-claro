@@ -2,8 +2,8 @@
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 import { BACKEND } from '@/const/backend'
-import { Login } from '@/interface/interfaces'
-import axios, { AxiosError } from 'axios'
+import { AxiosUser, Login } from '@/interface/interfaces'
+import axios, { AxiosError, AxiosResponse } from 'axios'
 import Swal from 'sweetalert2'
 const headers = () => {
   const headers: {} = {
@@ -38,8 +38,9 @@ export { usersRedux }
 
 export class userController {
   static fetchAllUsers = async (dispatch:any) => {
-    const users:any = []
-    return users
+    const users:AxiosResponse<AxiosUser> = await axios.get(`${BACKEND}/users`)
+    console.log(users.data)
+    dispatch(setUsers(users.data.message))
   }
 
   static login = async (newLogin:Login) => {

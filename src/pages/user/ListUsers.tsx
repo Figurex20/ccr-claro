@@ -5,18 +5,12 @@ import { Table } from 'react-bootstrap'
 import { selectUsers, userController } from '@/slices/user/userSlices'
 import { useDispatch, useSelector } from 'react-redux'
 import { ModalFormCreateUser } from './ModalFormCreateUser'
+import { User } from '@/interface/interfaces'
 // import { ModalFormEditUser } from './ModalFormEditUser'
 
 export const ListUsers = () => {
   const dispatch = useDispatch()
-  const list = useSelector(selectUsers)
-  const listTest:any = [{
-    name: 'Hola',
-    lastname: 'pepe',
-    userName: 'userName',
-    role: 'admin',
-    email: 'test@example.com'
-  }]
+  const list:User = useSelector(selectUsers)
   useEffect(() => {
     userController.fetchAllUsers(dispatch)
   }, [dispatch])
@@ -36,14 +30,14 @@ export const ListUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {listTest.map((user:any) => (
+          {list.saveUsers?.map((user:any) => (
             <tr key={user._id} className=' fs-6'>
               <th>
                 <h6>Nombre: {user.name.toUpperCase()}</h6>
                 <h6>Apellidos: {user.lastname.toUpperCase()}</h6>
               </th>
               <th>
-                <h6>Usuario: {user.userName}</h6>
+                <h6>Usuario: {user.userName.toUpperCase()}</h6>
                 <h6>Role: {user.role.toUpperCase()}</h6>
                 <h6>Email: {user.email.toUpperCase()}</h6>
               </th>

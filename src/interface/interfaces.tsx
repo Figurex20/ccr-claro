@@ -30,6 +30,27 @@ export interface IncomeState {
 
    }
 
+export interface User {
+  saveUsers: [{
+    _id:string,
+    userName:string,
+    email:string,
+    password:string,
+    resetPassword:boolean
+    role:string,
+    name:string,
+    lastname:string,
+    createdAt:string,
+    updatedAt:string,
+    __v:number
+  }]
+
+}
+
+export interface AxiosUser {
+  message: User,
+  status: number,
+ }
 export interface SaveDataNewIncome {
     name:string
     site:string
