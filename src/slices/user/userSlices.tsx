@@ -2,7 +2,7 @@
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 import { BACKEND } from '@/const/backend'
-import { AxiosUser, Login } from '@/interface/interfaces'
+import { AxiosUser, Login, SaveDataNewUser } from '@/interface/interfaces'
 import axios, { AxiosError, AxiosResponse } from 'axios'
 import Swal from 'sweetalert2'
 const headers = () => {
@@ -39,7 +39,6 @@ export { usersRedux }
 export class userController {
   static fetchAllUsers = async (dispatch:any) => {
     const users:AxiosResponse<AxiosUser> = await axios.get(`${BACKEND}/users`)
-    console.log(users.data)
     dispatch(setUsers(users.data.message))
   }
 
@@ -132,8 +131,38 @@ export class userController {
   }
 
   static createUser = async (data:any) => {
-    const createUser:any = data
-    const success = !!createUser
-    return success
+    try {
+      const headers1 = headers()
+
+      const saveNewUser:SaveDataNewUser = {
+        name: data.name.toUpperCase(),
+        lastname: data.lastname.toUpperCase(),
+        userName: data.userName.toUpperCase(),
+        role: data.role.toUpperCase(),
+        email: data.email.toUpperCase(),
+        password: data.password,
+        confirmPassword: data.confirmPassword,
+        recoverpassword: true
+      }
+      await axios.post(`${BACKEND}/users`, saveNewUser, {
+        headers: headers1
+      })
+      Swal.fire({
+        icon: 'success',
+        title: 'Your work has been saved',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      const success = 'success'
+      return success
+    } catch (error) {
+      const result = (error as DOMException).message
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: result
+      })
+      return result
+    }
   }
 }

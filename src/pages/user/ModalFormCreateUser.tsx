@@ -3,8 +3,9 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
 import Form from 'react-bootstrap/Form'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { userController } from '@/slices/user/userSlices'
+import { SaveDataNewUser } from '../../interface/interfaces'
 
 export const ModalFormCreateUser = () => {
   const [show, setShow] = useState(false)
@@ -17,9 +18,9 @@ export const ModalFormCreateUser = () => {
     handleSubmit,
     reset,
     formState: { errors }
-  } = useForm()
+  } = useForm<SaveDataNewUser>()
 
-  const onSubmit = async (data:any) => {
+  const onSubmit: SubmitHandler<SaveDataNewUser> = async (data) => {
     try {
       const success = await userController.createUser(data)
       if (success) {
@@ -46,35 +47,35 @@ export const ModalFormCreateUser = () => {
             <Form.Group className='mb-3' controlId='name'>
               <Form.Label>Nombre</Form.Label>
               <Form.Control
-                {...register('name', { required: true })}
                 type='text'
                 placeholder='Enter name'
+                {...register('name', { required: true })}
               />
             </Form.Group>
 
             <Form.Group className='mb-3' controlId='lastname'>
               <Form.Label>Apellidos</Form.Label>
               <Form.Control
-                {...register('lastname', { required: true })}
                 type='text'
                 placeholder='Enter last name'
+                {...register('lastname', { required: true })}
               />
               {errors.password && <h5>password is required</h5>}
             </Form.Group>
             <Form.Group className='mb-3' controlId='email'>
               <Form.Label>Email</Form.Label>
               <Form.Control
-                {...register('email', { required: true })}
                 type='text'
                 placeholder='Enter email'
+                {...register('email', { required: true })}
               />
             </Form.Group>
             <Form.Group className='mb-3' controlId='userName'>
               <Form.Label>Usuario</Form.Label>
               <Form.Control
-                {...register('userName', { required: true })}
                 type='text'
                 placeholder='Enter username'
+                {...register('userName', { required: true })}
               />
             </Form.Group>
 
@@ -95,18 +96,18 @@ export const ModalFormCreateUser = () => {
             <Form.Group className='mb-3' controlId='Password'>
               <Form.Label>Password</Form.Label>
               <Form.Control
-                {...register('password', { required: true })}
                 type='password'
                 placeholder='Password'
+                {...register('password', { required: true })}
               />
               {errors.password && <h5>password is required</h5>}
             </Form.Group>
             <Form.Group className='mb-3' controlId='ConfirmPassword'>
               <Form.Label>Confirm Password</Form.Label>
               <Form.Control
-                {...register('confirmPassword', { required: true })}
                 type='password'
                 placeholder='Confirm Password'
+                {...register('confirmPassword', { required: true })}
               />
               {errors.password && <h5>password is required</h5>}
             </Form.Group>

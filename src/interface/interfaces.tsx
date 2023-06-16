@@ -62,6 +62,17 @@ export interface SaveDataNewIncome {
     dateExit?:string
 }
 
+export interface SaveDataNewUser {
+  name:string
+  lastname:string
+  userName:string
+  email: string,
+  role:string
+  password:string
+  confirmPassword:string
+  recoverpassword?:boolean
+}
+
 export interface Login{
   userName:string,
   password:string
