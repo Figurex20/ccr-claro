@@ -29,16 +29,6 @@ export class UserController {
     }
   }
 
-  static deleteUser = async (req: NextApiRequest, res: NextApiResponse) => {
-    try {
-      await UserModel.findByIdAndDelete(req.query.id)
-      res.status(200).json({ message: 'User elimited' })
-    } catch (error) {
-      const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
-    }
-  }
-
   static userChangepassword = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
@@ -77,36 +67,36 @@ export class UserController {
         const rol = ['admin', 'moderator']
         const uniqueUser = await UserModel.findById(req.query.id)
         const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) return res.status(404).json({ message: 'Rol not found' })
+        if (!uniqueUser) throw Error('Rol not found')
         uniqueUser.roles = foundRoles.map((role) => role._id)
         await uniqueUser.save()
       }
-
-      console.log(req.body.role)
 
       if (req.body.role === 'moderator') {
         const rol = ['moderator']
         const uniqueUser = await UserModel.findById(req.query.id)
         const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) return res.status(404).json({ message: 'Rol not found' })
+        if (!uniqueUser) throw Error('Rol not found')
         uniqueUser.roles = foundRoles.map((role) => role._id)
         await uniqueUser.save()
+        return { message: 'User created', status: 200 }
       }
 
       if (req.body.role === 'user') {
         const rol = ['user']
         const uniqueUser = await UserModel.findById(req.query.id)
         const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) return res.status(404).json({ message: 'Rol not found' })
+        if (!uniqueUser) throw Error('Rol not found')
         uniqueUser.roles = foundRoles.map((role) => role._id)
         await uniqueUser.save()
+        return { message: 'User created', status: 200 }
       }
 
       await UserModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
       res.status(200).json({ status: 'User updated' })
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result, status: 400 }
     }
   }
 }

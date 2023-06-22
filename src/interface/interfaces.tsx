@@ -112,3 +112,8 @@ export interface respondeIncomes {
   status?: number,
   message?: string,
 }
+
+export interface respondoControllers{
+  message?: any,
+  status: number
+}

@@ -10,13 +10,13 @@ export class AuthController {
     const equalPassword = password === confirmPassword
 
     if (!equalPassword) {
-      return res.status(400).json({ message: 'the passwords are not the same' })
+      return { message: 'the passwords are not the same', status: 400 }
     }
 
     const UserAlreadyExists = UserModel.findOne({ userName })
 
     if (!UserAlreadyExists) {
-      return res.status(400).json({ message: 'User duplicated' })
+      return { message: 'User duplicated', status: 400 }
     }
 
     try {
@@ -51,12 +51,10 @@ export class AuthController {
       }
 
       await newUser.save()
-
-      return res.status(200).json({ message: 'Succes to create User' })
-      // return res.status(200).json({ message: 'Succes to create User', newUser: saveUser });
+      return { message: 'Succes to create User', status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
-      return res.status(404).json({ message: result })
+      return { message: result, status: 400 }
     }
   }
 
