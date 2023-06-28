@@ -5,7 +5,7 @@ export class utilChangePassword {
     // Claro+2023
 
     // find user by userName
-    const userFound:any = await UserModel.findOne({ userName: user }).populate('roles')
+    const userFound = user
 
     if (!userFound.resetPassword) {
       const { data } = dataProps
@@ -24,28 +24,22 @@ export class utilChangePassword {
       const saveNewpassword = {
         password: await UserModel.encryptPassword(data.newPassword)
       }
-      console.log(saveNewpassword)
-      console.log(userFound._id)
 
       await UserModel.findByIdAndUpdate(userFound._id, saveNewpassword, { new: true })
 
       return { message: 'Password reseted', status: 200 }
+    } else {
+      const newPassword = 'password'
+
+      const saveNewpassword = {
+        password: await UserModel.encryptPassword(newPassword),
+        resetPassword: false,
+        recoverpassword: true
+      }
+
+      await UserModel.findByIdAndUpdate(userFound._id, saveNewpassword, { new: true })
+
+      return { message: 'Password reseted, new password: password', status: 200 }
     }
-    // else {
-    //   const equalPassword = req.data.newPassword === req.data.confirmNewPassword
-
-    //   if (!equalPassword) {
-    //     return { message: 'the passwords are not the same', status: 400 }
-    //   }
-
-    //   const saveNewpassword = {
-    //     password: await UserModel.encryptPassword(req.data.newPassword),
-    //     resetPassword: false
-    //   }
-
-    //   await UserModel.findByIdAndUpdate(req.data._id, saveNewpassword, { new: true })
-
-    //   return { Message: 'Password changed', status: 200 }
-    // }
   }
 }

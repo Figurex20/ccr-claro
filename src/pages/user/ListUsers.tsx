@@ -1,12 +1,12 @@
 import { useEffect } from 'react'
-import { Table } from 'react-bootstrap'
+import { Button, Table } from 'react-bootstrap'
 
 // Redux
 import { selectUsers, userController } from '@/slices/user/userSlices'
 import { useDispatch, useSelector } from 'react-redux'
 import { ModalFormCreateUser } from './ModalFormCreateUser'
 import { User } from '@/interface/interfaces'
-// import { ModalFormEditUser } from './ModalFormEditUser'
+import { ModalFormEditUser } from './ModalFormEditUser'
 
 export const ListUsers = () => {
   const dispatch = useDispatch()
@@ -15,9 +15,11 @@ export const ListUsers = () => {
     userController.fetchAllUsers(dispatch)
   }, [dispatch])
 
+  const handleShow = () => { console.log('object') }
+
   return (
-    <>
-      <div className='d-grid gap-2'>
+    <div className='m-5'>
+      <div className='d-grid gap-2 '>
         <ModalFormCreateUser />
       </div>
       <Table>
@@ -42,22 +44,17 @@ export const ListUsers = () => {
                 <h6>Email: {user.email.toUpperCase()}</h6>
               </th>
               <th>
-                {/* <ModalFormEditUser user={user} /> */}
+                <ModalFormEditUser user={user} />
               </th>
-
-              {/* <th>
-                <ModalValidations
-                  funtionProps={deleteUser}
-                  userID={user._id}
-                  title='Eliminar usuario'
-                  body={`¿Seguro que quieres eliminar el usuario: ${user.name}?`}
-                  nameButton='Eliminar'
-                />
-              </th> */}
+              <th>
+                <Button variant='danger ' size='lg' onClick={handleShow}>
+                  Eliminar usuario
+                </Button>
+              </th>
             </tr>
           ))}
         </tbody>
       </Table>
-    </>
+    </div>
   )
 }

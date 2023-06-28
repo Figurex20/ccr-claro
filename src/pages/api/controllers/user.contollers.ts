@@ -1,6 +1,6 @@
 import { UserModel } from '../models/modelUser'
 // import { utils } from '../middlewares/utils'
-import { RoleModel } from '../models/modelRole'
+// import { RoleModel } from '../models/modelRole'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { utilChangePassword } from '../utils/utilChangePassword'
 import { valitadeCookies } from '../utils/valitadedToken'
@@ -34,12 +34,25 @@ export class UserController {
       const dataToken: any = await valitadeCookies(req.cookies)
 
       if (dataToken.message) throw Error(dataToken.message)
+
       if (req.body.option === 'changePassword') {
         const respond = await utilChangePassword.changePassword(dataToken.token.userName, req.body)
         if (respond!.status === 200) {
           return { message: respond!.message, status: 200 }
         } else {
           return { status: 400, message: respond!.message }
+        }
+      }
+
+      if (req.body.option === 'resetPassword') {
+        try {
+          const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
+          userFound.resetPassword = true
+          const respond = await utilChangePassword.changePassword(userFound, req.body)
+          return { message: respond.message, status: 200 }
+        } catch (error) {
+          const result = (error as DOMException).message
+          return { status: 400, message: result }
         }
       }
 
@@ -53,47 +66,37 @@ export class UserController {
 
   static updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      // if (req.body.option === 'resetPassword') {
-      //   try {
-      //     const respond = await utils.newPasswordAmin(req.query.id)
-      //     return res.status(200).json(respond)
-      //   } catch (error) {
-      //     const result = (error as DOMException).message
-      //     return res.status(404).json({ message: result })
-      //   }
+      // if (req.body.role === 'admin') {
+      //   const rol = ['admin', 'moderator']
+      //   const uniqueUser = await UserModel.findById(req.query.id)
+      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
+      //   if (!uniqueUser) throw Error('Rol not found')
+      //   uniqueUser.roles = foundRoles.map((role) => role._id)
+      //   await uniqueUser.save()
       // }
 
-      if (req.body.role === 'admin') {
-        const rol = ['admin', 'moderator']
-        const uniqueUser = await UserModel.findById(req.query.id)
-        const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) throw Error('Rol not found')
-        uniqueUser.roles = foundRoles.map((role) => role._id)
-        await uniqueUser.save()
-      }
+      // if (req.body.role === 'moderator') {
+      //   const rol = ['moderator']
+      //   const uniqueUser = await UserModel.findById(req.query.id)
+      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
+      //   if (!uniqueUser) throw Error('Rol not found')
+      //   uniqueUser.roles = foundRoles.map((role) => role._id)
+      //   await uniqueUser.save()
+      //   return { message: 'User created', status: 200 }
+      // }
 
-      if (req.body.role === 'moderator') {
-        const rol = ['moderator']
-        const uniqueUser = await UserModel.findById(req.query.id)
-        const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) throw Error('Rol not found')
-        uniqueUser.roles = foundRoles.map((role) => role._id)
-        await uniqueUser.save()
-        return { message: 'User created', status: 200 }
-      }
-
-      if (req.body.role === 'user') {
-        const rol = ['user']
-        const uniqueUser = await UserModel.findById(req.query.id)
-        const foundRoles = await RoleModel.find({ name: { $in: rol } })
-        if (!uniqueUser) throw Error('Rol not found')
-        uniqueUser.roles = foundRoles.map((role) => role._id)
-        await uniqueUser.save()
-        return { message: 'User created', status: 200 }
-      }
-
-      await UserModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
-      res.status(200).json({ status: 'User updated' })
+      // if (req.body.role === 'user') {
+      //   const rol = ['user']
+      //   const uniqueUser = await UserModel.findById(req.query.id)
+      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
+      //   if (!uniqueUser) throw Error('Rol not found')
+      //   uniqueUser.roles = foundRoles.map((role) => role._id)
+      //   await uniqueUser.save()
+      //   return { message: 'User created', status: 200 }
+      // }
+      console.log(req.body)
+      await UserModel.findByIdAndUpdate(req.body.idUser, req.body, { new: true })
+      return { message: 'User updated', status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
       return { message: result, status: 400 }

@@ -41,7 +41,13 @@ static async encryptPassword (password: string) {
 }
 
 static async comparePassword (password: string, recivePassword: string) {
-  return await bcrypt.compare(password, recivePassword)
+  try {
+    await bcrypt.compare(password, recivePassword)
+    return 'success'
+  } catch (error) {
+    const result = (error as DOMException).message
+    return { message: result, status: 400 }
+  }
 }
 }
 

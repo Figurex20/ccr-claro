@@ -5,7 +5,7 @@ import { serialize } from 'cookie'
 import { NextApiRequest, NextApiResponse } from 'next'
 export class AuthController {
   static signUp = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { userName, email, password, role, name, lastname, confirmPassword } = req.body
+    const { userName, email, password, role, name, lastname, confirmPassword, recoverpassword } = req.body
 
     const equalPassword = password === confirmPassword
 
@@ -26,6 +26,7 @@ export class AuthController {
         role,
         name,
         lastname,
+        recoverpassword,
         password: await UserModel.encryptPassword(password)
       })
 
@@ -64,6 +65,9 @@ export class AuthController {
     if (!userFound) return { message: 'Incorrect username or password' }
 
     const userPassword = String(userFound.password)
+    console.log('userPassword: ', userPassword)
+
+    console.log(req.body.password)
 
     const matchPassword = await UserModel.comparePassword(req.body.password, userPassword)
 

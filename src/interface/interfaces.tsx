@@ -68,9 +68,10 @@ export interface SaveDataNewUser {
   userName:string
   email: string,
   role:string
-  password:string
-  confirmPassword:string
-  recoverpassword?:boolean
+  password?:string
+  confirmPassword?:string
+  recoverpassword?:boolean,
+  idUser?: string
 }
 
 export interface Login{

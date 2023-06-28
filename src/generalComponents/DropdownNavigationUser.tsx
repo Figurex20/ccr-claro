@@ -25,7 +25,7 @@ export const DropdownNavigationUser = () => {
     <DropdownButton id='Usuario' title='Usuario' variant='info'>
       <h5 className=' ms-5 mt-2'>{sessionStorage.getItem('user')}</h5>
 
-      {token?.role === 'admin'
+      {token?.role === 'ADMIN'
         ? (
           <>
             <Dropdown.Item>

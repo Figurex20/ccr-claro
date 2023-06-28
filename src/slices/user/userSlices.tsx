@@ -67,6 +67,8 @@ export class userController {
       const headers1 = headers()
       if (option === 'resetPassword') {
         const newUser = {
+          idUser: data,
+          userName,
           option
         }
 
@@ -74,8 +76,11 @@ export class userController {
           headers: headers1
         })
 
-        alert(respond.data.status)
-        alert(respond.data.newpassword)
+        Swal.fire({
+          icon: 'success',
+          title: 'Contraseña recetiada',
+          text: respond.data.message
+        })
         const success = true
         return success
       }
@@ -110,18 +115,19 @@ export class userController {
         }
       }
 
-      const newUser = {
-        userName: data.userName,
-        email: data.email,
-        password: data.password,
-        role: data.role,
-        name: data.name,
-        lastname: data.lastname
+      const newUser:SaveDataNewUser = {
+        userName: data.userName.toUpperCase(),
+        email: data.email.toUpperCase(),
+        role: data.role.toUpperCase(),
+        name: data.name.toUpperCase(),
+        lastname: data.lastname.toUpperCase(),
+        idUser: data._id
       }
 
-      await axios.put(`${BACKEND}/users/${data._id}`, newUser, {
+      await axios.put(`${BACKEND}/users`, newUser, {
         headers: headers1
       })
+
       alert('Successfully ')
       const success = true
       return success

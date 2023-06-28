@@ -15,15 +15,29 @@ export default async function PUT (req: NextApiRequest, res:NextApiResponse) {
       origin: '*',
       optionsSuccessStatus: 200
     })
-    try {
-      const response:respondoControllers = await UserController.userChangepassword(req, res)
-      if (response.status === 400) throw Error(response.message)
-      if (response.status === 200) {
-        res.status(200).json({ message: response.message, status: response.status })
+
+    if (req.body.option === 'changePassword' || req.body.option === 'resetPassword') {
+      try {
+        const response:respondoControllers = await UserController.userChangepassword(req, res)
+        if (response.status === 400) throw Error(response.message)
+        if (response.status === 200) {
+          res.status(200).json({ message: response.message, status: response.status })
+        }
+      } catch (error) {
+        const result = (error as DOMException).message
+        return res.status(500).json({ message: result, status: 500 })
       }
-    } catch (error) {
-      const result = (error as DOMException).message
-      return res.status(500).json({ message: result, status: 500 })
+    } else {
+      try {
+        const response:respondoControllers = await UserController.updateUser(req, res)
+        if (response.status === 400) throw Error(response.message)
+        if (response.status === 200) {
+          res.status(200).json({ message: response.message, status: response.status })
+        }
+      } catch (error) {
+        const result = (error as DOMException).message
+        return res.status(500).json({ message: result, status: 500 })
+      }
     }
   }
 
