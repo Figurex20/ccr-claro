@@ -79,7 +79,8 @@ export class AuthController {
       userName: userFound.userName,
       role: userFound.role,
       name: userFound.name,
-      _id: userFound._id
+      _id: userFound._id,
+      resetPassword: userFound.resetPassword
     }, process.env.LOGIN, {
       expiresIn: 7200 // 2h
     })

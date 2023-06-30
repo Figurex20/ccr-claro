@@ -90,7 +90,8 @@ export interface BrowserToken {
   name: string
   role: string
   _id:string
-  userName: string
+  userName: string,
+  resetPassword:boolean
 }
 
 export interface OpecionsPaginateIncome {

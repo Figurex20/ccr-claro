@@ -6,9 +6,17 @@ import { SearchIncome } from '../pages/income/SearchIncome'
 // import { hasCookie } from 'cookies-next'
 import { decodeToken } from '@/decodeToken'
 import { BrowserToken } from '@/interface/interfaces'
+import { useEffect } from 'react'
 const Navigation = () => {
   const router = useRouter()
   const token: BrowserToken | null = decodeToken()
+
+  useEffect(() => {
+    if (token?.resetPassword) {
+      router.replace('/user/changepassword')
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <nav className=''>
