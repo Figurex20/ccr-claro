@@ -11,12 +11,18 @@ const Navigation = () => {
   const router = useRouter()
   const token: BrowserToken | null = decodeToken()
 
+  // if (token?.resetPassword) {
+  //   console.log('token?.resetPassword: ', token?.resetPassword)
+  //   router.replace('/user/changepassword')
+  // }
+
   useEffect(() => {
     if (token?.resetPassword) {
+      console.log('token?.resetPassword: ', token?.resetPassword)
       router.replace('/user/changepassword')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [token?.resetPassword])
 
   return (
     <nav className=''>

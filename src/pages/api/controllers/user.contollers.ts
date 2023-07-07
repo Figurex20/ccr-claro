@@ -36,7 +36,10 @@ export class UserController {
       if (dataToken.message) throw Error(dataToken.message)
 
       if (req.body.option === 'changePassword') {
-        const respond = await utilChangePassword.changePassword(dataToken.token.userName, req.body)
+        const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
+        userFound.resetPassword = false
+        const respond = await utilChangePassword.changePassword(userFound, req.body)
+
         if (respond!.status === 200) {
           return { message: respond!.message, status: 200 }
         } else {
@@ -49,6 +52,7 @@ export class UserController {
           const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
           userFound.resetPassword = true
           const respond = await utilChangePassword.changePassword(userFound, req.body)
+
           return { message: respond.message, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
@@ -94,7 +98,6 @@ export class UserController {
       //   await uniqueUser.save()
       //   return { message: 'User created', status: 200 }
       // }
-      console.log(req.body)
       await UserModel.findByIdAndUpdate(req.body.idUser, req.body, { new: true })
       return { message: 'User updated', status: 200 }
     } catch (error) {

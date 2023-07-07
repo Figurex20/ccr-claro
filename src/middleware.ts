@@ -15,4 +15,4 @@ export async function middleware (req:NextRequest, res: NextApiResponse) {
   }
 }
 
-export const config = { matcher: ['/income', '/income/[id]', '/user/changepassword'] }
+export const config = { matcher: ['/income', '/income/[id]', '/user/changepassword', '/user'] }

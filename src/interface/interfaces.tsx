@@ -31,6 +31,20 @@ export interface IncomeState {
    }
 
 export interface User {
+    _id:string,
+    userName:string,
+    email:string,
+    password:string,
+    resetPassword:boolean
+    role:string,
+    name:string,
+    lastname:string,
+    createdAt:string,
+    updatedAt:string,
+    __v:number
+}
+
+export interface UserArray {
   saveUsers: [{
     _id:string,
     userName:string,
@@ -44,7 +58,6 @@ export interface User {
     updatedAt:string,
     __v:number
   }]
-
 }
 
 export interface AxiosUser {
@@ -62,6 +75,15 @@ export interface SaveDataNewIncome {
     dateExit?:string
 }
 
+export interface DataUser {
+  name:string
+  lastname:string
+  userName:string
+  role:string
+
+  email:string
+
+}
 export interface SaveDataNewUser {
   name:string
   lastname:string
@@ -118,4 +140,14 @@ export interface respondeIncomes {
 export interface respondoControllers{
   message?: any,
   status: number
+}
+
+export interface SubmitUserData {
+   name: string,
+    lastname: string,
+    email: string,
+    userName: string,
+    role: string,
+    password: string,
+    _id: string,
 }

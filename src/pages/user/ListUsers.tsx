@@ -5,17 +5,19 @@ import { Button, Table } from 'react-bootstrap'
 import { selectUsers, userController } from '@/slices/user/userSlices'
 import { useDispatch, useSelector } from 'react-redux'
 import { ModalFormCreateUser } from './ModalFormCreateUser'
-import { User } from '@/interface/interfaces'
+import { User, UserArray } from '@/interface/interfaces'
 import { ModalFormEditUser } from './ModalFormEditUser'
 
 export const ListUsers = () => {
   const dispatch = useDispatch()
-  const list:User = useSelector(selectUsers)
+  const list:UserArray = useSelector(selectUsers)
   useEffect(() => {
     userController.fetchAllUsers(dispatch)
   }, [dispatch])
 
   const handleShow = () => { console.log('object') }
+
+  console.log(list.saveUsers)
 
   return (
     <div className='m-5'>
@@ -32,27 +34,31 @@ export const ListUsers = () => {
           </tr>
         </thead>
         <tbody>
-          {list.saveUsers?.map((user:any) => (
-            <tr key={user._id} className=' fs-6'>
-              <th>
-                <h6>Nombre: {user.name.toUpperCase()}</h6>
-                <h6>Apellidos: {user.lastname.toUpperCase()}</h6>
-              </th>
-              <th>
-                <h6>Usuario: {user.userName.toUpperCase()}</h6>
-                <h6>Role: {user.role.toUpperCase()}</h6>
-                <h6>Email: {user.email.toUpperCase()}</h6>
-              </th>
-              <th>
-                <ModalFormEditUser user={user} />
-              </th>
-              <th>
-                <Button variant='danger ' size='lg' onClick={handleShow}>
-                  Eliminar usuario
-                </Button>
-              </th>
-            </tr>
-          ))}
+          {list.saveUsers?.map((userData:User) => {
+            const user = userData
+
+            return (
+              <tr key={user._id} className=' fs-6'>
+                <th>
+                  <h6>Nombre: {user.name.toUpperCase()}</h6>
+                  <h6>Apellidos: {user.lastname.toUpperCase()}</h6>
+                </th>
+                <th>
+                  <h6>Usuario: {user.userName.toUpperCase()}</h6>
+                  <h6>Role: {user.role.toUpperCase()}</h6>
+                  <h6>Email: {user.email.toUpperCase()}</h6>
+                </th>
+                <th>
+                  <ModalFormEditUser {...user} />
+                </th>
+                <th>
+                  <Button variant='danger ' size='lg' onClick={handleShow}>
+                    Eliminar usuario
+                  </Button>
+                </th>
+              </tr>
+            )
+          })}
         </tbody>
       </Table>
     </div>

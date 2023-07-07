@@ -62,7 +62,7 @@ export class userController {
     }
   }
 
-  static updateUser = async (data:any, userName:any, option:any) => {
+  static updateUser = async (data:any, userName:any, option?:any) => {
     try {
       const headers1 = headers()
       if (option === 'resetPassword') {

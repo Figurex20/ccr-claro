@@ -3,12 +3,12 @@ import Button from 'react-bootstrap/Button'
 import Modal from 'react-bootstrap/Modal'
 
 import Form from 'react-bootstrap/Form'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { userController } from '@/slices/user/userSlices'
+import { SubmitUserData, User } from '@/interface/interfaces'
 
-const ModalFormEditUser = (props) => {
-  const { user } = props
-
+const ModalFormEditUser = (props: User) => {
+  const user = props
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)
@@ -23,7 +23,7 @@ const ModalFormEditUser = (props) => {
     reset,
     setValue,
     formState: { errors }
-  } = useForm()
+  } = useForm<SubmitUserData>()
 
   const getDateUser = () => {
     setValue('name', user.name)
@@ -32,10 +32,9 @@ const ModalFormEditUser = (props) => {
     setValue('email', user.email)
     setValue('userName', user.userName)
     setValue('password', user.password)
-    console.log(user)
   }
 
-  const onSubmit = async (data) => {
+  const onSubmit: SubmitHandler<SubmitUserData> = async (data) => {
     try {
       data._id = user._id
       const success = await userController.updateUser(data, user.userName)
@@ -114,7 +113,6 @@ const ModalFormEditUser = (props) => {
               <Form.Select
                 aria-label='Default select example'
                 {...register('role', { required: true })}
-                type='text'
                 placeholder='Enter Role'
               >
                 <option value='USER'>USER</option>

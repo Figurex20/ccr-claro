@@ -22,7 +22,8 @@ export class utilChangePassword {
       }
 
       const saveNewpassword = {
-        password: await UserModel.encryptPassword(data.newPassword)
+        password: await UserModel.encryptPassword(data.newPassword),
+        resetPassword: false
       }
 
       await UserModel.findByIdAndUpdate(userFound._id, saveNewpassword, { new: true })
@@ -33,8 +34,7 @@ export class utilChangePassword {
 
       const saveNewpassword = {
         password: await UserModel.encryptPassword(newPassword),
-        resetPassword: false,
-        recoverpassword: true
+        resetPassword: true
       }
 
       await UserModel.findByIdAndUpdate(userFound._id, saveNewpassword, { new: true })
