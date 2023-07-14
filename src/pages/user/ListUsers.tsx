@@ -15,7 +15,9 @@ export const ListUsers = () => {
     userController.fetchAllUsers(dispatch)
   }, [dispatch])
 
-  const handleShow = () => { console.log('object') }
+  const handleDeleteUser = async (idUser:string) => {
+    await userController.deleteUser(idUser)
+  }
 
   console.log(list.saveUsers)
 
@@ -52,7 +54,7 @@ export const ListUsers = () => {
                   <ModalFormEditUser {...user} />
                 </th>
                 <th>
-                  <Button variant='danger ' size='lg' onClick={handleShow}>
+                  <Button variant='danger ' size='lg' onClick={() => { handleDeleteUser(user._id) }}>
                     Eliminar usuario
                   </Button>
                 </th>

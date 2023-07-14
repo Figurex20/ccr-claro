@@ -2,12 +2,8 @@ import Button from 'react-bootstrap/Button'
 import Form from 'react-bootstrap/Form'
 import { useForm } from 'react-hook-form'
 import { Link, useNavigate } from 'react-router-dom'
-import Swal from 'sweetalert2'
 
 import '../../styles/css/custom.css'
-
-// Socket
-import { socketConnect } from '../Store/Slices/Sockets'
 
 // redux
 import { login } from '../Store/Slices/Users'
@@ -31,8 +27,6 @@ export const FormLogin = () => {
       }
 
       const result = await login(newLogin)
-      const user = result.data.user
-      const role = result.data.role
 
       sessionStorage.setItem('token', result.data.token)
       sessionStorage.setItem('user', result.data.user)
@@ -49,9 +43,6 @@ export const FormLogin = () => {
       reset()
       navigate('/')
     } catch (error) {
-      // alert('SweetAlert 2 en React JS);
-      // Swal.fire('Error', 'Correo o Contraseña incorrecta', 'error');
-      alert(error.response.data.message)
       console.log(error.response.data.message)
     }
   }

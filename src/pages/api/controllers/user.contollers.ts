@@ -4,7 +4,8 @@ import { UserModel } from '../models/modelUser'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { utilChangePassword } from '../utils/utilChangePassword'
 import { valitadeCookies } from '../utils/valitadedToken'
-// import { token } from '../../../interface/interfaces'
+import { RoleModel } from '../models/modelRole'
+// import { token, User } from '../../../interface/interfaces';
 
 export class UserController {
   static getAllUsers = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -20,6 +21,10 @@ export class UserController {
 
   static getUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+      const dataToken: any = await valitadeCookies(req.cookies)
+
+      if (dataToken.message) throw Error(dataToken.message)
+
       const uniqueUser = await UserModel.findById(req.query.id)
       if (!uniqueUser) throw Error('User not found')
       res.status(200).json(uniqueUser)
@@ -70,36 +75,55 @@ export class UserController {
 
   static updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-      // if (req.body.role === 'admin') {
-      //   const rol = ['admin', 'moderator']
-      //   const uniqueUser = await UserModel.findById(req.query.id)
-      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
-      //   if (!uniqueUser) throw Error('Rol not found')
-      //   uniqueUser.roles = foundRoles.map((role) => role._id)
-      //   await uniqueUser.save()
-      // }
+      const dataToken: any = await valitadeCookies(req.cookies)
 
-      // if (req.body.role === 'moderator') {
-      //   const rol = ['moderator']
-      //   const uniqueUser = await UserModel.findById(req.query.id)
-      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
-      //   if (!uniqueUser) throw Error('Rol not found')
-      //   uniqueUser.roles = foundRoles.map((role) => role._id)
-      //   await uniqueUser.save()
-      //   return { message: 'User created', status: 200 }
-      // }
+      if (dataToken.message) throw Error(dataToken.message)
 
-      // if (req.body.role === 'user') {
-      //   const rol = ['user']
-      //   const uniqueUser = await UserModel.findById(req.query.id)
-      //   const foundRoles = await RoleModel.find({ name: { $in: rol } })
-      //   if (!uniqueUser) throw Error('Rol not found')
-      //   uniqueUser.roles = foundRoles.map((role) => role._id)
-      //   await uniqueUser.save()
-      //   return { message: 'User created', status: 200 }
-      // }
+      const role: any = dataToken.role
+
+      if (role === 'admin') {
+        const roles = ['admin', 'moderator']
+        const uniqueUser = await UserModel.findById(req.body.idUser)
+        const foundRoles = await RoleModel.find({ name: { $in: roles } })
+        if (!foundRoles) throw Error('Something went wrong with role admin and role moderator')
+        uniqueUser!.roles = foundRoles.map((role) => role._id)
+        await uniqueUser!.save()
+      }
+
+      if (role === 'moderator') {
+        const roles = ['moderator']
+        const uniqueUser = await UserModel.findById(req.body.idUser)
+        const foundRoles = await RoleModel.find({ name: { $in: roles } })
+        if (!foundRoles) throw Error('Something went wrong with role moderator')
+        uniqueUser!.roles = foundRoles.map((role) => role._id)
+        await uniqueUser!.save()
+      }
+
+      if (role === 'user') {
+        const roles = ['user']
+        const uniqueUser = await UserModel.findById(req.body.idUser)
+        const foundRoles = await RoleModel.find({ name: { $in: roles } })
+        if (!foundRoles) throw Error('Something went wrong with role user')
+        uniqueUser!.roles = foundRoles.map((role) => role._id)
+        await uniqueUser!.save()
+      }
+
       await UserModel.findByIdAndUpdate(req.body.idUser, req.body, { new: true })
       return { message: 'User updated', status: 200 }
+    } catch (error) {
+      const result = (error as DOMException).message
+      return { message: result, status: 400 }
+    }
+  }
+
+  static deleteUser = async (req: NextApiRequest) => {
+    try {
+      const dataToken: any = await valitadeCookies(req.cookies)
+
+      if (dataToken.message) throw Error(dataToken.message)
+
+      await UserModel.findByIdAndDelete(req.body.idUser)
+      return { message: 'User deleted', status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
       return { message: result, status: 400 }

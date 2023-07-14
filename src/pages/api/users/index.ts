@@ -78,4 +78,23 @@ export default async function PUT (req: NextApiRequest, res:NextApiResponse) {
       return res.status(500).json({ message: result, status: 500 })
     }
   }
+
+  if (method === 'DELETE') {
+    const methods = ['DELETE']
+    await NextCors(req, res, {
+      methods,
+      origin: '*',
+      optionsSuccessStatus: 200
+    })
+    try {
+      const response:respondoControllers = await UserController.deleteUser(req)
+      if (response.status === 400) throw Error(response.message)
+      if (response.status === 200) {
+        return res.status(200).json({ message: response.message, status: response.status })
+      }
+    } catch (error) {
+      const result = (error as DOMException).message
+      return res.status(500).json({ message: result, status: 500 })
+    }
+  }
 }

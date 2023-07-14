@@ -171,4 +171,24 @@ export class userController {
       return result
     }
   }
+
+  static deleteUser = async (data:any) => {
+    try {
+      await axios.delete(`${BACKEND}/users`)
+      Swal.fire({
+        icon: 'success',
+        title: 'Acceso concedido',
+        text: 'Exito al ingresar'
+      })
+      return
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Usuario o Contraseña incorrectas'
+        })
+      }
+    }
+  }
 }
