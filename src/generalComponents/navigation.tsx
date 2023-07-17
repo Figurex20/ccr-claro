@@ -11,22 +11,16 @@ const Navigation = () => {
   const router = useRouter()
   const token: BrowserToken | null = decodeToken()
 
-  // if (token?.resetPassword) {
-  //   console.log('token?.resetPassword: ', token?.resetPassword)
-  //   router.replace('/user/changepassword')
-  // }
-
   useEffect(() => {
     if (token?.resetPassword) {
-      console.log('token?.resetPassword: ', token?.resetPassword)
       router.replace('/user/changepassword')
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [token?.resetPassword])
 
   return (
-    <nav className=''>
-      <div className='d-flex justify-content-between navbar-dark bg-dark px-3 py-3'>
+    <nav>
+      <div className='d-flex justify-content-between navbar-dark bg-dark px-3 pt-1 my-0'>
         {token !== null
           ? (
             <>

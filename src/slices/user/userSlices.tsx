@@ -58,6 +58,7 @@ export class userController {
           title: 'Oops...',
           text: 'Usuario o Contraseña incorrectas'
         })
+        throw error
       }
     }
   }

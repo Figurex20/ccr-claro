@@ -31,11 +31,8 @@ export const ListUsers = () => {
       }
     })
   }
-
-  console.log(list.saveUsers)
-
   return (
-    <div className='m-5'>
+    <div className='m-5 '>
       <div className='d-grid gap-2 '>
         <ModalFormCreateUser />
       </div>
