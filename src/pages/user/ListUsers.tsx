@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { ModalFormCreateUser } from './ModalFormCreateUser'
 import { User, UserArray } from '@/interface/interfaces'
 import { ModalFormEditUser } from './ModalFormEditUser'
+import Swal from 'sweetalert2'
 
 export const ListUsers = () => {
   const dispatch = useDispatch()
@@ -16,7 +17,19 @@ export const ListUsers = () => {
   }, [dispatch])
 
   const handleDeleteUser = async (idUser:string) => {
-    await userController.deleteUser(idUser)
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'Se eliminara TODA la informacion del usuario!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar usuario!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await userController.deleteUser(idUser)
+      }
+    })
   }
 
   console.log(list.saveUsers)

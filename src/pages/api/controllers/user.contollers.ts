@@ -1,6 +1,6 @@
 import { UserModel } from '../models/modelUser'
 // import { utils } from '../middlewares/utils'
-// import { RoleModel } from '../models/modelRole'
+// import { RoleModel, Role } from '../models/modelRole';
 import { NextApiRequest, NextApiResponse } from 'next'
 import { utilChangePassword } from '../utils/utilChangePassword'
 import { valitadeCookies } from '../utils/valitadedToken'
@@ -53,15 +53,21 @@ export class UserController {
       }
 
       if (req.body.option === 'resetPassword') {
-        try {
-          const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
-          userFound.resetPassword = true
-          const respond = await utilChangePassword.changePassword(userFound, req.body)
+        const uniqueUser = await UserModel.findById(dataToken.token._id)
 
-          return { message: respond.message, status: 200 }
-        } catch (error) {
-          const result = (error as DOMException).message
-          return { status: 400, message: result }
+        const roles = await RoleModel.find({ _id: { $in: uniqueUser!.roles } })
+
+        if (roles[0].name === 'admin') {
+          try {
+            const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
+            userFound.resetPassword = true
+            const respond = await utilChangePassword.changePassword(userFound, req.body)
+
+            return { message: respond.message, status: 200 }
+          } catch (error) {
+            const result = (error as DOMException).message
+            return { status: 400, message: result }
+          }
         }
       }
 
@@ -78,38 +84,45 @@ export class UserController {
       const dataToken: any = await valitadeCookies(req.cookies)
 
       if (dataToken.message) throw Error(dataToken.message)
+      const uniqueUser = await UserModel.findById(dataToken.token._id)
 
-      const role: any = dataToken.role
+      const roles = await RoleModel.find({ _id: { $in: uniqueUser!.roles } })
 
-      if (role === 'admin') {
-        const roles = ['admin', 'moderator']
-        const uniqueUser = await UserModel.findById(req.body.idUser)
-        const foundRoles = await RoleModel.find({ name: { $in: roles } })
-        if (!foundRoles) throw Error('Something went wrong with role admin and role moderator')
+      if (roles[0].name === 'admin') {
+        const role: any = req.body.role.toLowerCase()
+
+        if (role === 'admin') {
+          const roles = ['admin']
+          const uniqueUser = await UserModel.findById(req.body.idUser)
+          const foundRoles = await RoleModel.find({ name: { $in: roles } })
+          if (!foundRoles) throw Error('Something went wrong with role admin and role moderator')
         uniqueUser!.roles = foundRoles.map((role) => role._id)
         await uniqueUser!.save()
-      }
+        }
 
-      if (role === 'moderator') {
-        const roles = ['moderator']
-        const uniqueUser = await UserModel.findById(req.body.idUser)
-        const foundRoles = await RoleModel.find({ name: { $in: roles } })
-        if (!foundRoles) throw Error('Something went wrong with role moderator')
+        if (role === 'moderator') {
+          const roles = ['moderator']
+          const uniqueUser = await UserModel.findById(req.body.idUser)
+          const foundRoles = await RoleModel.find({ name: { $in: roles } })
+          if (!foundRoles) throw Error('Something went wrong with role moderator')
         uniqueUser!.roles = foundRoles.map((role) => role._id)
         await uniqueUser!.save()
-      }
+        }
 
-      if (role === 'user') {
-        const roles = ['user']
-        const uniqueUser = await UserModel.findById(req.body.idUser)
-        const foundRoles = await RoleModel.find({ name: { $in: roles } })
-        if (!foundRoles) throw Error('Something went wrong with role user')
+        if (role === 'user') {
+          const roles = ['user']
+          const uniqueUser = await UserModel.findById(req.body.idUser)
+          const foundRoles = await RoleModel.find({ name: { $in: roles } })
+          if (!foundRoles) throw Error('Something went wrong with role user')
         uniqueUser!.roles = foundRoles.map((role) => role._id)
         await uniqueUser!.save()
-      }
+        }
 
-      await UserModel.findByIdAndUpdate(req.body.idUser, req.body, { new: true })
-      return { message: 'User updated', status: 200 }
+        await UserModel.findByIdAndUpdate(req.body.idUser, req.body, { new: true })
+        return { message: 'User updated', status: 200 }
+      } else {
+        return { message: 'User not have permissions', status: 400 }
+      }
     } catch (error) {
       const result = (error as DOMException).message
       return { message: result, status: 400 }
@@ -121,9 +134,17 @@ export class UserController {
       const dataToken: any = await valitadeCookies(req.cookies)
 
       if (dataToken.message) throw Error(dataToken.message)
+      const uniqueUser = await UserModel.findById(dataToken.token._id)
 
-      await UserModel.findByIdAndDelete(req.body.idUser)
-      return { message: 'User deleted', status: 200 }
+      const roles = await RoleModel.find({ _id: { $in: uniqueUser!.roles } })
+      console.log('roles: ', roles[0].name)
+
+      if (roles[0].name === 'admin') {
+        await UserModel.findByIdAndDelete(req.query.id)
+        return { message: 'User deleted', status: 200 }
+      } else {
+        return { message: 'User not have perssions', status: 400 }
+      }
     } catch (error) {
       const result = (error as DOMException).message
       return { message: result, status: 400 }

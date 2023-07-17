@@ -6,6 +6,7 @@ import Form from 'react-bootstrap/Form'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { userController } from '@/slices/user/userSlices'
 import { SubmitUserData, User } from '@/interface/interfaces'
+import Swal from 'sweetalert2'
 
 const ModalFormEditUser = (props: User) => {
   const user = props
@@ -35,30 +36,54 @@ const ModalFormEditUser = (props: User) => {
   }
 
   const onSubmit: SubmitHandler<SubmitUserData> = async (data) => {
-    try {
-      data._id = user._id
-      const success = await userController.updateUser(data, user.userName)
-      if (success) {
-        reset()
-        return
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'Se actualizara el usuario',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, actualizar!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          data._id = user._id
+          const success = await userController.updateUser(data, user.userName)
+          if (success) {
+            reset()
+            return
+          }
+        } catch (error) {
+          console.log(error)
+        }
       }
-    } catch (error) {
-      console.log(error)
-    }
+    })
   }
 
   const resetPassword = async () => {
-    try {
-      const id = user._id
-      const option = 'resetPassword'
-      const success = await userController.updateUser(id, user.userName, option)
-      if (success) {
-        reset()
-        return
+    Swal.fire({
+      title: 'Estas seguro?',
+      text: 'Se reseteara la contraseña del usuario',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, resete la contraseña!'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        try {
+          const id = user._id
+          const option = 'resetPassword'
+          const success = await userController.updateUser(id, user.userName, option)
+          if (success) {
+            reset()
+            return
+          }
+        } catch (error) {
+          console.log(error)
+        }
       }
-    } catch (error) {
-      console.log(error)
-    }
+    })
   }
 
   return (

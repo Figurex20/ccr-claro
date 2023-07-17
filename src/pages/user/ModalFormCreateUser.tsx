@@ -34,7 +34,7 @@ export const ModalFormCreateUser = () => {
 
   return (
     <>
-      <Button variant='primary ' size='lg' onClick={handleShow}>
+      <Button variant='primary ' size='lg' className='mb-2' onClick={handleShow}>
         Crear Usuario
       </Button>
 
@@ -111,7 +111,7 @@ export const ModalFormCreateUser = () => {
               />
               {errors.password && <h5>password is required</h5>}
             </Form.Group>
-            <Button variant='primary' type='submit' id='submit'>
+            <Button className='col-md-12' variant='primary' type='submit' id='submit'>
               Guardar Usuario
             </Button>
           </Form>

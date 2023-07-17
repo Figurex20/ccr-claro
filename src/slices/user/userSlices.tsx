@@ -128,7 +128,11 @@ export class userController {
         headers: headers1
       })
 
-      alert('Successfully ')
+      Swal.fire({
+        icon: 'success',
+        title: 'Confirmacion',
+        text: 'Se actualizo el usuario'
+      })
       const success = true
       return success
     } catch (err) {
@@ -174,11 +178,11 @@ export class userController {
 
   static deleteUser = async (data:any) => {
     try {
-      await axios.delete(`${BACKEND}/users`)
+      await axios.delete(`${BACKEND}/users/${data}`)
       Swal.fire({
         icon: 'success',
         title: 'Acceso concedido',
-        text: 'Exito al ingresar'
+        text: 'Exito al eliminar el usuario'
       })
       return
     } catch (error) {
