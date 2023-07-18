@@ -7,7 +7,7 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { userController } from '@/slices/user/userSlices'
 import { SaveDataNewUser } from '../../interface/interfaces'
 
-export const ModalFormCreateUser = () => {
+export default function ModalFormCreateUser () {
   const [show, setShow] = useState(false)
 
   const handleClose = () => setShow(false)

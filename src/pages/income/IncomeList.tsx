@@ -21,7 +21,7 @@ interface Income {
         'updatedAt': string,
         '__v': 0
 }
-export const IncomeList = () => {
+export default function IncomeList () {
   const listincomes = useSelector(selectValueIncomes)
   const dispatch = useDispatch()
 

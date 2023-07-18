@@ -28,7 +28,7 @@ export default function App ({ Component, pageProps }: AppProps) {
             <link rel='icon' href='/favicon.ico' />
           </Head>
 
-          <header className='position-fixed'>
+          <header className='position-fixed w-100'>
             <Navigation />
           </header>
 

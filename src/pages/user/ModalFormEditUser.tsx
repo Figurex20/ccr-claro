@@ -8,7 +8,7 @@ import { userController } from '@/slices/user/userSlices'
 import { SubmitUserData, User } from '@/interface/interfaces'
 import Swal from 'sweetalert2'
 
-const ModalFormEditUser = (props: User) => {
+export default function ModalFormEditUser (props: User) {
   const user = props
   const [show, setShow] = useState(false)
 
@@ -163,5 +163,3 @@ const ModalFormEditUser = (props: User) => {
     </>
   )
 }
-
-export { ModalFormEditUser }

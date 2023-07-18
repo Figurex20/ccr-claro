@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button'
 import { Calendar } from '../../generalComponents/Calendar'
 import { dataReduxController } from '@/slices/incomes/dataSearch'
 
-const SearchIncome = () => {
+export default function SearchIncome () {
   const dispatch = useDispatch()
   const [dateStart, setDateStart] = useState(null)
   const [dateEnd, setDateEnd] = useState(null)
@@ -74,5 +74,3 @@ const SearchIncome = () => {
     </div>
   )
 }
-
-export { SearchIncome }

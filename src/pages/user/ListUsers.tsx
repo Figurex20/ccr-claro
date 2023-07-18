@@ -4,12 +4,12 @@ import { Button, Table } from 'react-bootstrap'
 // Redux
 import { selectUsers, userController } from '@/slices/user/userSlices'
 import { useDispatch, useSelector } from 'react-redux'
-import { ModalFormCreateUser } from './ModalFormCreateUser'
+import ModalFormCreateUser from './ModalFormCreateUser'
 import { User, UserArray } from '@/interface/interfaces'
-import { ModalFormEditUser } from './ModalFormEditUser'
+import ModalFormEditUser from './ModalFormEditUser'
 import Swal from 'sweetalert2'
 
-export const ListUsers = () => {
+export default function ListUsers () {
   const dispatch = useDispatch()
   const list:UserArray = useSelector(selectUsers)
   useEffect(() => {
