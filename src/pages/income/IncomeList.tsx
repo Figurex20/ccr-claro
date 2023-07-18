@@ -68,7 +68,7 @@ export default function IncomeList () {
               <th className='border border-success'>{income.name}</th>
               <th className='border border-success'>{income.site}</th>
               <th className='border border-success'>{income.whatdo}</th>
-              <th className='border border-success'>{income.rda}</th>
+              <th className='border border-success'>{income.rda === '0000000' ? <p className='text-success '>Sitio nuevo</p> : income.rda}</th>
               <th className='border border-success'>{dates(income.dateEnter)}</th>
               <th className='border border-success'>
                 {income.exit
