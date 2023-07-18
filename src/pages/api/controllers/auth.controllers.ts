@@ -86,7 +86,7 @@ export class AuthController {
       httpOnly: false,
       sameSite: 'strict',
       secure: false,
-      maxAge: 7200,
+      maxAge: 43200,
       path: '/'
     })
     return { serealized, user: userFound }
