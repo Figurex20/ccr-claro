@@ -44,6 +44,7 @@ export class userController {
 
   static login = async (newLogin:Login) => {
     try {
+      newLogin.userName = newLogin.userName.toUpperCase()
       await axios.post(`${BACKEND}/auth/login`, newLogin)
       Swal.fire({
         icon: 'success',

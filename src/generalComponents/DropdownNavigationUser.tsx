@@ -22,7 +22,7 @@ export const DropdownNavigationUser = () => {
     router.replace('./')
   }
   return (
-    <DropdownButton id='Usuario' title='Usuario' variant='info'>
+    <DropdownButton id='Usuario' title='Usuario' variant='info' className='mb-1'>
       <h5 className=' ms-5 mt-2'>{sessionStorage.getItem('user')}</h5>
 
       {token?.role === 'ADMIN'
