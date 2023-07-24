@@ -26,12 +26,12 @@ export const createUserAdmin = async () => {
     if (countUser > 0) return
 
     const userAdmin = new UserModel({
-      userName: 'ccr-cr',
+      userName: 'CCR-CR',
       email: 'ccr-cr@claro.cr',
       password: await UserModel.encryptPassword('Claro+2023'),
-      role: 'admin',
-      name: 'ccr',
-      lastname: 'ccr',
+      role: 'ADMIN',
+      name: 'CCR',
+      lastname: 'CCR',
       resetPassword: false
     })
 
