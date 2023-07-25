@@ -31,21 +31,23 @@ export class AuthController {
         password: await UserModel.encryptPassword(password)
       })
 
-      if (role === 'admin') {
+      const newRole: any = role.toLowerCase()
+
+      if (newRole === 'admin') {
         const roles = ['admin', 'moderator']
         const foundRoles = await RoleModel.find({ name: { $in: roles } })
         if (!foundRoles) throw Error('Something went wrong with role admin and role moderator')
         newUser.roles = foundRoles.map((role) => role._id)
       }
 
-      if (role === 'moderator') {
+      if (newRole === 'moderator') {
         const roles = ['moderator']
         const foundRoles = await RoleModel.find({ name: { $in: roles } })
         if (!foundRoles) throw Error('Something went wrong with role moderator')
         newUser.roles = foundRoles.map((role) => role._id)
       }
 
-      if (role === 'user') {
+      if (newRole === 'user') {
         const roles = ['user']
         const foundRoles = await RoleModel.find({ name: { $in: roles } })
         if (!foundRoles) throw Error('Something went wrong with role user')

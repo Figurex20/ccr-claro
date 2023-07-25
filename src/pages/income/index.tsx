@@ -29,14 +29,36 @@ export default function income () {
           text: 'La RDA es debe de ser de 7 digitos'
         })
       }
-      incomesController.newIncome(data).then(() => {
-        reset()
-        router.replace('/')
-      }).catch(() => { router.replace('/') })
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: 'Se creara un nuevo ingreso',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, crear!'
+      }).then((result) => {
+        incomesController.newIncome(data).then(() => {
+          reset()
+          router.replace('/')
+        })
+      })
     } else {
-      console.log('first')
       data.dateExit = dateStart!
-      incomesController.updateDataIncome(IdParam.toLocaleString(), data).then(() => { reset() })
+      Swal.fire({
+        title: 'Estas seguro?',
+        text: 'Se actualizara el ingreso',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Si, actualizar!'
+      }).then((result) => {
+        incomesController.updateDataIncome(IdParam.toLocaleString(), data).then(() => {
+          reset()
+          router.replace('/')
+        }).catch(() => { router.replace('/') })
+      })
     }
   }
 
