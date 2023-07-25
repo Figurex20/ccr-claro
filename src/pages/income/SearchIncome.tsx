@@ -11,6 +11,7 @@ import Button from 'react-bootstrap/Button'
 
 import { Calendar } from '../../generalComponents/Calendar'
 import { dataReduxController } from '@/slices/incomes/dataSearch'
+import Swal from 'sweetalert2'
 
 export default function SearchIncome () {
   const dispatch = useDispatch()
@@ -28,7 +29,13 @@ export default function SearchIncome () {
     data.dateEnd = dateEnd
     dataReduxController.saveDateSearch(dispatch, data)
     if (data.exit === true && data.enter === true) {
-      return alert('Seleccione solo "Entrada" o "Salida"')
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Solo se puede selecionar salida o entrada'
+      })
+
+      return
     }
     incomesController.fetchAllIncomes(dispatch, 1, data)
   }

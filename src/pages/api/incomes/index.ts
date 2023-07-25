@@ -16,6 +16,7 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
     })
     try {
       const response:respondeIncomes = await IncomeController.getIncomes(req, res)
+      if (response.status !== 200) throw Error(response.message)
       if (response.status === 200) {
         res.status(200).json(response.incomes)
       }

@@ -20,15 +20,19 @@ export default function income () {
   /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
 
   const onSubmit: SubmitHandler<SaveDataNewIncome> = async data => {
+    if (data.rda.length !== 7) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'La RDA debe de ser de 7 digitos'
+      })
+
+      return
+    }
+
     if (!IdParam) {
       data.dateEnter = dateStart!
-      if (data.rda.length > 7) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'La RDA es debe de ser de 7 digitos'
-        })
-      }
+      data.exit = !!data.exit
       Swal.fire({
         title: 'Estas seguro?',
         text: 'Se creara un nuevo ingreso',
@@ -131,7 +135,7 @@ export default function income () {
               <option value='REPARACION DE QUIEPOS'>Reparacion de equipos</option>
               <option value='COLOCACION DE VIÑETASs'>Colocacion de viñetas</option>
               <option value='MIGRACION DE EQUIPOS'>Migracion de equipos</option>
-              <option value='Intalacion de tierras'>Intalacion de tierras</option>
+              <option value='INSTALACION DE TIERRAS'>Instalacion de tierras</option>
               <option value='Certificacion de FO'>Certificacion de FO</option>
               <option value='CERTIFICACION DE FO'>Revision de sitio</option>
               <option value='CAMBIO DE IP'>Cambio de IP</option>

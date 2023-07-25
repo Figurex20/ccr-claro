@@ -70,13 +70,15 @@ export class incomesController {
 
       if (dataProp) {
         const data = dataProp.saveDataSearch ? dataProp.saveDataSearch : dataProp
-        console.log(data)
+
         if (data.enter === true) {
-          const result = await axios.get(`${BACKEND}/incomes/?numberPage=${numberPage}&onlyEnter=true`)
+          console.log('data.enter: ', data.enter)
+          const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}&onlyEnter=true`)
           props(setiIncomeList(result.data))
           const success = true
           return success
         }
+
         if (data.exit === true) {
           const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}&onlyEnd=true`)
           props(setiIncomeList(result.data))

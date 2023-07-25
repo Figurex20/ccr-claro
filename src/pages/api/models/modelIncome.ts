@@ -52,7 +52,7 @@ class Income {
 @prop({
   type: Boolean
 })
-  exit?: Boolean
+  exit: Boolean
 
 @prop({
   type: String,

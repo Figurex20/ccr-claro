@@ -33,14 +33,16 @@ export class IncomeController {
     }
 
     // find by onlyEnter
+
     if (req.query.onlyEnter) {
       const onlyEnter = req.query.onlyEnter
       if (onlyEnter === 'true') {
         try {
           const incomes = await IncomeModel.paginate({
-            exit: 'false'
+            exit: false
           }, options)
           if (incomes.docs.length === 0) throw Error('Someting went wrong with onlyEnter')
+
           return { incomes, status: 200 }
         } catch (error) {
           const result = (error as DOMException).message
