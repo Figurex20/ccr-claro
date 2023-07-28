@@ -50,16 +50,16 @@ export default function IncomeList () {
       >
         <thead>
           <tr>
-            <th className='border border-primary'>Tec</th>
-            <th className='border border-primary'>Sitio</th>
-            <th className='border border-primary'>Trabajo a realizar</th>
-            <th className='border border-primary'>RDA</th>
-            <th className='border border-primary'>Entrada</th>
-            <th className='border border-primary'>Salida</th>
-            <th className='border border-primary'>Nom-Ingreso</th>
-            <th className='border border-primary'>Nom-Salida</th>
-            <th className='border border-primary'>Coment</th>
-            <th className='border border-primary'>Actualizar</th>
+            <th className='border border-primary bg-danger text-light'>Tec</th>
+            <th className='border border-primary bg-danger text-light'>Sitio</th>
+            <th className='border border-primary bg-danger text-light'>Trabajo a realizar</th>
+            <th className='border border-primary bg-danger text-light'>RDA</th>
+            <th className='border border-primary bg-danger text-light'>Entrada</th>
+            <th className='border border-primary bg-danger text-light'>Salida</th>
+            <th className='border border-primary bg-danger text-light'>Nom-Ingreso</th>
+            <th className='border border-primary bg-danger text-light'>Nom-Salida</th>
+            <th className='border border-primary bg-danger text-light'>Coment</th>
+            <th className='border border-primary bg-danger text-light'>Actualizar</th>
           </tr>
         </thead>
         <tbody>
