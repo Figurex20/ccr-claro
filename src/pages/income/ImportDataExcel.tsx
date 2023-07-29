@@ -1,8 +1,8 @@
-import { Income } from '@/interface/interfaces'
 import { selectValueIncomes } from '@/slices/incomes/incomesSlices'
 import xlsx from 'json-as-xlsx'
 import { Button } from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import { Income } from '@/interface/interfaces'
 
 export default function ImportDataExcel () {
   const listincomes = useSelector(selectValueIncomes)

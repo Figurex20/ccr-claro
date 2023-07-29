@@ -75,6 +75,23 @@ export interface SaveDataNewIncome {
     dateExit?:string
 }
 
+export interface Income {
+  '_id': string,
+  'name': string,
+  'site': string,
+  'whatdo': string,
+  'rda': string,
+  'exit': boolean,
+  'nameEnter': string,
+  'nameExit'?: string,
+  'dateEnter': string,
+  'dateExit'?: string,
+  'comments': string,
+  'createdAt': string,
+  'updatedAt': string,
+  '__v': 0
+}
+
 export interface DataUser {
   name:string
   lastname:string

@@ -5,16 +5,11 @@
   align-items: center;
   padding: 2rem;
   min-height: 3rem;
+  overflow: hidden;
 }
 
-.fixed{position:fixed; top:0}
 
 .user{
-
-  /* display: flex; */
-  /* flex-direction: column; */
-  /* justify-content: space-between; */
-  /* align-items: center; */
   padding-top: 5rem;
   padding-left: 35%;
   padding-right: 35%;

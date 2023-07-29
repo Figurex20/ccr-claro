@@ -124,7 +124,7 @@ export class IncomeController {
       const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
 
       if (rda.length !== 7) {
-        return { message: 'RDA invalida, tiene que ser de 7 numeros' }
+        return { message: 'RDA invalida, tiene que ser de 7 numeros', status: 400 }
       }
 
       const newIncome = new IncomeModel({

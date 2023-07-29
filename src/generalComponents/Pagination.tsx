@@ -3,6 +3,8 @@ import { Badge, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { incomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
 import { selectDateSearch } from '@/slices/incomes/dataSearch'
+import ImportDataExcel from '@/pages/income/ImportDataExcel'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
 
 export const Pagination = () => {
   const listincomes = useSelector(selectValueIncomes)
@@ -17,11 +19,11 @@ export const Pagination = () => {
     incomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
   }
   return (
-    <div className='d-flex justify-content-center'>
+    <div className='d-flex justify-content-evenly p-3 bg-body'>
       {listincomes.saveIncomes.hasPrevPage === false
         ? (
           <Button variant='info' type='submit' className='ms-2' disabled>
-            anterior
+            <FaArrowLeft />
           </Button>
           )
         : (
@@ -33,7 +35,7 @@ export const Pagination = () => {
               prevPage(listincomes.saveIncomes.page)
             }}
           >
-            anterior
+            <FaArrowRight />
           </Button>
           )}
       <div>
@@ -45,7 +47,7 @@ export const Pagination = () => {
       {listincomes.saveIncomes.hasNextPage === false
         ? (
           <Button variant='info' type='submit' className='ms-2' disabled>
-            siguiente
+            <FaArrowRight />
           </Button>
           )
         : (
@@ -57,9 +59,10 @@ export const Pagination = () => {
               nextPage(listincomes.saveIncomes.page)
             }}
           >
-            siguiente
+            <FaArrowRight />
           </Button>
           )}
+      <ImportDataExcel />
     </div>
   )
 }

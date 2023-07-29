@@ -4,23 +4,8 @@ import React, { useEffect } from 'react'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { hasCookie } from 'cookies-next'
+import { Income } from '@/interface/interfaces'
 
-interface Income {
-        '_id': string,
-        'name': string,
-        'site': string,
-        'whatdo': string,
-        'rda': string,
-        'exit': boolean,
-        'nameEnter': string,
-        'nameExit'?: string,
-        'dateEnter': string,
-        'dateExit'?: string,
-        'comments': string,
-        'createdAt': string,
-        'updatedAt': string,
-        '__v': 0
-}
 export default function IncomeList () {
   const listincomes = useSelector(selectValueIncomes)
   const dispatch = useDispatch()
@@ -45,24 +30,27 @@ export default function IncomeList () {
   return (
     <>
       <Table
-        className='text-center border border-primary overflow-auto'
+        className='text-center border border-primary mb-5'
         style={{ fontSize: '1rem', fontWeight: 'bold' }}
       >
-        <thead>
-          <tr>
-            <th className='border border-primary bg-danger text-light'>Tec</th>
-            <th className='border border-primary bg-danger text-light'>Sitio</th>
-            <th className='border border-primary bg-danger text-light'>Trabajo a realizar</th>
-            <th className='border border-primary bg-danger text-light'>RDA</th>
-            <th className='border border-primary bg-danger text-light'>Entrada</th>
-            <th className='border border-primary bg-danger text-light'>Salida</th>
-            <th className='border border-primary bg-danger text-light'>Nom-Ingreso</th>
-            <th className='border border-primary bg-danger text-light'>Nom-Salida</th>
-            <th className='border border-primary bg-danger text-light'>Coment</th>
-            <th className='border border-primary bg-danger text-light'>Actualizar</th>
+        <thead className=''>
+          <tr className=''>
+            <th className='border border-primary bg-danger text-light '>Tec</th>
+            <th className='border border-primary bg-danger text-light '>Sitio</th>
+            <th className='border border-primary bg-danger text-light '>Trabajo a realizar</th>
+            <th className='border border-primary bg-danger text-light '>RDA</th>
+            <th className='border border-primary bg-danger text-light '>Entrada</th>
+            <th className='border border-primary bg-danger text-light '>Salida</th>
+            <th className='border border-primary bg-danger text-light '>Nom-Ingreso</th>
+            <th className='border border-primary bg-danger text-light '>Nom-Salida</th>
+            <th className='border border-primary bg-danger text-light '>Coment</th>
+            <th className='border border-primary bg-danger text-light '>Actualizar</th>
           </tr>
+
         </thead>
+
         <tbody>
+
           {listincomes.saveIncomes.docs && listincomes.saveIncomes.docs.map((income: Income) => (
             <tr key={income._id} className='text-center fs-6'>
               <th className='border border-success'>{income.name}</th>

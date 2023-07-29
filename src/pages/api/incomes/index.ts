@@ -22,7 +22,7 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
       }
     } catch (error) {
       const result = (error as DOMException).message
-      res.status(500).json({ status: 'Internal server error', message: result })
+      res.status(500).json({ status: 500, message: result })
     }
   }
 

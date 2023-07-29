@@ -20,7 +20,7 @@ const Navigation = () => {
 
   return (
     <nav>
-      <div className='d-flex justify-content-between navbar-dark bg-dark px-3 pt-1 my-0'>
+      <div className='d-flex justify-content-between navbar-dark bg-dark px-3 pt-1 my-0 '>
         {token !== null
           ? (
             <>

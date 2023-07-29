@@ -82,7 +82,7 @@ export class AuthController {
       _id: userFound._id,
       resetPassword: userFound.resetPassword
     }, process.env.LOGIN, {
-      expiresIn: 7200 // 2h
+      expiresIn: 43200 // 12h
     })
     const serealized = serialize('userLogin', token, {
       httpOnly: false,

@@ -3,13 +3,12 @@ import type { AppProps } from 'next/app'
 import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 import SSRProvider from 'react-bootstrap/SSRProvider'
-import 'bootstrap/dist/css/bootstrap.min.css'
 import { Spinner } from 'react-bootstrap'
-
+import { Pagination } from '@/generalComponents/Pagination'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Navigation } from '@/generalComponents/navigation'
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 export default function App ({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false)
   useEffect(() => {
@@ -35,6 +34,10 @@ export default function App ({ Component, pageProps }: AppProps) {
           <body className='pt-5'>
             <Component {...pageProps} />
           </body>
+
+          <footer className='position-fixed bottom-0 end-0 w-100'>
+            <Pagination />
+          </footer>
 
         </SSRProvider>
 
