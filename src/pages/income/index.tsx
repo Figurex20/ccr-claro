@@ -4,12 +4,12 @@ import Form from 'react-bootstrap/Form'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { Badge, Button } from 'react-bootstrap'
 import { Calendar } from '@/generalComponents/Calendar'
-import { incomesController } from '@/slices/incomes/incomesSlices'
+import { IncomesController } from '@/slices/incomes/incomesSlices'
 import { SaveDataNewIncome } from '@/interface/interfaces'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
 
-export default function income () {
+export default function Income () {
   const [dateStart, setDateStart] = useState<null | string>(null)
 
   const { setValue, register, handleSubmit, reset, formState: { errors } } = useForm<SaveDataNewIncome>()
@@ -41,11 +41,13 @@ export default function income () {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, crear!'
-      }).then((result) => {
-        incomesController.newIncome(data).then(() => {
-          reset()
-          router.replace('/')
-        })
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          IncomesController.newIncome(data).then(() => {
+            reset()
+            router.replace('/')
+          })
+        }
       })
     } else {
       data.dateExit = dateStart!
@@ -58,24 +60,30 @@ export default function income () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, actualizar!'
       }).then((result) => {
-        incomesController.updateDataIncome(IdParam.toLocaleString(), data).then(() => {
-          reset()
-          router.replace('/')
-        }).catch(() => { router.replace('/') })
+        if (result.isConfirmed) {
+          IncomesController.updateDataIncome(IdParam.toLocaleString(), data).then(() => {
+            reset()
+            router.replace('/')
+          }).catch(() => { console.log('object') })
+        }
       })
     }
   }
 
+  const selectData = async (response:any) => {
+    setValue('name', response.name.toUpperCase())
+    setValue('site', response.site.toUpperCase())
+    setValue('whatdo', response.whatdo.toUpperCase())
+    setValue('rda', response.rda.toUpperCase())
+    setValue('exit', response.exit)
+    setValue('comments', response.comments.toUpperCase())
+    setDateStart(response.dateEnter)
+  }
+
   const updateIncome = async (id: string) => {
-    const response = await incomesController.getDataIncome(id)
+    const response = await IncomesController.getDataIncome(id)
     if (response) {
-      setValue('name', response.data.name)
-      setValue('site', response.data.site)
-      setValue('whatdo', response.data.whatdo)
-      setValue('rda', response.data.rda)
-      setValue('exit', response.data.exit)
-      setValue('comments', response.data.comments)
-      setDateStart(response.data.dateEnter)
+      await selectData(response)
     }
   }
   /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
@@ -133,7 +141,7 @@ export default function income () {
               <option value='INSTALACION DE EQUIPOS'>Instalacion de equipos</option>
               <option value='MANTENIMIENTO DE MG'>Mantenimiento de MG</option>
               <option value='REPARACION DE QUIEPOS'>Reparacion de equipos</option>
-              <option value='COLOCACION DE VIÑETASs'>Colocacion de viñetas</option>
+              <option value='COLOCACION DE VIÑETAS'>Colocacion de viñetas</option>
               <option value='MIGRACION DE EQUIPOS'>Migracion de equipos</option>
               <option value='INSTALACION DE TIERRAS'>Instalacion de tierras</option>
               <option value='Certificacion de FO'>Certificacion de FO</option>

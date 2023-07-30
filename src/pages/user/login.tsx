@@ -45,7 +45,7 @@ export default function edit () {
             />
           </Form.Group>
 
-          <Form.Group className='mb-3' controlId='name'>
+          <Form.Group className='mb-3' controlId='password'>
             <Form.Label>Contreseña</Form.Label>
             {errors.password && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Control

@@ -63,7 +63,7 @@ const incomeRedux = incomeSlice.reducer
 
 export { incomeRedux }
 
-export class incomesController {
+export class IncomesController {
   static fetchAllIncomes = async (props:any, numberPage: number, dataProp?:any) => {
     try {
       const nunPage: number = numberPage
@@ -72,7 +72,6 @@ export class incomesController {
         const data = dataProp.saveDataSearch ? dataProp.saveDataSearch : dataProp
 
         if (data.enter === true) {
-          console.log('data.enter: ', data.enter)
           const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}&onlyEnter=true`)
           props(setiIncomeList(result.data))
           const success = true
@@ -120,11 +119,12 @@ export class incomesController {
       const success = true
       return success
     } catch (error) {
-      const result = (error as DOMException).message
+      const result:any = (error as AxiosError).response?.data
       Swal.fire({
         icon: 'error',
-        title: 'Oops...',
-        text: result
+        title: result.message,
+        text: 'try to put a day after what was requested',
+        footer: result.status
       })
     }
   }
@@ -139,7 +139,7 @@ export class incomesController {
         whatdo: data.whatdo.toUpperCase(),
         rda: data.rda,
         exit: data.exit,
-        comments: data.comments,
+        comments: data.comments.toUpperCase(),
         dateEnter: data.dateEnter
       }
 
@@ -168,7 +168,7 @@ export class incomesController {
   static getDataIncome = async (id:string) => {
     try {
       const result = await axios.get(`${BACKEND}/incomes/${id}`)
-      return result
+      return result.data.incomes.docs[0]
     } catch (error) {
       const result:any = (error as AxiosError).response?.data
       if (result.message) {
@@ -182,26 +182,41 @@ export class incomesController {
     }
   }
 
-  static updateDataIncome = async (id:string, updatedOldIncome:SaveDataNewIncome) => {
+  static updateDataIncome = async (id:string, data:SaveDataNewIncome) => {
     try {
       const headers1 = headers()
-      await axios.put(`${BACKEND}/incomes/${id}`, updatedOldIncome, {
+      const saveNewIncome:SaveDataNewIncome = {
+        name: data.name.toUpperCase(),
+        site: data.site.toUpperCase(),
+        whatdo: data.whatdo.toUpperCase(),
+        rda: data.rda,
+        exit: data.exit,
+        comments: data.comments.toUpperCase(),
+        dateEnter: data.dateEnter,
+        dateExit: data.dateExit
+      }
+
+      await axios.put(`${BACKEND}/incomes/${id}`, saveNewIncome, {
         headers: headers1
       })
+
       Swal.fire({
         icon: 'success',
         title: 'Your work has been saved',
         showConfirmButton: false,
         timer: 1500
       })
+
       const success = 'success'
       return success
     } catch (error) {
-      const result = (error as DOMException).message
+      const result:any = (error as AxiosError).response?.data
+      const response = result.message ? result.message : 'Error al tratar de actualizar'
       Swal.fire({
         icon: 'error',
         title: 'Oops...',
-        text: result
+        text: response,
+        footer: result.status
       })
     }
   }

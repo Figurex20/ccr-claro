@@ -4,6 +4,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { valitadeCookies } from '../utils/valitadedToken'
 import { RoleModel } from '../models/modelRole'
 import { UserModel } from '../models/modelUser'
+import { getByDate, getByRDA, getBySite, getOnlyEnd, getOnlyEnter } from './getIncome'
 export class IncomeController {
   static getIncomes = async (req: NextApiRequest, res: NextApiResponse) => {
     const numberPage = req.query.numberPage
@@ -14,93 +15,20 @@ export class IncomeController {
       limit: 80
     }
 
-    if (req.query.onlyEnd) {
-      const onlyEnd = req.query.onlyEnd
-      if (onlyEnd === 'true') {
-        try {
-          const incomes = await IncomeModel.paginate({
-            exit: true
-          }, options)
-          if (incomes.docs.length === 0) throw Error('There are no docs')
-          return { incomes, status: 200 }
-        } catch (error) {
-          const result = (error as DOMException).message
-          return { message: result, status: 400 }
-        }
-      } else {
-        return { message: 'the onlyEnd must be true', status: 400 }
-      }
-    }
+    // find by onlyEnd
+    if (req.query.onlyEnd) { return getOnlyEnter(req, options) }
 
     // find by onlyEnter
-
-    if (req.query.onlyEnter) {
-      const onlyEnter = req.query.onlyEnter
-      if (onlyEnter === 'true') {
-        try {
-          const incomes = await IncomeModel.paginate({
-            exit: false
-          }, options)
-          if (incomes.docs.length === 0) throw Error('Someting went wrong with onlyEnter')
-
-          return { incomes, status: 200 }
-        } catch (error) {
-          const result = (error as DOMException).message
-          return { message: result, status: 400 }
-        }
-      } else {
-        return { message: 'the onlyEnd must be true', status: 400 }
-      }
-    }
+    if (req.query.onlyEnter) { return getOnlyEnd(req, options) }
 
     // find by date
-    if (req.query.startDate && req.query.endDate) {
-      try {
-        const startDate = req.query.startDate.toString()
-        const endDate = req.query.endDate.toString()
-
-        const neWstartDate = new Date(startDate)
-        const neWendDate = new Date(endDate)
-
-        const isoStartDate = neWstartDate.toISOString()
-        const isoEndDate = neWendDate.toISOString()
-
-        const incomes = await IncomeModel.paginate({
-          $and: [{ dateEnter: { $gte: isoStartDate } },
-            { dateEnter: { $lte: isoEndDate } }]
-        })
-        if (incomes.docs.length === 0) throw Error('Someting went wrong with find by date')
-
-        return { incomes, status: 200 }
-      } catch (error) {
-        const result = (error as DOMException).message
-        return { message: result, status: 400 }
-      }
-    }
+    if (req.query.startDate && req.query.endDate) { return getByDate(req, options) }
 
     // find by site
-    if (req.query.site) {
-      try {
-        const incomes = await IncomeModel.paginate({ site: req.query.site }, options)
-        if (incomes.docs.length === 0) throw Error('The SITE does not exist')
-        return { incomes, status: 200 }
-      } catch (error) {
-        const result = (error as DOMException).message
-        return { message: result, status: 400 }
-      }
-    }
+    if (req.query.site) { return getBySite(req, options) }
 
     // find by RDA
-    if (req.query.rda) {
-      try {
-        const incomes = await IncomeModel.paginate({ rda: req.query.rda }, options)
-        if (incomes.docs.length === 0) throw Error('The RDA does not exist')
-        return { incomes, status: 200 }
-      } catch (error) {
-        const result = (error as DOMException).message
-        return { message: result, status: 400 }
-      }
-    }
+    if (req.query.rda) { return getByRDA(req, options) }
 
     // normal find
     try {
@@ -151,9 +79,9 @@ export class IncomeController {
 
       if (dataToken.message) throw Error(dataToken.message)
 
-      const incomes = await IncomeModel.findById(req.query.id)
-      if (!incomes) throw Error('There are no docs')
-      return incomes
+      const incomes = await IncomeModel.paginate({ _id: req.query.id })
+
+      return { incomes, status: 200 }
     } catch (error) {
       const result = (error as DOMException).message
       return { message: result, status: 400 }
@@ -164,12 +92,27 @@ export class IncomeController {
     const dataToken: any = await valitadeCookies(req.cookies)
 
     if (dataToken.message) throw Error(dataToken.message)
+
     const uniqueUser = await UserModel.findById(dataToken.token._id)
 
-    const roles = await RoleModel.find({ _id: { $in: uniqueUser!.roles } })
+    if (!uniqueUser) throw Error(dataToken.message)
+
+    const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
 
     if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
       try {
+        const incomes = await IncomeModel.paginate({ _id: req.query.id })
+
+        if (incomes.docs.length === 0) throw Error('Error in update income')
+
+        if (incomes.docs[0].exit) {
+          delete req.body.exit
+          delete req.body.nameExit
+          delete req.body.dateExit
+          await IncomeModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
+          return { message: 'Income updated', status: 200 }
+        }
+
         if (req.body.exit) {
           const nameExit = dataToken.token!.userName.toUpperCase()
           req.body.nameExit = nameExit
@@ -181,6 +124,7 @@ export class IncomeController {
         return { message: 'Income updated', status: 200 }
       } catch (error) {
         const result = (error as DOMException).message
+        console.log('result: ', result)
         return { message: result, status: 400 }
       }
     }

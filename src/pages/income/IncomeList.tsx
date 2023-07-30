@@ -1,4 +1,4 @@
-import { incomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
+import { IncomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
 import Link from 'next/link'
 import React, { useEffect } from 'react'
 import { Table } from 'react-bootstrap'
@@ -10,7 +10,7 @@ export default function IncomeList () {
   const listincomes = useSelector(selectValueIncomes)
   const dispatch = useDispatch()
 
-  useEffect(() => { incomesController.fetchAllIncomes(dispatch, 1) }, [dispatch])
+  useEffect(() => { IncomesController.fetchAllIncomes(dispatch, 1) }, [dispatch])
 
   const dates = (date: string | undefined) => {
     if (date) {

@@ -9,24 +9,22 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   if (method === 'GET') {
     try {
       const response:any = await IncomeController.getIncome(req, res)
-      if (response.message !== 'No tienes autorizacion') {
-        res.status(200).json(response)
-      } else { throw Error('No tienes autorizacion') }
+      if (response.status !== 200) throw Error(response.message)
+      return res.status(200).json(response)
     } catch (error) {
       const result = (error as DOMException).message
-      res.status(500).json({ status: 'Internal server error', message: result })
+      return res.status(500).json({ status: 500, message: result })
     }
   }
 
   if (method === 'PUT') {
     try {
       const response:any = await IncomeController.updateIncome(req, res)
-      if (response) {
-        res.status(200).json(response)
-      }
+      if (response.status !== 200) throw Error(response.message)
+      return res.status(200).json(response)
     } catch (error) {
       const result = (error as DOMException).message
-      res.status(500).json({ status: 'Internal server error', message: result })
+      return res.status(500).json({ status: 500, message: result })
     }
   }
 }

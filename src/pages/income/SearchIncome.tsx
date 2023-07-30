@@ -4,13 +4,13 @@ import { useState } from 'react'
 
 // redux
 import { useDispatch } from 'react-redux'
-import { incomesController } from '../../slices/incomes/incomesSlices'
+import { IncomesController } from '../../slices/incomes/incomesSlices'
 
 // Components
 import Button from 'react-bootstrap/Button'
 
 import { Calendar } from '../../generalComponents/Calendar'
-import { dataReduxController } from '@/slices/incomes/dataSearch'
+import { DataReduxController } from '@/slices/incomes/dataSearch'
 import Swal from 'sweetalert2'
 
 export default function SearchIncome () {
@@ -22,12 +22,20 @@ export default function SearchIncome () {
     register,
     handleSubmit
     // formState: { errors }
-  } = useForm()
+  } = useForm({ mode: 'onChange' })
 
   const onSubmit = async (data: any) => {
     data.dateStart = dateStart
     data.dateEnd = dateEnd
-    dataReduxController.saveDateSearch(dispatch, data)
+    if (dateStart !== null && data.searchIncome.length > 0) {
+      data.searchIncome = ''
+      Swal.fire({
+        icon: 'warning',
+        title: 'Se trato de hacer una consulta del sitio y la fecha',
+        text: 'Se dio priridad a la fecha, revise si hay datos en el buscador'
+      })
+    }
+    DataReduxController.saveDateSearch(dispatch, data)
     if (data.exit === true && data.enter === true) {
       Swal.fire({
         icon: 'error',
@@ -37,7 +45,7 @@ export default function SearchIncome () {
 
       return
     }
-    incomesController.fetchAllIncomes(dispatch, 1, data)
+    IncomesController.fetchAllIncomes(dispatch, 1, data)
   }
 
   return (
