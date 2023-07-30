@@ -62,7 +62,9 @@ export const Pagination = () => {
             <FaArrowRight />
           </Button>
           )}
+
       <ImportDataExcel />
+
     </div>
   )
 }

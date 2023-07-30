@@ -51,7 +51,7 @@ export default function SearchIncome () {
 
   return (
     <div>
-      <Form onSubmit={handleSubmit(onSubmit)} className='d-flex justify-content-center'>
+      <Form onSubmit={handleSubmit(onSubmit)} className='d-flex justify-content-center mt-2'>
         <Form.Control
           className='w-25 me-2 border border-3 fs-7 h-25 d-inline-block'
           type='text'
@@ -61,7 +61,7 @@ export default function SearchIncome () {
           {...register('searchIncome')}
         />
         <Form.Check
-          className='me-5 fs-5  text-center text-light'
+          className='pt-2 me-5 fs-5  text-center text-light'
           style={{ width: '8rem' }}
           type='switch'
           id='custom-switch'
@@ -69,7 +69,7 @@ export default function SearchIncome () {
           {...register('exit')}
         />
         <Form.Check
-          className='me-5 fs-5 text-center text-light'
+          className='pt-2 me-5 fs-5 text-center text-light'
           type='switch'
           id='custom-switch'
           label='Entrada'

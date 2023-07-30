@@ -3,12 +3,13 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { DropdownNavigationUser } from './DropdownNavigationUser'
 import SearchIncome from '../pages/income/SearchIncome'
-// import { hasCookie } from 'cookies-next'
 import { decodeToken } from '@/decodeToken'
 import { BrowserToken } from '@/interface/interfaces'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { IncomesController } from '@/slices/incomes/incomesSlices'
+import iconClaro from '../styles/iconClaro.svg'
+import Image from 'next/image'
 const Navigation = () => {
   const router = useRouter()
   const token: BrowserToken | null = decodeToken()
@@ -23,6 +24,13 @@ const Navigation = () => {
   return (
     <nav>
       <div className='d-flex justify-content-between navbar-dark bg-dark px-3 pt-1 my-0 '>
+        <Image
+          priority
+          src={iconClaro}
+          height={50}
+          width={50}
+          alt='Follow us on Twitter'
+        />
         {token !== null
           ? (
             <>
@@ -33,13 +41,13 @@ const Navigation = () => {
               </div>
 
               <Link
-                className='navbar-brand me-3' href='/' onClick={() => {
+                className='navbar-brand me-5  mt-4' href='/' onClick={() => {
                   IncomesController.fetchAllIncomes(dispatch, 1)
                 }}
               >
                 <h5>Lista de ingresos</h5>
               </Link>
-              <Link className='navbar-brand ' href='/income'>
+              <Link className='navbar-brand mt-4' href='/income'>
                 <h5>Guardar ingresos</h5>
               </Link>
             </>
