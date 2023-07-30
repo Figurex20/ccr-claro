@@ -98,31 +98,31 @@ export default function Income () {
   return (
     <div className='col-md-6 offset-md-3'>
       <div className='card card-body'>
-        <h2 className='text-center'>Income</h2>
+        <h2 className='text-center'>Nuevo Ingreso</h2>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Form.Group className='mb-3' controlId='name'>
-            <Form.Label>Name</Form.Label>
+            <Form.Label>Nombre</Form.Label>
             {errors.name && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Control
               type='text'
-              placeholder='Name'
+              placeholder='Nombre'
               {...register('name', { required: true })}
             />
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='site'>
-            <Form.Label>Site</Form.Label>
+            <Form.Label>Sitio</Form.Label>
             {errors.site && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Control
               type='text'
-              placeholder='Site'
+              placeholder='Sitio'
               {...register('site', { required: true })}
             />
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='whatdo'>
-            <Form.Label>What are you going to do?</Form.Label>
+            <Form.Label>Trabajo a realizar</Form.Label>
             {errors.whatdo && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Select
               aria-label='Default select example'
