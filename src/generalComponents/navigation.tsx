@@ -7,10 +7,12 @@ import SearchIncome from '../pages/income/SearchIncome'
 import { decodeToken } from '@/decodeToken'
 import { BrowserToken } from '@/interface/interfaces'
 import { useEffect } from 'react'
+import { useDispatch } from 'react-redux'
+import { IncomesController } from '@/slices/incomes/incomesSlices'
 const Navigation = () => {
   const router = useRouter()
   const token: BrowserToken | null = decodeToken()
-
+  const dispatch = useDispatch()
   useEffect(() => {
     if (token?.resetPassword) {
       router.replace('/user/changepassword')
@@ -30,7 +32,11 @@ const Navigation = () => {
                 {router.pathname === '/' ? <SearchIncome /> : null}
               </div>
 
-              <Link className='navbar-brand me-3' href='/'>
+              <Link
+                className='navbar-brand me-3' href='/' onClick={() => {
+                  IncomesController.fetchAllIncomes(dispatch, 1)
+                }}
+              >
                 <h5>Lista de ingresos</h5>
               </Link>
               <Link className='navbar-brand ' href='/income'>
@@ -41,11 +47,19 @@ const Navigation = () => {
           : (
             <>
               <Link className='navbar-brand' href='/user/login'>
-                Usuario
+                <h4>
+                  Usuario
+                </h4>
               </Link>
               {router.pathname === '/' ? <SearchIncome /> : null}
-              <Link className='navbar-brand' href='/'>
-                Ingresos
+              <Link
+                className='navbar-brand' href='/' onClick={() => {
+                  IncomesController.fetchAllIncomes(dispatch, 1)
+                }}
+              >
+                <h4>
+                  Ingresos
+                </h4>
               </Link>
             </>
             )}

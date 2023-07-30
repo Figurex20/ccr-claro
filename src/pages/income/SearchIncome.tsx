@@ -27,7 +27,8 @@ export default function SearchIncome () {
   const onSubmit = async (data: any) => {
     data.dateStart = dateStart
     data.dateEnd = dateEnd
-    if (dateStart !== null && data.searchIncome.length > 0) {
+    if (dateStart !== undefined && data.searchIncome.length > 0) {
+      console.log('dateStart: ', dateStart)
       data.searchIncome = ''
       Swal.fire({
         icon: 'warning',

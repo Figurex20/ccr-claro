@@ -1,7 +1,7 @@
 import React from 'react'
 import { Badge, Button } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
-import { incomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
+import { IncomesController, selectValueIncomes } from '@/slices/incomes/incomesSlices'
 import { selectDateSearch } from '@/slices/incomes/dataSearch'
 import ImportDataExcel from '@/pages/income/ImportDataExcel'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
@@ -13,13 +13,13 @@ export const Pagination = () => {
   const dispatch = useDispatch()
 
   const nextPage = async (page:number) => {
-    incomesController.fetchAllIncomes(dispatch, page + 1, dateSearch)
+    IncomesController.fetchAllIncomes(dispatch, page + 1, dateSearch)
   }
   const prevPage = async (page:number) => {
-    incomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
+    IncomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
   }
   return (
-    <div className='d-flex justify-content-evenly p-3 bg-body'>
+    <div className='d-flex justify-content-evenly p-2 bg-dark'>
       {listincomes.saveIncomes.hasPrevPage === false
         ? (
           <Button variant='info' type='submit' className='ms-2' disabled>
@@ -39,7 +39,7 @@ export const Pagination = () => {
           </Button>
           )}
       <div>
-        <h6 className='d-inline-flex p-2 bd-highlight'>
+        <h6 className='d-inline-flex p-2 bd-highlight text-info'>
           Pagina actual
         </h6>
         <Badge bg='secondary'>{listincomes.saveIncomes.page}</Badge>

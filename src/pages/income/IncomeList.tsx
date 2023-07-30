@@ -51,7 +51,7 @@ export default function IncomeList () {
 
         <tbody>
 
-          {listincomes.saveIncomes.docs && listincomes.saveIncomes.docs.map((income: Income) => (
+          {listincomes?.saveIncomes.docs.map((income: Income) => (
             <tr key={income._id} className='text-center fs-6'>
               <th className='border border-success'>{income.name}</th>
               <th className='border border-success'>{income.site}</th>

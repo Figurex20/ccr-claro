@@ -133,6 +133,8 @@ export class IncomesController {
     try {
       const headers1 = headers()
 
+      if (data.site.length !== 6) throw Error('El sitio ocupa ser de 6 digitos')
+
       const saveNewIncome:SaveDataNewIncome = {
         name: data.name.toUpperCase(),
         site: data.site.toUpperCase(),
@@ -161,7 +163,7 @@ export class IncomesController {
         title: 'Oops...',
         text: result
       })
-      return result
+      return Error('El sitio ocupa ser de 6 digitos')
     }
   }
 

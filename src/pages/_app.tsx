@@ -9,8 +9,11 @@ import { useState, useEffect } from 'react'
 import Head from 'next/head'
 import { Navigation } from '@/generalComponents/navigation'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { useRouter } from 'next/router'
+
 export default function App ({ Component, pageProps }: AppProps) {
   const [mounted, setMounted] = useState(false)
+  const router = useRouter()
   useEffect(() => {
     setMounted(true)
   }, [])
@@ -36,7 +39,7 @@ export default function App ({ Component, pageProps }: AppProps) {
           </body>
 
           <footer className='position-fixed bottom-0 end-0 w-100'>
-            <Pagination />
+            {router.pathname === '/' ? <Pagination /> : null}
           </footer>
 
         </SSRProvider>
