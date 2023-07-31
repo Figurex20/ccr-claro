@@ -90,7 +90,7 @@ export class IncomesController {
 
           if (regex.test(data.searchIncome)) {
             const result = await axios.get(
-            `${BACKEND}/incomes/?numberPage=${numberPage}&site=${data.searchIncome}`
+            `${BACKEND}/incomes/?numberPage=${numberPage}&site=${data.searchIncome.toUpperCase()}`
             )
             props(setiIncomeList(result.data))
             const success = true

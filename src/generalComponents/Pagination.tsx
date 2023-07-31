@@ -5,6 +5,9 @@ import { IncomesController, selectValueIncomes } from '@/slices/incomes/incomesS
 import { selectDateSearch } from '@/slices/incomes/dataSearch'
 import ImportDataExcel from '@/pages/income/ImportDataExcel'
 import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+import Image from 'next/image'
+import linkedin from '../styles/linkedin.svg'
+import styles from '@/styles/Home.module.css'
 
 export const Pagination = () => {
   const listincomes = useSelector(selectValueIncomes)
@@ -63,7 +66,22 @@ export const Pagination = () => {
           </Button>
           )}
 
-      <ImportDataExcel />
+      <div className='d-flex '>
+        <ImportDataExcel />
+        <div className={`${styles.imgHover}`}>
+          <div className={`${styles.imgContainer}`}>
+            <Image
+              priority
+              src={linkedin}
+              height={33}
+              width={33}
+              alt='Follow us on Twitter'
+            />
+            <p className=''>Desarrollado por: Kenneth Alonso Gomez Martinez</p>
+          </div>
+        </div>
+
+      </div>
 
     </div>
   )
