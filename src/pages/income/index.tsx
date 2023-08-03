@@ -161,11 +161,6 @@ export default function Income () {
               {...register('rda', { required: true })}
             />
           </Form.Group>
-          {errors.tecNumber && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
-          <Form.Group className='mb-3' controlId='tecNumber'>
-            <Form.Label>Numero del tec</Form.Label>
-            <Form.Control type='text' placeholder='Numero del tec' {...register('tecNumber', { required: true })} />
-          </Form.Group>
 
           <Form.Group className='mb-3' controlId='rda'>
             <Form.Label>Comentarios</Form.Label>

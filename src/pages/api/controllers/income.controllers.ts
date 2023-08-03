@@ -49,13 +49,11 @@ export class IncomeController {
 
       const nameEnter = dataToken.token!.userName.toUpperCase()
 
-      const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments, tecNumber } = req.body
+      const { name, site, whatdo, rda, exit, nameExit, dateEnter, comments } = req.body
 
       if (rda.length !== 7) {
         return { message: 'RDA invalida, tiene que ser de 7 numeros', status: 400 }
       }
-
-      console.log(tecNumber)
 
       const newIncome = new IncomeModel({
         name,
@@ -66,8 +64,7 @@ export class IncomeController {
         nameEnter,
         nameExit,
         dateEnter,
-        comments,
-        tecNumber
+        comments
       })
       await newIncome.save()
       return { message: 'Income saved', status: 200 }

@@ -27,7 +27,6 @@ const initialState: IncomeState = {
         nameEnter: '',
         dateEnter: '',
         comments: '',
-        tecNumber: '',
         createdAt: '',
         updatedAt: '',
         __v: 0
@@ -143,8 +142,7 @@ export class IncomesController {
         rda: data.rda,
         exit: data.exit,
         comments: data.comments.toUpperCase(),
-        dateEnter: data.dateEnter,
-        tecNumber: data.tecNumber
+        dateEnter: data.dateEnter
       }
 
       await axios.post(`${BACKEND}/incomes`, saveNewIncome, {
@@ -197,8 +195,7 @@ export class IncomesController {
         exit: data.exit,
         comments: data.comments.toUpperCase(),
         dateEnter: data.dateEnter,
-        dateExit: data.dateExit,
-        tecNumber: data.tecNumber
+        dateExit: data.dateExit
       }
 
       await axios.put(`${BACKEND}/incomes/${id}`, saveNewIncome, {

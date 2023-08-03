@@ -70,7 +70,6 @@ export default function IncomeList () {
               </th>
               <th className='border border-success'>{income.nameEnter}</th>
               <th className='border border-success'>{income.nameExit}</th>
-              <th className='border border-success'>{income.tecNumber}</th>
               <th className='border border-success'>{income.comments}</th>
               {hasCookie('userLogin')
                 ? (

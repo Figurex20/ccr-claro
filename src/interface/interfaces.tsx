@@ -14,7 +14,6 @@ export interface IncomeState {
   dateEnter: string
   dateExit?: string
   comments :string
-  tecNumber:string
   createdAt: string
   updatedAt: string
   __v: number
@@ -76,7 +75,6 @@ export interface SaveDataNewIncome {
     comments:string
     dateEnter?:string
     dateExit?:string
-    tecNumber:string
 }
 
 export interface Income {
@@ -91,7 +89,6 @@ export interface Income {
   dateEnter: string
   dateExit?: string
   comments :string
-  tecNumber:string
   createdAt: string
   updatedAt: string
   __v: number
