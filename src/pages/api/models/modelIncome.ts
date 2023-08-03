@@ -86,6 +86,13 @@ class Income {
 })
   comments?: String
 
+@prop({
+  type: String,
+  required: true,
+  trim: true
+})
+  tecNumber: String
+
 // eslint-disable-next-line no-use-before-define
 static paginate: PaginateMethod<Income>
 }

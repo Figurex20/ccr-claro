@@ -3,18 +3,21 @@ import { JWTPayload } from 'jose'
 export interface IncomeState {
     saveIncomes:{
      docs: [{
-     '_id': string,
-     'name': string,
-     'site': string,
-     'whatdo': string,
-     'rda': string,
-     'exit': boolean,
-     'nameEnter': string,
-     'dateEnter': string,
-     'comments': string,
-     'createdAt': string,
-     'updatedAt': string,
-     '__v': 0
+      _id: string
+  name: string
+  site: string,
+  whatdo: string,
+  rda: string,
+  exit: boolean,
+  nameEnter: string
+  nameExit?: string
+  dateEnter: string
+  dateExit?: string
+  comments :string
+  tecNumber:string
+  createdAt: string
+  updatedAt: string
+  __v: number
    }
    ],
    totalDocs: number
@@ -73,23 +76,25 @@ export interface SaveDataNewIncome {
     comments:string
     dateEnter?:string
     dateExit?:string
+    tecNumber:string
 }
 
 export interface Income {
-  '_id': string,
-  'name': string,
-  'site': string,
-  'whatdo': string,
-  'rda': string,
-  'exit': boolean,
-  'nameEnter': string,
-  'nameExit'?: string,
-  'dateEnter': string,
-  'dateExit'?: string,
-  'comments': string,
-  'createdAt': string,
-  'updatedAt': string,
-  '__v': 0
+  _id: string
+  name: string
+  site: string,
+  whatdo: string,
+  rda: string,
+  exit: boolean,
+  nameEnter: string
+  nameExit?: string
+  dateEnter: string
+  dateExit?: string
+  comments :string
+  tecNumber:string
+  createdAt: string
+  updatedAt: string
+  __v: number
 }
 
 export interface DataUser {
@@ -161,10 +166,11 @@ export interface respondoControllers{
 
 export interface SubmitUserData {
    name: string,
-    lastname: string,
-    email: string,
-    userName: string,
-    role: string,
-    password: string,
-    _id: string,
+   lastname: string,
+   email: string,
+   userName: string,
+   role: string,
+   password: string,
+   tecNumber:string
+   _id: string,
 }

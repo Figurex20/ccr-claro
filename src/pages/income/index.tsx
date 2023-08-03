@@ -101,16 +101,6 @@ export default function Income () {
         <h2 className='text-center'>Nuevo Ingreso</h2>
 
         <Form onSubmit={handleSubmit(onSubmit)}>
-          <Form.Group className='mb-3' controlId='name'>
-            <Form.Label>Nombre</Form.Label>
-            {errors.name && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
-            <Form.Control
-              type='text'
-              placeholder='Nombre'
-              {...register('name', { required: true })}
-            />
-          </Form.Group>
-
           <Form.Group className='mb-3' controlId='site'>
             <Form.Label>Sitio</Form.Label>
             {errors.site && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
@@ -121,6 +111,16 @@ export default function Income () {
             />
           </Form.Group>
 
+          <Form.Group className='mb-3' controlId='name'>
+            <Form.Label>Nombre</Form.Label>
+            {errors.name && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
+            <Form.Control
+              type='text'
+              placeholder='Nombre'
+              {...register('name', { required: true })}
+            />
+          </Form.Group>
+
           <Form.Group className='mb-3' controlId='whatdo'>
             <Form.Label>Trabajo a realizar</Form.Label>
             {errors.whatdo && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
@@ -128,28 +128,26 @@ export default function Income () {
               aria-label='Default select example'
               {...register('whatdo', { required: true })}
             >
-              <option value='Instalacion, medicion o pruebas de FO'>
-                Instalacion, medicion o pruebas de FO
-              </option>
-              <option value='Mantenimiento preventivo TELECOM'>
-                Mantenimiento preventivo TELECOM
-              </option>
-              <option value='MANTENIMIENTO PREVENTIVO INFRA'>Mantenimiento preventivo INFRA</option>
-              <option value='INSTALACION DE EQUIPOS (PREVIAS)'>Instalacion de equipos (previas)</option>
-              <option value='DESISTALACION DE EQUIPOS'>Desistalacion de equipos</option>
               <option value='INSTALACION, MEDICION O PRUEBAS DE FO'>Intalacion, medicion o pruebas de FO</option>
+              <option value='MANTENIMIENTO PREVENTIVO TELECOM'>Mantenimiento preventivo TELECOM</option>
+              <option value='INSTALACION DE EQUIPOS (PREVIAS)'>Instalacion de equipos (previas)</option>
+              <option value='MANTENIMIENTO PREVENTIVO INFRA'>Mantenimiento preventivo INFRA</option>
+              <option value='DESISTALACION DE EQUIPOS'>Desistalacion de equipos</option>
               <option value='INSTALACION DE EQUIPOS'>Instalacion de equipos</option>
-              <option value='MANTENIMIENTO DE MG'>Mantenimiento de MG</option>
+              <option value='INSTALACION DE TIERRAS'>Instalacion de tierras</option>
               <option value='REPARACION DE QUIEPOS'>Reparacion de equipos</option>
               <option value='COLOCACION DE VIÑETAS'>Colocacion de viñetas</option>
               <option value='MIGRACION DE EQUIPOS'>Migracion de equipos</option>
-              <option value='INSTALACION DE TIERRAS'>Instalacion de tierras</option>
+              <option value='MANTENIMIENTO DE MG'>Mantenimiento de MG</option>
               <option value='Certificacion de FO'>Certificacion de FO</option>
-              <option value='CERTIFICACION DE FO'>Revision de sitio</option>
+              <option value='REVISION DE SITIO'>Revision de sitio</option>
               <option value='CAMBIO DE IP'>Cambio de IP</option>
+              <option value='INTEGRACION'>Integracion</option>
               <option value='SITE SURVEY'>Site Survey</option>
               <option value='AUDITORIA'>Auditoria</option>
               <option value='BATERIAS'>Baterias</option>
+              <option value='VENTANA'>Ventana</option>
+              <option value='OTROS'>Otros</option>
               <option value='ATP'>ATP</option>
             </Form.Select>
           </Form.Group>
@@ -162,6 +160,11 @@ export default function Income () {
               placeholder='RDA'
               {...register('rda', { required: true })}
             />
+          </Form.Group>
+          {errors.tecNumber && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
+          <Form.Group className='mb-3' controlId='tecNumber'>
+            <Form.Label>Numero del tec</Form.Label>
+            <Form.Control type='text' placeholder='Numero del tec' {...register('tecNumber', { required: true })} />
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='rda'>

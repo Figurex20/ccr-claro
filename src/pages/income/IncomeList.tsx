@@ -19,7 +19,7 @@ export default function IncomeList () {
       const day = (
         <>
           <p>
-            {newDate.toLocaleDateString('es-ES')} {newDate.getHours()}:{newDate.getMinutes()}
+            {newDate.toLocaleDateString('es-ES')} {newDate.getHours()}:{(newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()}
           </p>
         </>
       )
@@ -43,6 +43,7 @@ export default function IncomeList () {
             <th className='border border-primary bg-danger text-light '>Salida</th>
             <th className='border border-primary bg-danger text-light '>Nom-Ingreso</th>
             <th className='border border-primary bg-danger text-light '>Nom-Salida</th>
+            <th className='border border-primary bg-danger text-light '>Numero</th>
             <th className='border border-primary bg-danger text-light '>Coment</th>
             <th className='border border-primary bg-danger text-light '>Actualizar</th>
           </tr>
@@ -54,7 +55,7 @@ export default function IncomeList () {
           {listincomes?.saveIncomes.docs.map((income: Income) => (
             <tr key={income._id} className='text-center fs-6'>
               <th className='border border-success'>{income.name}</th>
-              <th className='border border-success'>{income.site}</th>
+              <th className='border border-success'>{income.site === 'MTR105' || income.site === 'RU2020' || income.site === 'MTR488' ? <p className='text-primary '>{income.site}</p> : income.site}</th>
               <th className='border border-success'>{income.whatdo}</th>
               <th className='border border-success'>{income.rda === '0000000' ? <p className='text-success '>Sitio nuevo</p> : income.rda}</th>
               <th className='border border-success'>{dates(income.dateEnter)}</th>
@@ -69,6 +70,7 @@ export default function IncomeList () {
               </th>
               <th className='border border-success'>{income.nameEnter}</th>
               <th className='border border-success'>{income.nameExit}</th>
+              <th className='border border-success'>{income.tecNumber}</th>
               <th className='border border-success'>{income.comments}</th>
               {hasCookie('userLogin')
                 ? (
