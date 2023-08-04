@@ -5,12 +5,33 @@ import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { hasCookie } from 'cookies-next'
 import { Income } from '@/interface/interfaces'
+import { selectDateSearch } from '@/slices/incomes/dataSearch'
 
 export default function IncomeList () {
   const listincomes = useSelector(selectValueIncomes)
+  const dateSearch = useSelector(selectDateSearch)
   const dispatch = useDispatch()
 
-  useEffect(() => { IncomesController.fetchAllIncomes(dispatch, 1) }, [dispatch])
+  useEffect(() => {
+    const reset = async () => {
+      const isEmpty = JSON.stringify(dateSearch) === '{}'
+
+      if (isEmpty) {
+        console.log('isEmpty: ', isEmpty)
+        IncomesController.fetchAllIncomes(dispatch, 1)
+      }
+    }
+
+    setInterval(reset, 180000)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateSearch])
+
+  useEffect(() => {
+    IncomesController.fetchAllIncomes(dispatch, 1)
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const dates = (date: string | undefined) => {
     if (date) {
@@ -43,7 +64,6 @@ export default function IncomeList () {
             <th className='border border-primary bg-danger text-light '>Salida</th>
             <th className='border border-primary bg-danger text-light '>Nom-Ingreso</th>
             <th className='border border-primary bg-danger text-light '>Nom-Salida</th>
-            <th className='border border-primary bg-danger text-light '>Numero</th>
             <th className='border border-primary bg-danger text-light '>Coment</th>
             <th className='border border-primary bg-danger text-light '>Actualizar</th>
           </tr>

@@ -15,8 +15,8 @@ import Swal from 'sweetalert2'
 
 export default function SearchIncome () {
   const dispatch = useDispatch()
-  const [dateStart, setDateStart] = useState(null)
-  const [dateEnd, setDateEnd] = useState(null)
+  const [dateStart, setDateStart] = useState(undefined)
+  const [dateEnd, setDateEnd] = useState(undefined)
 
   const {
     register,
@@ -27,26 +27,37 @@ export default function SearchIncome () {
   const onSubmit = async (data: any) => {
     data.dateStart = dateStart
     data.dateEnd = dateEnd
-    if (dateStart !== undefined && data.searchIncome.length > 0) {
-      console.log('dateStart: ', dateStart)
-      data.searchIncome = ''
-      Swal.fire({
-        icon: 'warning',
-        title: 'Se trato de hacer una consulta del sitio y la fecha',
-        text: 'Se dio priridad a la fecha, revise si hay datos en el buscador'
-      })
+
+    if ((dateStart === undefined || dateStart === null) && (data.searchIncome.length === 0 && !data.enter && !data.exit)) {
+      data = {}
+      await DataReduxController.saveDateSearch(dispatch, data)
+      await IncomesController.fetchAllIncomes(dispatch, 1)
+      return
     }
-    DataReduxController.saveDateSearch(dispatch, data)
-    if (data.exit === true && data.enter === true) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'Solo se puede selecionar salida o entrada'
-      })
+
+    if ((dateStart === undefined || dateStart === null) && data.searchIncome.length >= 0) {
+      DataReduxController.saveDateSearch(dispatch, data)
+      if (data.exit === true && data.enter === true) {
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Solo se puede selecionar salida o entrada'
+        })
+
+        return
+      }
+      await IncomesController.fetchAllIncomes(dispatch, 1, data)
 
       return
     }
-    IncomesController.fetchAllIncomes(dispatch, 1, data)
+
+    Swal.fire({
+      icon: 'warning',
+      title: 'Se trato de hacer una consulta del sitio y la fecha',
+      text: 'Elimine los filtros'
+    })
+    setDateStart(undefined)
+    setDateEnd(undefined)
   }
 
   return (
