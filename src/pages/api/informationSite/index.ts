@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { IncomeController } from '../controllers/income.controllers'
 import { dbConnect } from '../utils'
 import NextCors from 'nextjs-cors'
-import { respondeIncomes } from '@/interface/interfaces'
+import { InformationSiteController } from '../controllers/informationSite.controllers'
 import { valitadeCookies } from '../utils/valitadedToken'
 import { UserModel } from '../models/modelUser'
 import { RoleModel } from '../models/modelRole'
 
-export default async function GET (req: NextApiRequest, res:NextApiResponse) {
+export default async function Method (req: NextApiRequest, res:NextApiResponse) {
   const { method } = req
   await dbConnect()
   const dataToken: any = await valitadeCookies(req.cookies)
@@ -19,33 +18,18 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   if (!uniqueUser) throw Error(dataToken.message)
 
   const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
-  if (method === 'GET') {
-    await get(req, res)
-    return
-  }
   if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
     if (method === 'POST') {
       await post(req, res)
+      return
     }
-  }
-}
-
-const get = async (req: NextApiRequest, res: NextApiResponse) => {
-  const methods = ['GET']
-  await NextCors(req, res, {
-    methods,
-    origin: '*',
-    optionsSuccessStatus: 200
-  })
-  try {
-    const response:respondeIncomes = await IncomeController.getIncomes(req, res)
-    if (response.status !== 200) throw Error(response.message)
-    if (response.status === 200) {
-      res.status(200).json(response.incomes)
+    if (method === 'PUT') {
+      await put(req, res)
+      return
     }
-  } catch (error) {
-    const result = (error as DOMException).message
-    res.status(500).json({ status: 500, message: result })
+    if (method === 'GET') {
+      await get(req, res)
+    }
   }
 }
 
@@ -57,7 +41,46 @@ const post = async (req: NextApiRequest, res: NextApiResponse) => {
     optionsSuccessStatus: 200
   })
   try {
-    const response = await IncomeController.createIncome(req, res)
+    const response = await InformationSiteController.createSite(req, res)
+    if (response.status !== 200) throw Error(response.message)
+    if (response.status === 200) {
+      res.status(200).json(response)
+    }
+  } catch (error) {
+    const result = (error as DOMException).message
+    res.status(500).json({ status: 500, message: result })
+  }
+}
+
+const put = async (req: NextApiRequest, res: NextApiResponse) => {
+  const methods = ['PUT']
+  await NextCors(req, res, {
+    methods,
+    origin: '*',
+    optionsSuccessStatus: 200
+  })
+  try {
+    const response = await InformationSiteController.createSite(req, res)
+    if (response.status !== 200) throw Error(response.message)
+
+    if (response.status === 200) {
+      res.status(200).json(response)
+    }
+  } catch (error) {
+    const result = (error as DOMException).message
+    res.status(500).json({ status: 500, message: result })
+  }
+}
+
+const get = async (req: NextApiRequest, res: NextApiResponse) => {
+  const methods = ['GET']
+  await NextCors(req, res, {
+    methods,
+    origin: '*',
+    optionsSuccessStatus: 200
+  })
+  try {
+    const response = await InformationSiteController.createSite(req, res)
     if (response.status !== 200) throw Error(response.message)
 
     if (response.status === 200) {

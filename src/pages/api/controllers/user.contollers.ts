@@ -1,11 +1,8 @@
 import { UserModel } from '../models/modelUser'
-// import { utils } from '../middlewares/utils'
-// import { RoleModel, Role } from '../models/modelRole';
 import { NextApiRequest, NextApiResponse } from 'next'
 import { utilChangePassword } from '../utils/utilChangePassword'
 import { valitadeCookies } from '../utils/valitadedToken'
 import { RoleModel } from '../models/modelRole'
-// import { token, User } from '../../../interface/interfaces';
 
 export class UserController {
   static getAllUsers = async (req: NextApiRequest, res: NextApiResponse) => {
