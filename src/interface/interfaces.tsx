@@ -1,5 +1,6 @@
 import { JWTPayload } from 'jose'
 
+/* /********************************************** INCOME ***********************************************/
 export interface IncomeState {
     saveIncomes:{
      docs: [{
@@ -31,41 +32,6 @@ export interface IncomeState {
    },
 
    }
-
-export interface User {
-    _id:string,
-    userName:string,
-    email:string,
-    password:string,
-    resetPassword:boolean
-    role:string,
-    name:string,
-    lastname:string,
-    createdAt:string,
-    updatedAt:string,
-    __v:number
-}
-
-export interface UserArray {
-  saveUsers: [{
-    _id:string,
-    userName:string,
-    email:string,
-    password:string,
-    resetPassword:boolean
-    role:string,
-    name:string,
-    lastname:string,
-    createdAt:string,
-    updatedAt:string,
-    __v:number
-  }]
-}
-
-export interface AxiosUser {
-  message: User,
-  status: number,
- }
 export interface SaveDataNewIncome {
     name:string
     site:string
@@ -76,7 +42,6 @@ export interface SaveDataNewIncome {
     dateEnter?:string
     dateExit?:string
 }
-
 export interface Income {
   _id: string
   name: string
@@ -93,6 +58,50 @@ export interface Income {
   updatedAt: string
   __v: number
 }
+export interface User {
+    _id:string,
+    userName:string,
+    email:string,
+    password:string,
+    resetPassword:boolean
+    role:string,
+    name:string,
+    lastname:string,
+    createdAt:string,
+    updatedAt:string,
+    __v:number
+}
+export interface OpecionsPaginateIncome {
+  sort:{}
+  page:number
+  limit:number
+}
+export interface respondeIncomes {
+  incomes?: any,
+  status?: number,
+  message?: string,
+}
+
+/** ******************************************** USER *********************************/
+export interface UserArray {
+  saveUsers: [{
+    _id:string,
+    userName:string,
+    email:string,
+    password:string,
+    resetPassword:boolean
+    role:string,
+    name:string,
+    lastname:string,
+    createdAt:string,
+    updatedAt:string,
+    __v:number
+  }]
+}
+export interface AxiosUser {
+  message: User,
+  status: number,
+ }
 
 export interface DataUser {
   name:string
@@ -114,7 +123,6 @@ export interface SaveDataNewUser {
   recoverpassword?:boolean,
   idUser?: string
 }
-
 export interface Login{
   userName:string,
   password:string
@@ -124,6 +132,138 @@ export interface ChangePassword{
   newPassword:string
   confirmNewPassword:string
 }
+/** ********************************************* INFORMATIONSITE ***********************************************/
+export interface InformationSiteState{
+  saveInformationSite:{
+  docs: [{
+   _id: string
+   nameEnter:any,
+   siteID:any,
+   siteIDLTE:any,
+   mnemonico:any,
+   noPlaca:any,
+   name:any,
+   direccion:any,
+   provincia:any,
+   canton:any,
+   distrito:any,
+   latitud:any,
+   longitud:any,
+   propietarioSite:any,
+   categoria:any,
+   idTorrero:any,
+   tecnologia:any,
+   funcionalidad:any,
+   tipoRBS:any,
+   bscInicial:any,
+   rncInicial:any,
+   medio:any,
+   equipoTX:any,
+   sitioOrigen:any,
+   dependencias:any,
+   criticidad:any,
+   redudancia:any,
+   nMedidor:any,
+   companiaElectrica:any,
+   conexionDefinitivaTempoal:any,
+   aa:any,
+   mg:any,
+   capacidadKW:any,
+   tanqueCombustibleLitros:any,
+   bancoBateriasExterno:any,
+   autonomiaTotalHoras:any,
+   tipoTorre:any,
+   alturaTorre:any,
+   casetaContenedor:any,
+   zona:any,
+   zonaEricsson:any,
+   supervisorRBS:any,
+   supervisorEnergia:any,
+   llaveOYM:any,
+   cantidadCorporativos:any,
+   etiqueta:any,
+   golden:any,
+   olt:any,
+   rputerPE:any,
+   site2G:any,
+   site3G:any,
+   site4G:any,
+   ampliacion2G:any,
+   ampliacion3G:any,
+   ampliacion4G:any
+   createdAt: string
+   updatedAt: string
+ __v: number
+}
+],
+totalDocs: number
+limit: number
+totalPages: number
+page: number
+pagingCounter: number
+hasPrevPage:boolean
+hasNextPage:boolean
+prevPage:null | number
+nextPage:null | number
+},
+}
+export interface InformationSite{
+  nameEnter:any,
+  siteID:any,
+  siteIDLTE:any,
+  mnemonico:any,
+  noPlaca:any,
+  name:any,
+  direccion:any,
+  provincia:any,
+  canton:any,
+  distrito:any,
+  latitud:any,
+  longitud:any,
+  propietarioSite:any,
+  categoria:any,
+  idTorrero:any,
+  tecnologia:any,
+  funcionalidad:any,
+  tipoRBS:any,
+  bscInicial:any,
+  rncInicial:any,
+  medio:any,
+  equipoTX:any,
+  sitioOrigen:any,
+  dependencias:any,
+  criticidad:any,
+  redudancia:any,
+  nMedidor:any,
+  companiaElectrica:any,
+  conexionDefinitivaTempoal:any,
+  aa:any,
+  mg:any,
+  capacidadKW:any,
+  tanqueCombustibleLitros:any,
+  bancoBateriasExterno:any,
+  autonomiaTotalHoras:any,
+  tipoTorre:any,
+  alturaTorre:any,
+  casetaContenedor:any,
+  zona:any,
+  zonaEricsson:any,
+  supervisorRBS:any,
+  supervisorEnergia:any,
+  llaveOYM:any,
+  cantidadCorporativos:any,
+  etiqueta:any,
+  golden:any,
+  olt:any,
+  rputerPE:any,
+  site2G:any,
+  site3G:any,
+  site4G:any,
+  ampliacion2G:any,
+  ampliacion3G:any,
+  ampliacion4G:any
+}
+/** ********************************************* GENERAL ***********************************************/
 
 export interface BrowserToken {
   exp: number
@@ -135,12 +275,6 @@ export interface BrowserToken {
   resetPassword:boolean
 }
 
-export interface OpecionsPaginateIncome {
-  sort:{}
-  page:number
-  limit:number
-}
-
 export interface token{
   token?: {
     userName?: string,
@@ -148,12 +282,6 @@ export interface token{
     name?: string
   } | string | JWTPayload,
   message?: string
-}
-
-export interface respondeIncomes {
-  incomes?: any,
-  status?: number,
-  message?: string,
 }
 
 export interface respondoControllers{

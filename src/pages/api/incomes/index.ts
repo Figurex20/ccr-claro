@@ -10,6 +10,12 @@ import { RoleModel } from '../models/modelRole'
 export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   const { method } = req
   await dbConnect()
+
+  if (method === 'GET') {
+    await get(req, res)
+    return
+  }
+
   const dataToken: any = await valitadeCookies(req.cookies)
 
   if (dataToken.message) throw Error(dataToken.message)
@@ -19,10 +25,6 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
   if (!uniqueUser) throw Error(dataToken.message)
 
   const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
-  if (method === 'GET') {
-    await get(req, res)
-    return
-  }
   if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
     if (method === 'POST') {
       await post(req, res)

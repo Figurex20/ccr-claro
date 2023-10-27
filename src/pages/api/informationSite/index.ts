@@ -60,7 +60,7 @@ const put = async (req: NextApiRequest, res: NextApiResponse) => {
     optionsSuccessStatus: 200
   })
   try {
-    const response = await InformationSiteController.createSite(req, res)
+    const response = await InformationSiteController.updateSite(req, res)
     if (response.status !== 200) throw Error(response.message)
 
     if (response.status === 200) {
