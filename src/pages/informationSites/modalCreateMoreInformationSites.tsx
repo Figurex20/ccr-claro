@@ -1,15 +1,14 @@
-import { InformationSite } from '@/interface/interfaces'
-// import { informationSiteController } from '@/slices/informationSites/informationSiteSlices'
+import { informationSiteController } from '@/slices/informationSites/informationSiteSlices'
 import React, { useState } from 'react'
 import { Button, Form, Modal } from 'react-bootstrap'
 import { SubmitHandler, useForm } from 'react-hook-form'
-// import { InformationSite } from '../../interface/interfaces'
+import { InformationSite } from '../../interface/interfaces'
 import * as XLSX from 'xlsx'
 export const ModalCreateMoreInformationSites = () => {
   const {
     register,
     handleSubmit,
-    // reset,
+    reset,
     formState: { errors }
   } = useForm<any>()
 
@@ -26,7 +25,6 @@ export const ModalCreateMoreInformationSites = () => {
 
   const handleFile = (e:any) => {
     const fileTypes = ['application/vnd.ms-excel', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'text/csv']
-    console.log('e: ', e)
     const selectedFile = e.target.files[0]
     if (selectedFile) {
       if (fileTypes.includes(selectedFile.type)) {
@@ -51,19 +49,18 @@ export const ModalCreateMoreInformationSites = () => {
       const worksheetName = workbook.SheetNames[0]
       const worksheet = workbook.Sheets[worksheetName]
       const data = XLSX.utils.sheet_to_json(worksheet)
-      console.log('data: ', data)
-      setExcelData(data.slice(0, 10))
+      setExcelData(data)
     }
 
-    // try {
-    //   const success = await informationSiteController.createInformationSite(excelData)
-    //   if (success) {
-    //     reset()
-    //     return
-    //   }
-    // } catch (error) {
-    //   console.log(error)
-    // }
+    try {
+      const success = await informationSiteController.createInformationSite(excelData)
+      if (success) {
+        reset()
+        return
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (

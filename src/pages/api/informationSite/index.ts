@@ -20,6 +20,7 @@ export default async function Method (req: NextApiRequest, res:NextApiResponse) 
   const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
   if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
     if (method === 'POST') {
+      console.log('method: ', method)
       await post(req, res)
       return
     }
@@ -42,6 +43,7 @@ const post = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   try {
     const response = await InformationSiteController.createSite(req, res)
+    console.log('response: ', response)
     if (response.status !== 200) throw Error(response.message)
     if (response.status === 200) {
       res.status(200).json(response)

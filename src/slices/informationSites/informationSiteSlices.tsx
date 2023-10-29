@@ -1,5 +1,5 @@
 import { BACKEND } from '@/const/backend'
-import { InformationSite, InformationSiteState } from '@/interface/interfaces'
+import { InformationSite, InformationSiteState, saveInformationSite } from '@/interface/interfaces'
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
@@ -129,69 +129,14 @@ export class informationSiteController {
     }
   }
 
-  static createInformationSite = async (data:InformationSite) => {
+  static createInformationSite = async (data:saveInformationSite) => {
     const headers1 = headers()
-    const saveInformationSite:InformationSite = {
-      _id: '',
-      nameEnter: '',
-      siteID: '',
-      siteIDLTE: '',
-      mnemonico: '',
-      noPlaca: '',
-      name: '',
-      direccion: '',
-      provincia: '',
-      canton: '',
-      distrito: '',
-      latitud: '',
-      longitud: '',
-      propietarioSite: '',
-      categoria: '',
-      idTorrero: '',
-      tecnologia: '',
-      funcionalidad: '',
-      tipoRBS: '',
-      bscInicial: '',
-      rncInicial: '',
-      medio: '',
-      equipoTX: '',
-      sitioOrigen: '',
-      dependencias: '',
-      criticidad: '',
-      redudancia: '',
-      nMedidor: '',
-      companiaElectrica: '',
-      conexionDefinitivaTempoal: '',
-      aa: '',
-      mg: '',
-      capacidadKW: '',
-      tanqueCombustibleLitros: '',
-      bancoBateriasExterno: '',
-      autonomiaTotalHoras: '',
-      tipoTorre: '',
-      alturaTorre: '',
-      casetaContenedor: '',
-      zona: '',
-      zonaEricsson: '',
-      supervisorRBS: '',
-      supervisorEnergia: '',
-      llaveOYM: '',
-      cantidadCorporativos: '',
-      etiqueta: '',
-      golden: '',
-      olt: '',
-      rputerPE: '',
-      site2G: '',
-      site3G: '',
-      site4G: '',
-      ampliacion2G: '',
-      ampliacion3G: '',
-      ampliacion4G: ''
+    const saveInformationSite:saveInformationSite = data
 
-    }
-    await axios.post(`${BACKEND}/incomes`, saveInformationSite, {
+    await axios.post(`${BACKEND}/informationSite`, saveInformationSite, {
       headers: headers1
     })
+
     Swal.fire({
       icon: 'success',
       title: 'Your work has been saved',
