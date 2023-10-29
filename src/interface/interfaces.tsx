@@ -208,6 +208,7 @@ nextPage:null | number
 },
 }
 export interface InformationSite{
+  _id: string,
   nameEnter:any,
   siteID:any,
   siteIDLTE:any,

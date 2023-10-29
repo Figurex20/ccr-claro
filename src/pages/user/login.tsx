@@ -9,7 +9,7 @@ import { userController } from '@/slices/user/userSlices'
 import { useRouter } from 'next/router'
 import styles from '@/styles/Home.module.css'
 
-export default function edit () {
+export default function Edit () {
   const [seePassword, setSeePassword] = useState < boolean >(true)
 
   const handleSeePassword = () => {
