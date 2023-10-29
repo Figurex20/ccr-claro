@@ -21,6 +21,6 @@
     "emitDecoratorMetadata": true,
     "strictPropertyInitialization": false 
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "src/pages/informationSites/modalCreateMoreInformationSites.tsx"],
   "exclude": ["node_modules"]
 }
