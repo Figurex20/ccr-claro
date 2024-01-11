@@ -13,7 +13,7 @@ export const CardInformationSite = (site:InformationSite) => {
       </Button>
 
       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
+        <Modal.Header closeButton className=''>
           <Modal.Title>Modal heading</Modal.Title>
         </Modal.Header>
         <Modal.Body>
@@ -92,26 +92,6 @@ export const CardInformationSite = (site:InformationSite) => {
             </tr>
 
             <tr>
-              <th className='border border-success'>funcionalidad</th>
-              <th className='border border-success'>{site.funcionalidad}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>tipoRBS</th>
-              <th className='border border-success'>{site.tipoRBS}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>bscInicial</th>
-              <th className='border border-success'>{site.bscInicial}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>rncInicial</th>
-              <th className='border border-success'>{site.rncInicial}</th>
-            </tr>
-
-            <tr>
               <th className='border border-success'>medio</th>
               <th className='border border-success'>{site.medio}</th>
             </tr>
@@ -129,16 +109,6 @@ export const CardInformationSite = (site:InformationSite) => {
             <tr>
               <th className='border border-success'>dependencias</th>
               <th className='border border-success'>{site.dependencias}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>criticidad</th>
-              <th className='border border-success'>{site.criticidad}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>redudancia</th>
-              <th className='border border-success'>{site.redudancia}</th>
             </tr>
 
             <tr>
@@ -219,61 +189,6 @@ export const CardInformationSite = (site:InformationSite) => {
             <tr>
               <th className='border border-success'>llaveOYM</th>
               <th className='border border-success'>{site.llaveOYM}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>cantidadCorporativos</th>
-              <th className='border border-success'>{site.cantidadCorporativos}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>etiqueta</th>
-              <th className='border border-success'>{site.etiqueta}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>golden</th>
-              <th className='border border-success'>{site.golden}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>olt</th>
-              <th className='border border-success'>{site.olt}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>rputerPE</th>
-              <th className='border border-success'>{site.rputerPE}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>site2G</th>
-              <th className='border border-success'>{site.site2G}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>site3G</th>
-              <th className='border border-success'>{site.site3G}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>site4G</th>
-              <th className='border border-success'>{site.site4G}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>ampliacion2G</th>
-              <th className='border border-success'>{site.ampliacion2G}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>ampliacion3G</th>
-              <th className='border border-success'>{site.ampliacion3G}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>ampliacion4G</th>
-              <th className='border border-success'>{site.ampliacion4G}</th>
             </tr>
 
           </Table>

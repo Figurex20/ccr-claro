@@ -9,7 +9,7 @@ import { IncomesController } from '../../slices/incomes/incomesSlices'
 // Components
 import Button from 'react-bootstrap/Button'
 
-import { Calendar } from '../../generalComponents/Calendar'
+// import { Calendar } from '../../generalComponents/Calendar'
 import { DataReduxController } from '@/slices/incomes/dataSearch'
 import Swal from 'sweetalert2'
 
@@ -86,14 +86,14 @@ export default function SearchIncome () {
           label='Entrada'
           {...register('enter')}
         />
-        <div className='ms-2 '>
+        {/* <div className='ms-2 '>
           <Calendar setDate={setDateStart} />
           <label className='text-light'>Fecha inicio</label>
         </div>
         <div className='ms-2'>
           <Calendar setDate={setDateEnd} />
           <label className='text-light'>Fecha final</label>
-        </div>
+        </div> */}
         <Button variant='success' type='submit' className='ms-2 h-25 d-inline-block'>
           Buscar
         </Button>
