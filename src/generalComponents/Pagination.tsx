@@ -46,6 +46,7 @@ export const Pagination = () => {
           Pagina actual
         </h6>
         <Badge bg='secondary'>{listincomes.saveIncomes.page}</Badge>
+        <Badge bg='secondary m-1'>{listincomes.saveIncomes.totalPages}</Badge>
       </div>
       {listincomes.saveIncomes.hasNextPage === false
         ? (
