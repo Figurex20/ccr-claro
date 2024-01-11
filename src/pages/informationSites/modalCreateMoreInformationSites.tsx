@@ -83,25 +83,17 @@ export const ModalCreateMoreInformationSites = () => {
                 placeholder='Enter file'
                 {...register('file', { required: true, onChange: (e) => { handleFile(e) } })}
               />
-              <button type='submit' className='btn btn-success btn-md'>UPLOAD</button>
+              {/* <button type='submit' className='btn btn-success btn-md'>UPLOAD</button> */}
             </Form.Group>
             {errors.file && <h5>El archivo es requerido</h5>}
             {typeError && (
               <div className='alert alert-danger' role='alert'>{typeError}</div>
             )}
-            <Button className='col-md-12' variant='primary' type='submit' id='submit'>
+            <Button className='col-md-12 mt-2' variant='primary' type='submit' id='submit'>
               Actualizar
             </Button>
           </Form>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
       </Modal>
       {/* view data */}
       {/* <div className='viewer'>

@@ -66,6 +66,7 @@ export class IncomeController {
         dateEnter,
         comments
       })
+
       await newIncome.save()
       return { message: 'Income saved', status: 200 }
     } catch (error) {

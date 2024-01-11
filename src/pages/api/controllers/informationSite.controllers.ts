@@ -1,7 +1,7 @@
 import { InformationSiteModel } from '../models/modelInformationSite'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { valitadeCookies } from '../utils/valitadedToken'
-import { OpecionsPaginateIncome } from '@/interface/interfaces'
+import { OpecionsPaginateIncome, saveInformationSite } from '@/interface/interfaces'
 
 export class InformationSiteController {
   static createSite = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,9 +10,7 @@ export class InformationSiteController {
 
       if (dataToken.message) throw Error(dataToken.message)
 
-      const nameEnter = dataToken.token!.userName.toUpperCase()
-
-      req.body.map(async (key:any) => {
+      req.body.forEach(async (site:saveInformationSite) => {
         const {
           siteID,
           siteIDLTE,
@@ -29,16 +27,10 @@ export class InformationSiteController {
           categoria,
           idTorrero,
           tecnologia,
-          funcionalidad,
-          tipoRBS,
-          bscInicial,
-          rncInicial,
           medio,
           equipoTX,
           sitioOrigen,
           dependencias,
-          criticidad,
-          redudancia,
           nMedidor,
           companiaElectrica,
           conexionDefinitivaTempoal,
@@ -55,23 +47,10 @@ export class InformationSiteController {
           zonaEricsson,
           supervisorRBS,
           supervisorEnergia,
-          llaveOYM,
-          cantidadCorporativos,
-          etiqueta,
-          golden,
-          olt,
-          rputerPE,
-          site2G,
-          site3G,
-          site4G,
-          ampliacion2G,
-          ampliacion3G,
-          ampliacion4G
-        } = key
-        console.log('key: ', key)
+          llaveOYM
+        }:saveInformationSite = site
 
-        const newSite = new InformationSiteModel({
-          nameEnter,
+        const siteInfor = new InformationSiteModel({
           siteID,
           siteIDLTE,
           mnemonico,
@@ -87,16 +66,10 @@ export class InformationSiteController {
           categoria,
           idTorrero,
           tecnologia,
-          funcionalidad,
-          tipoRBS,
-          bscInicial,
-          rncInicial,
           medio,
           equipoTX,
           sitioOrigen,
           dependencias,
-          criticidad,
-          redudancia,
           nMedidor,
           companiaElectrica,
           conexionDefinitivaTempoal,
@@ -113,23 +86,10 @@ export class InformationSiteController {
           zonaEricsson,
           supervisorRBS,
           supervisorEnergia,
-          llaveOYM,
-          cantidadCorporativos,
-          etiqueta,
-          golden,
-          olt,
-          rputerPE,
-          site2G,
-          site3G,
-          site4G,
-          ampliacion2G,
-          ampliacion3G,
-          ampliacion4G
+          llaveOYM
         })
-
-        await newSite.save()
-
-        console.log(newSite)
+        await siteInfor.save()
+        return siteInfor
       })
 
       return { message: 'Site saved', status: 200 }

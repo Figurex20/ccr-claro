@@ -45,13 +45,6 @@ class InformationSite {
   required: true,
   trim: true
 })
-  noPlaca: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
   name: string
 
 @prop({
@@ -129,34 +122,6 @@ class InformationSite {
   required: true,
   trim: true
 })
-  funcionalidad: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
-  tipoRBS: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
-  bscInicial: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
-  rncInicial: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
   medio: string
 
 @prop({
@@ -179,20 +144,6 @@ class InformationSite {
   trim: true
 })
   dependencias: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
-  criticidad: string
-
-@prop({
-  type: String,
-  required: true,
-  trim: true
-})
-  redudancia: string
 
 @prop({
   type: String,
