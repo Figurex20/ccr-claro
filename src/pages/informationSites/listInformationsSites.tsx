@@ -1,12 +1,12 @@
-import { fetchAllInformationSites, selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
+import { informationSiteController, selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
 import { Table } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { InformationSite } from '../../interface/interfaces'
 import { CardInformationSite } from './cardInformationSite'
-import { ModalCreateInformationSite } from './modalCreateInformationSite'
 import { ModalCreateMoreInformationSites } from './modalCreateMoreInformationSites'
 import Stack from 'react-bootstrap/Stack'
 import { useEffect } from 'react'
+import { ModalUpdatenformationSite } from './modalUpdatenformationSite'
 
 export default function InformationSites () {
   const dispatch = useDispatch()
@@ -14,7 +14,7 @@ export default function InformationSites () {
   console.log('informationSites: ', informationSites)
 
   useEffect(() => {
-    fetchAllInformationSites.fetchAllInformationSites(dispatch, 1)
+    informationSiteController.fetchAllInformationSites(dispatch, 1)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -22,10 +22,10 @@ export default function InformationSites () {
     <div className='m-5'>
       <Stack direction='horizontal' gap={5} className=''>
         <div className='col-lg-6 text-center'>
-          <ModalCreateInformationSite />
+          <ModalCreateMoreInformationSites />
         </div>
         <div className='col-lg-6 text-center'>
-          <ModalCreateMoreInformationSites />
+          <ModalUpdatenformationSite />
         </div>
       </Stack>
       <Table

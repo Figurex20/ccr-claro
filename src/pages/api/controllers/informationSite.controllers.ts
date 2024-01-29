@@ -2,7 +2,9 @@ import { InformationSiteModel } from '../models/modelInformationSite'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { valitadeCookies } from '../utils/valitadedToken'
 import { OpecionsPaginateIncome } from '@/interface/interfaces'
-import { createSites } from './createSites'
+import { createSites, updateSites } from './functionsInfoSites'
+import { UserModel } from '../models/modelUser'
+import { RoleModel } from '../models/modelRole'
 
 export class InformationSiteController {
   static createSite = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -11,7 +13,15 @@ export class InformationSiteController {
 
       if (dataToken.message) throw Error(dataToken.message)
 
-      await createSites(req)
+      const uniqueUser = await UserModel.findById(dataToken.token._id)
+
+      if (!uniqueUser) throw Error(dataToken.message)
+
+      const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
+
+      if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
+        await createSites(req)
+      } else throw Error('you dont have permissions')
 
       return { message: 'Site saved', status: 200 }
     } catch (error) {
@@ -23,11 +33,19 @@ export class InformationSiteController {
   static updateSite = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       {
-        const site = await InformationSiteModel.paginate({ _id: req.query.id })
+        const dataToken: any = await valitadeCookies(req.cookies)
 
-        if (site.docs.length === 0) throw Error('Error in update site')
+        if (dataToken.message) throw Error(dataToken.message)
 
-        await InformationSiteModel.findByIdAndUpdate(req.query.id, req.body, { new: true })
+        const uniqueUser = await UserModel.findById(dataToken.token._id)
+
+        if (!uniqueUser) throw Error(dataToken.message)
+
+        const roles = await RoleModel.find({ _id: { $in: uniqueUser.roles } })
+
+        if (roles[0].name === 'admin' || roles[0].name === 'moderator') {
+          await updateSites(req)
+        }
       }
       return { message: 'Income updated', status: 200 }
     } catch (error) {

@@ -1,5 +1,5 @@
 import { BACKEND } from '@/const/backend'
-import { InformationSite, InformationSiteState, saveInformationSite } from '@/interface/interfaces'
+import { InformationSiteState, saveInformationSite } from '@/interface/interfaces'
 import { RootState } from '@/redux/store'
 import { createSlice } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
@@ -93,7 +93,7 @@ const informationSiteRedux = InformationSiteSlice.reducer
 
 export { informationSiteRedux }
 
-export class fetchAllInformationSites {
+export class informationSiteController {
   static fetchAllInformationSites = async (props:any, numberPage: number, dataProp?:any) => {
     try {
       const nunPage: number = numberPage
@@ -148,50 +148,12 @@ export class fetchAllInformationSites {
     }
   }
 
-  static updateDataIncome = async (id:string, data:InformationSite) => {
+  static updateDataIncome = async (data:saveInformationSite) => {
     try {
       const headers1 = headers()
-      const saveInformationSite:InformationSite = {
-        _id: '',
-        nameEnter: '',
-        siteID: '',
-        siteIDLTE: '',
-        mnemonico: '',
-        noPlaca: '',
-        name: '',
-        direccion: '',
-        provincia: '',
-        canton: '',
-        distrito: '',
-        latitud: '',
-        longitud: '',
-        propietarioSite: '',
-        categoria: '',
-        idTorrero: '',
-        tecnologia: '',
-        medio: '',
-        equipoTX: '',
-        sitioOrigen: '',
-        dependencias: '',
-        nMedidor: '',
-        companiaElectrica: '',
-        conexionDefinitivaTempoal: '',
-        aa: '',
-        mg: '',
-        capacidadKW: '',
-        tanqueCombustibleLitros: '',
-        bancoBateriasExterno: '',
-        autonomiaTotalHoras: '',
-        tipoTorre: '',
-        alturaTorre: '',
-        casetaContenedor: '',
-        zona: '',
-        zonaEricsson: '',
-        supervisorRBS: '',
-        supervisorEnergia: '',
-        llaveOYM: ''
-      }
-      await axios.put(`${BACKEND}/incomes`, saveInformationSite, {
+      const saveInformationSite:saveInformationSite = data
+
+      await axios.put(`${BACKEND}/informationSite`, saveInformationSite, {
         headers: headers1
       })
       Swal.fire({

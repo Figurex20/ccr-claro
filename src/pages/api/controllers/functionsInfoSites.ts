@@ -44,8 +44,6 @@ export const createSites = async (req: NextApiRequest) => {
     }:saveInformationSite = site
 
     const siteAlready = await InformationSiteModel.paginate({ mnemonico })
-    console.log('siteAlready: ', siteAlready)
-
     if (siteAlready.docs.length === 0) {
       const siteInfor = new InformationSiteModel({
         siteID,
@@ -87,5 +85,11 @@ export const createSites = async (req: NextApiRequest) => {
       })
       await siteInfor.save()
     }
+  })
+}
+
+export const updateSites = async (req: NextApiRequest) => {
+  req.body.every(async (site:saveInformationSite) => {
+    await InformationSiteModel.findOneAndUpdate({ mnemonico: site.mnemonico }, site, { new: true })
   })
 }

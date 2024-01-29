@@ -8,7 +8,7 @@ export const CardInformationSite = (site:InformationSite) => {
 
   return (
     <>
-      <Button variant='primary ' size='lg' className='mb-2 btn btn-primary ms-5 me-5' onClick={handleShow}>
+      <Button variant='info ' size='lg' className='mb-2 btn btn-primary ms-5 me-5' onClick={handleShow}>
         Toda la informacion del sitio
       </Button>
 
@@ -20,165 +20,165 @@ export const CardInformationSite = (site:InformationSite) => {
           <Table>
 
             <tr>
-              <th className='border border-success'>name:</th>
-              <th className='border border-success'>{site.name}</th>
+              <th className='border border-secondary '>name:</th>
+              <th className='border border-secondary'>{site.name}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>siteID:</th>
-              <th className='border border-success'>{site.siteID}</th>
+              <th className='border border-secondary'>siteID:</th>
+              <th className='border border-secondary'>{site.siteID}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>siteIDLTE:</th>
-              <th className='border border-success'>{site.siteIDLTE}</th>
+              <th className='border border-secondary'>siteIDLTE:</th>
+              <th className='border border-secondary'>{site.siteIDLTE}</th>
 
             </tr>
 
             <tr>
-              <th className='border border-success'>mnemonico:</th>
-              <th className='border border-success'>{site.mnemonico}</th>
+              <th className='border border-secondary'>mnemonico:</th>
+              <th className='border border-secondary'>{site.mnemonico}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>direccion:</th>
-              <th className='border border-success'>{site.direccion}</th>
+              <th className='border border-secondary'>direccion:</th>
+              <th className='border border-secondary'>{site.direccion}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>provincia:</th>
-              <th className='border border-success'>{site.provincia}</th>
+              <th className='border border-secondary'>provincia:</th>
+              <th className='border border-secondary'>{site.provincia}</th>
             </tr>
 
             <tr>
 
-              <th className='border border-success'>distrito:</th>
-              <th className='border border-success'>{site.distrito}</th>
+              <th className='border border-secondary'>distrito:</th>
+              <th className='border border-secondary'>{site.distrito}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>latitud:</th>
-              <th className='border border-success'>{site.latitud}</th>
+              <th className='border border-secondary'>latitud:</th>
+              <th className='border border-secondary'>{site.latitud}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>longitud:</th>
-              <th className='border border-success'>{site.longitud}</th>
+              <th className='border border-secondary'>longitud:</th>
+              <th className='border border-secondary'>{site.longitud}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>categoria:</th>
-              <th className='border border-success'>{site.categoria}</th>
+              <th className='border border-secondary'>categoria:</th>
+              <th className='border border-secondary'>{site.categoria}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>idTorrero:</th>
-              <th className='border border-success'>{site.idTorrero}</th>
+              <th className='border border-secondary'>idTorrero:</th>
+              <th className='border border-secondary'>{site.idTorrero}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>tecnologia:</th>
-              <th className='border border-success'>{site.tecnologia}</th>
+              <th className='border border-secondary'>tecnologia:</th>
+              <th className='border border-secondary'>{site.tecnologia}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>medio</th>
-              <th className='border border-success'>{site.medio}</th>
+              <th className='border border-secondary'>medio</th>
+              <th className='border border-secondary'>{site.medio}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>equipoTX</th>
-              <th className='border border-success'>{site.equipoTX}</th>
+              <th className='border border-secondary'>equipoTX</th>
+              <th className='border border-secondary'>{site.equipoTX}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>sitioOrigen</th>
-              <th className='border border-success'>{site.sitioOrigen}</th>
+              <th className='border border-secondary'>sitioOrigen</th>
+              <th className='border border-secondary'>{site.sitioOrigen}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>dependencias</th>
-              <th className='border border-success'>{site.dependencias}</th>
+              <th className='border border-secondary'>dependencias</th>
+              <th className='border border-secondary'>{site.dependencias}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>nMedidor</th>
-              <th className='border border-success'>{site.nMedidor}</th>
+              <th className='border border-secondary'>nMedidor</th>
+              <th className='border border-secondary'>{site.nMedidor}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>companiaElectrica</th>
-              <th className='border border-success'>{site.companiaElectrica}</th>
+              <th className='border border-secondary'>companiaElectrica</th>
+              <th className='border border-secondary'>{site.companiaElectrica}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>conexionDefinitivaTempoal</th>
-              <th className='border border-success'>{site.conexionDefinitivaTempoal}</th>
+              <th className='border border-secondary'>conexionDefinitivaTempoal</th>
+              <th className='border border-secondary'>{site.conexionDefinitivaTempoal}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>mg</th>
-              <th className='border border-success'>{site.mg}</th>
+              <th className='border border-secondary'>mg</th>
+              <th className='border border-secondary'>{site.mg}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>capacidadKW</th>
-              <th className='border border-success'>{site.capacidadKW}</th>
+              <th className='border border-secondary'>capacidadKW</th>
+              <th className='border border-secondary'>{site.capacidadKW}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>tanqueCombustibleLitros</th>
-              <th className='border border-success'>{site.tanqueCombustibleLitros}</th>
+              <th className='border border-secondary'>tanqueCombustibleLitros</th>
+              <th className='border border-secondary'>{site.tanqueCombustibleLitros}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>bancoBateriasExterno</th>
-              <th className='border border-success'>{site.bancoBateriasExterno}</th>
+              <th className='border border-secondary'>bancoBateriasExterno</th>
+              <th className='border border-secondary'>{site.bancoBateriasExterno}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>autonomiaTotalHoras</th>
-              <th className='border border-success'>{site.autonomiaTotalHoras}</th>
+              <th className='border border-secondary'>autonomiaTotalHoras</th>
+              <th className='border border-secondary'>{site.autonomiaTotalHoras}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>tipoTorre</th>
-              <th className='border border-success'>{site.tipoTorre}</th>
+              <th className='border border-secondary'>tipoTorre</th>
+              <th className='border border-secondary'>{site.tipoTorre}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>alturaTorre</th>
-              <th className='border border-success'>{site.alturaTorre}</th>
+              <th className='border border-secondary'>alturaTorre</th>
+              <th className='border border-secondary'>{site.alturaTorre}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>casetaContenedor</th>
-              <th className='border border-success'>{site.casetaContenedor}</th>
+              <th className='border border-secondary'>casetaContenedor</th>
+              <th className='border border-secondary'>{site.casetaContenedor}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>zona</th>
-              <th className='border border-success'>{site.zona}</th>
+              <th className='border border-secondary'>zona</th>
+              <th className='border border-secondary'>{site.zona}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>zonaEricsson</th>
-              <th className='border border-success'>{site.zonaEricsson}</th>
+              <th className='border border-secondary'>zonaEricsson</th>
+              <th className='border border-secondary'>{site.zonaEricsson}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>supervisorRBS</th>
-              <th className='border border-success'>{site.supervisorRBS}</th>
+              <th className='border border-secondary'>supervisorRBS</th>
+              <th className='border border-secondary'>{site.supervisorRBS}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>supervisorEnergia</th>
-              <th className='border border-success'>{site.supervisorEnergia}</th>
+              <th className='border border-secondary'>supervisorEnergia</th>
+              <th className='border border-secondary'>{site.supervisorEnergia}</th>
             </tr>
 
             <tr>
-              <th className='border border-success'>llaveOYM</th>
-              <th className='border border-success'>{site.llaveOYM}</th>
+              <th className='border border-secondary'>llaveOYM</th>
+              <th className='border border-secondary'>{site.llaveOYM}</th>
             </tr>
 
           </Table>
@@ -186,9 +186,6 @@ export const CardInformationSite = (site:InformationSite) => {
         <Modal.Footer>
           <Button variant='secondary' onClick={handleClose}>
             Close
-          </Button>
-          <Button variant='primary' onClick={handleClose}>
-            Save Changes
           </Button>
         </Modal.Footer>
       </Modal>
