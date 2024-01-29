@@ -1,7 +1,8 @@
 import { InformationSiteModel } from '../models/modelInformationSite'
 import { NextApiRequest, NextApiResponse } from 'next'
 import { valitadeCookies } from '../utils/valitadedToken'
-import { OpecionsPaginateIncome, saveInformationSite } from '@/interface/interfaces'
+import { OpecionsPaginateIncome } from '@/interface/interfaces'
+import { createSites } from './createSites'
 
 export class InformationSiteController {
   static createSite = async (req: NextApiRequest, res: NextApiResponse) => {
@@ -10,91 +11,7 @@ export class InformationSiteController {
 
       if (dataToken.message) throw Error(dataToken.message)
 
-      req.body.every(async (site:saveInformationSite) => {
-        const {
-          siteID,
-          siteIDLTE,
-          mnemonico,
-          noPlaca,
-          name,
-          direccion,
-          provincia,
-          canton,
-          distrito,
-          latitud,
-          longitud,
-          propietarioSite,
-          categoria,
-          idTorrero,
-          tecnologia,
-          medio,
-          equipoTX,
-          sitioOrigen,
-          dependencias,
-          nMedidor,
-          companiaElectrica,
-          conexionDefinitivaTempoal,
-          aa,
-          mg,
-          capacidadKW,
-          tanqueCombustibleLitros,
-          bancoBateriasExterno,
-          autonomiaTotalHoras,
-          tipoTorre,
-          alturaTorre,
-          casetaContenedor,
-          zona,
-          zonaEricsson,
-          supervisorRBS,
-          supervisorEnergia,
-          llaveOYM
-        }:saveInformationSite = site
-
-        const siteAlready = await InformationSiteModel.paginate({ mnemonico })
-        console.log('siteAlready: ', siteAlready)
-
-        if (siteAlready.docs.length === 0) {
-          const siteInfor = new InformationSiteModel({
-            siteID,
-            siteIDLTE,
-            mnemonico,
-            noPlaca,
-            name,
-            direccion,
-            provincia,
-            canton,
-            distrito,
-            latitud,
-            longitud,
-            propietarioSite,
-            categoria,
-            idTorrero,
-            tecnologia,
-            medio,
-            equipoTX,
-            sitioOrigen,
-            dependencias,
-            nMedidor,
-            companiaElectrica,
-            conexionDefinitivaTempoal,
-            aa,
-            mg,
-            capacidadKW,
-            tanqueCombustibleLitros,
-            bancoBateriasExterno,
-            autonomiaTotalHoras,
-            tipoTorre,
-            alturaTorre,
-            casetaContenedor,
-            zona,
-            zonaEricsson,
-            supervisorRBS,
-            supervisorEnergia,
-            llaveOYM
-          })
-          await siteInfor.save()
-        }
-      })
+      await createSites(req)
 
       return { message: 'Site saved', status: 200 }
     } catch (error) {
