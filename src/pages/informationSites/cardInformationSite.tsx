@@ -25,11 +25,6 @@ export const CardInformationSite = (site:InformationSite) => {
             </tr>
 
             <tr>
-              <th className='border border-success'>nameEnter:</th>
-              <th className='border border-success'>{site.nameEnter}</th>
-            </tr>
-
-            <tr>
               <th className='border border-success'>siteID:</th>
               <th className='border border-success'>{site.siteID}</th>
             </tr>
@@ -43,11 +38,6 @@ export const CardInformationSite = (site:InformationSite) => {
             <tr>
               <th className='border border-success'>mnemonico:</th>
               <th className='border border-success'>{site.mnemonico}</th>
-            </tr>
-
-            <tr>
-              <th className='border border-success'>noPlaca:</th>
-              <th className='border border-success'>{site.noPlaca}</th>
             </tr>
 
             <tr>

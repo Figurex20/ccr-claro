@@ -93,12 +93,13 @@ const informationSiteRedux = InformationSiteSlice.reducer
 
 export { informationSiteRedux }
 
-export class informationSiteController {
+export class fetchAllInformationSites {
   static fetchAllInformationSites = async (props:any, numberPage: number, dataProp?:any) => {
     try {
       const nunPage: number = numberPage
-      const result = await axios.get(`${BACKEND}/incomes/?numberPage=${nunPage}&dataSearch=${dataProp}`)
-      props(selectInformationSite(result.data))
+      const result = await axios.get(`${BACKEND}/informationSite/?numberPage=${nunPage}`)
+
+      props(setiInformationSite(result.data.site))
       const success = true
       return success
     } catch (error) {
@@ -106,7 +107,7 @@ export class informationSiteController {
       Swal.fire({
         icon: 'error',
         title: result.message,
-        text: 'try to put a day after what was requested',
+        text: 'ERROR TO LOAD DATA',
         footer: result.status
       })
     }

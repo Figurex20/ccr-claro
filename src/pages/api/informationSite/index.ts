@@ -82,14 +82,14 @@ const get = async (req: NextApiRequest, res: NextApiResponse) => {
     optionsSuccessStatus: 200
   })
   try {
-    const response = await InformationSiteController.createSite(req, res)
+    const response = await InformationSiteController.getsite(req, res)
     if (response.status !== 200) throw Error(response.message)
-
     if (response.status === 200) {
       res.status(200).json(response)
     }
   } catch (error) {
     const result = (error as DOMException).message
+    console.log('result: ', result)
     res.status(500).json({ status: 500, message: result })
   }
 }

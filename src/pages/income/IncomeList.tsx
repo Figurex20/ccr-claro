@@ -17,7 +17,6 @@ export default function IncomeList () {
       const isEmpty = JSON.stringify(dateSearch) === '{}'
 
       if (isEmpty) {
-        console.log('isEmpty: ', isEmpty)
         IncomesController.fetchAllIncomes(dispatch, 1)
       }
     }
@@ -38,78 +37,75 @@ export default function IncomeList () {
       const newDate = new Date(date)
 
       const day = (
-        <>
-          <p>
-            {newDate.toLocaleDateString('es-ES')} {newDate.getHours()}:{(newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()}
-          </p>
-        </>
+        <p>
+          {newDate.toLocaleDateString('es-ES')} {newDate.getHours()}:{(newDate.getMinutes() < 10 ? '0' : '') + newDate.getMinutes()}
+        </p>
+
       )
       return day
     }
   }
 
   return (
-    <>
-      <Table
-        className='text-center border border-primary mb-5'
-        style={{ fontSize: '1rem', fontWeight: 'bold' }}
-      >
-        <thead className=''>
-          <tr className=''>
-            <th className='border border-primary bg-danger text-light '>Tec</th>
-            <th className='border border-primary bg-danger text-light '>Sitio</th>
-            <th className='border border-primary bg-danger text-light '>Trabajo a realizar</th>
-            <th className='border border-primary bg-danger text-light '>RDA</th>
-            <th className='border border-primary bg-danger text-light '>Entrada</th>
-            <th className='border border-primary bg-danger text-light '>Salida</th>
-            <th className='border border-primary bg-danger text-light '>Nom-Ingreso</th>
-            <th className='border border-primary bg-danger text-light '>Nom-Salida</th>
-            <th className='border border-primary bg-danger text-light '>Coment</th>
-            <th className='border border-primary bg-danger text-light '>Actualizar</th>
-          </tr>
+    <Table
+      className='text-center border border-primary mb-5'
+      style={{ fontSize: '1rem', fontWeight: 'bold' }}
+    >
+      <thead className=''>
+        <tr className=''>
+          <th className='border border-primary bg-danger text-light '>Tec</th>
+          <th className='border border-primary bg-danger text-light '>Sitio</th>
+          <th className='border border-primary bg-danger text-light '>Trabajo a realizar</th>
+          <th className='border border-primary bg-danger text-light '>RDA</th>
+          <th className='border border-primary bg-danger text-light '>Entrada</th>
+          <th className='border border-primary bg-danger text-light '>Salida</th>
+          <th className='border border-primary bg-danger text-light '>Nom-Ingreso</th>
+          <th className='border border-primary bg-danger text-light '>Nom-Salida</th>
+          <th className='border border-primary bg-danger text-light '>Coment</th>
+          <th className='border border-primary bg-danger text-light '>Actualizar</th>
+        </tr>
 
-        </thead>
+      </thead>
 
-        <tbody>
+      <tbody>
 
-          {listincomes?.saveIncomes.docs.map((income: Income) => (
-            <tr key={income._id} className='text-center fs-6'>
-              <th className='border border-success'>{income.name}</th>
-              <th className='border border-success'>{income.site === 'MTR105' || income.site === 'RU2020' || income.site === 'MTR488' ? <p className='text-primary '>{income.site}</p> : income.site}</th>
-              <th className='border border-success'>{income.whatdo}</th>
-              <th className='border border-success'>{income.rda === '0000000' ? <p className='text-success '>Sitio nuevo</p> : income.rda}</th>
-              <th className='border border-success'>{dates(income.dateEnter)}</th>
-              <th className='border border-success'>
-                {income.exit
-                  ? (
-                      dates(income.dateExit)
-                    )
-                  : (
-                    <p className='text-danger '>No ha salido</p>
-                    )}
-              </th>
-              <th className='border border-success'>{income.nameEnter}</th>
-              <th className='border border-success'>{income.nameExit}</th>
-              <th className='border border-success'>{income.comments}</th>
-              {hasCookie('userLogin')
+        {listincomes?.saveIncomes.docs.map((income: Income) => (
+          <tr key={income._id} className='text-center fs-6'>
+            <th className='border border-success'>{income.name}</th>
+            <th className='border border-success'>{income.site === 'MTR105' || income.site === 'RU2020' || income.site === 'MTR488' ? <p className='text-primary '>{income.site}</p> : income.site}</th>
+            <th className='border border-success'>{income.whatdo}</th>
+            <th className='border border-success'>{income.rda === '0000000' ? <p className='text-success '>Sitio nuevo</p> : income.rda}</th>
+            <th className='border border-success'>{dates(income.dateEnter)}</th>
+            <th className='border border-success'>
+              {income.exit
                 ? (
-                  <>
-
-                    <th className='border border-success'>
-                      <Link className='btn btn-primary m-1' href={`/income/${income._id}`}>
-                        Actualizar
-                      </Link>
-                    </th>
-                  </>
+                    dates(income.dateExit)
                   )
                 : (
-                  <>
-                    <th className='border border-success'>No tienes permiso</th>
-                  </>
+                  <p className='text-danger '>No ha salido</p>
                   )}
-            </tr>))}
-        </tbody>
-      </Table>
-    </>
+            </th>
+            <th className='border border-success'>{income.nameEnter}</th>
+            <th className='border border-success'>{income.nameExit}</th>
+            <th className='border border-success'>{income.comments}</th>
+            {hasCookie('userLogin')
+              ? (
+                <>
+
+                  <th className='border border-success'>
+                    <Link className='btn btn-primary m-1' href={`/income/${income._id}`}>
+                      Actualizar
+                    </Link>
+                  </th>
+                </>
+                )
+              : (
+                <>
+                  <th className='border border-success'>No tienes permiso</th>
+                </>
+                )}
+          </tr>))}
+      </tbody>
+    </Table>
   )
 }

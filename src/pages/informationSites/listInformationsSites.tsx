@@ -1,14 +1,22 @@
-import { selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
+import { fetchAllInformationSites, selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
 import { Table } from 'react-bootstrap'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { InformationSite } from '../../interface/interfaces'
 import { CardInformationSite } from './cardInformationSite'
 import { ModalCreateInformationSite } from './modalCreateInformationSite'
 import { ModalCreateMoreInformationSites } from './modalCreateMoreInformationSites'
 import Stack from 'react-bootstrap/Stack'
+import { useEffect } from 'react'
 
 export default function InformationSites () {
+  const dispatch = useDispatch()
   const informationSites = useSelector(selectInformationSite)
+  console.log('informationSites: ', informationSites)
+
+  useEffect(() => {
+    fetchAllInformationSites.fetchAllInformationSites(dispatch, 1)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <div className='m-5'>
@@ -28,11 +36,9 @@ export default function InformationSites () {
         <thead>
           <tr>
             <th className='border border-primary bg-danger text-light '>Nonmbre</th>
-            <th className='border border-primary bg-danger text-light '>Nombre de entrada</th>
             <th className='border border-primary bg-danger text-light '>ID del sitior</th>
             <th className='border border-primary bg-danger text-light '>ID LTE del sitio</th>
             <th className='border border-primary bg-danger text-light '>Mnemonico</th>
-            <th className='border border-primary bg-danger text-light '>NoPlaca</th>
             <th className='border border-primary bg-danger text-light '>Direccion</th>
             <th className='border border-primary bg-danger text-light '>Provincia</th>
             <th className='border border-primary bg-danger text-light '>Canton</th>
@@ -45,11 +51,9 @@ export default function InformationSites () {
           {informationSites?.saveInformationSite.docs.map((site: InformationSite) => (
             <tr key={site._id} className='text-center fs-6'>
               <th className='border border-success'>{site.name}</th>
-              <th className='border border-success'>{site.nameEnter}</th>
               <th className='border border-success'>{site.siteID}</th>
               <th className='border border-success'>{site.siteIDLTE}</th>
               <th className='border border-success'>{site.mnemonico}</th>
-              <th className='border border-success'>{site.noPlaca}</th>
               <th className='border border-success'>{site.direccion}</th>
               <th className='border border-success'>{site.provincia}</th>
               <th className='border border-success'>{site.canton}</th>
