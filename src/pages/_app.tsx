@@ -40,6 +40,7 @@ export default function App ({ Component, pageProps }: AppProps) {
 
           <footer className='position-fixed bottom-0 end-0 w-100'>
             {router.pathname === '/' ? <Pagination /> : null}
+            {router.pathname === '/informationSites' ? <Pagination /> : null}
           </footer>
 
         </SSRProvider>
