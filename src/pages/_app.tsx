@@ -3,7 +3,7 @@ import type { AppProps } from 'next/app'
 import { store } from '../redux/store'
 import { Provider } from 'react-redux'
 import SSRProvider from 'react-bootstrap/SSRProvider'
-import { Spinner } from 'react-bootstrap'
+// import { Spinner } from 'react-bootstrap'
 import { Pagination } from '@/generalComponents/Pagination'
 import { useState, useEffect } from 'react'
 import Head from 'next/head'
@@ -47,11 +47,11 @@ export default function App ({ Component, pageProps }: AppProps) {
 
       </Provider>
     )
-  } else {
-    return (
-      <Spinner animation='border' role='status'>
-        <span className='visually-hidden'>Loading...</span>
-      </Spinner>
-    )
+  // } else {
+  //   return (
+  //     <Spinner animation='border' role='status'>
+  //       <span className='visually-hidden'>Loading...</span>
+  //     </Spinner>
+  //   )
   }
 }
