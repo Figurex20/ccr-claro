@@ -16,8 +16,6 @@ export default async function PUT (req: NextApiRequest, res:NextApiResponse) {
       optionsSuccessStatus: 200
     })
     try {
-      console.log('response')
-
       const response:respondoControllers = await UserController.deleteUser(req)
       if (response.status === 400) throw Error(response.message)
       if (response.status === 200) {

@@ -152,6 +152,7 @@ export class informationSiteController {
     try {
       const headers1 = headers()
       const saveInformationSite:saveInformationSite = data
+      console.log('saveInformationSite: ', saveInformationSite)
 
       await axios.put(`${BACKEND}/informationSite`, saveInformationSite, {
         headers: headers1
@@ -172,6 +173,21 @@ export class informationSiteController {
         icon: 'error',
         title: 'Oops...',
         text: response,
+        footer: result.status
+      })
+    }
+  }
+
+  static deleteInformationSites = async (data:string) => {
+    try {
+      await axios.delete(`${BACKEND}/informationSite/${data}`)
+      return
+    } catch (error) {
+      const result:any = (error as AxiosError).response?.data
+      Swal.fire({
+        icon: 'error',
+        title: result.message,
+        text: 'ERROR TO DELETE SITE',
         footer: result.status
       })
     }

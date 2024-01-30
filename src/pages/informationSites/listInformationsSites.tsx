@@ -7,11 +7,11 @@ import { ModalCreateMoreInformationSites } from './modalCreateMoreInformationSit
 import Stack from 'react-bootstrap/Stack'
 import { useEffect } from 'react'
 import { ModalUpdatenformationSite } from './modalUpdatenformationSite'
+import { DeleteInformacionSite } from './deleteInformacionSite'
 
 export default function InformationSites () {
   const dispatch = useDispatch()
   const informationSites = useSelector(selectInformationSite)
-  console.log('informationSites: ', informationSites)
 
   useEffect(() => {
     informationSiteController.fetchAllInformationSites(dispatch, 1)
@@ -35,14 +35,15 @@ export default function InformationSites () {
       >
         <thead>
           <tr>
-            <th className='border border-primary bg-danger text-light '>Nonmbre</th>
-            <th className='border border-primary bg-danger text-light '>ID del sitior</th>
-            <th className='border border-primary bg-danger text-light '>ID LTE del sitio</th>
-            <th className='border border-primary bg-danger text-light '>Mnemonico</th>
-            <th className='border border-primary bg-danger text-light '>Direccion</th>
-            <th className='border border-primary bg-danger text-light '>Provincia</th>
-            <th className='border border-primary bg-danger text-light '>Canton</th>
-            <th className='border border-primary bg-danger text-light '>Mas</th>
+            <th className='border border-success bg-secondary text-light '>Nonmbre</th>
+            <th className='border border-success bg-secondary text-light '>ID del sitior</th>
+            <th className='border border-success bg-secondary text-light '>ID LTE del sitio</th>
+            <th className='border border-success bg-secondary text-light '>Mnemonico</th>
+            <th className='border border-success bg-secondary text-light '>Direccion</th>
+            <th className='border border-success bg-secondary text-light '>Provincia</th>
+            <th className='border border-success bg-secondary text-light '>Canton</th>
+            <th className='border border-success bg-secondary text-light '>Mas</th>
+            <th className='border border-success bg-secondary text-light '>Eliminar</th>
           </tr>
 
         </thead>
@@ -58,6 +59,7 @@ export default function InformationSites () {
               <th className='border border-success'>{site.provincia}</th>
               <th className='border border-success'>{site.canton}</th>
               <th className='border border-success'><CardInformationSite {...site} /></th>
+              <th className='border border-success'><DeleteInformacionSite {...site} /></th>
             </tr>))}
         </tbody>
       </Table>

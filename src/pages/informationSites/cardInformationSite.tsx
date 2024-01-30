@@ -8,7 +8,7 @@ export const CardInformationSite = (site:InformationSite) => {
 
   return (
     <>
-      <Button variant='info ' size='lg' className='mb-2 btn btn-primary ms-5 me-5' onClick={handleShow}>
+      <Button variant='info ' size='sm' className='mb-2 btn btn-primary ms-5 me-5' onClick={handleShow}>
         Toda la informacion del sitio
       </Button>
 

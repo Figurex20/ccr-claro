@@ -9,6 +9,7 @@ import { RoleModel } from '../models/modelRole'
 export default async function Method (req: NextApiRequest, res:NextApiResponse) {
   const { method } = req
   await dbConnect()
+
   const dataToken: any = await valitadeCookies(req.cookies)
 
   if (dataToken.message) throw Error(dataToken.message)
@@ -24,12 +25,13 @@ export default async function Method (req: NextApiRequest, res:NextApiResponse) 
       await post(req, res)
       return
     }
-    if (method === 'PUT') {
-      await put(req, res)
-      return
-    }
+
     if (method === 'GET') {
       await get(req, res)
+    }
+
+    if (method === 'PUT') {
+      await put(req, res)
     }
   }
 }
@@ -46,31 +48,11 @@ const post = async (req: NextApiRequest, res: NextApiResponse) => {
     console.log('response: ', response)
     if (response.status !== 200) throw Error(response.message)
     if (response.status === 200) {
-      res.status(200).json(response)
+      return res.status(200).json(response)
     }
   } catch (error) {
     const result = (error as DOMException).message
-    res.status(500).json({ status: 500, message: result })
-  }
-}
-
-const put = async (req: NextApiRequest, res: NextApiResponse) => {
-  const methods = ['PUT']
-  await NextCors(req, res, {
-    methods,
-    origin: '*',
-    optionsSuccessStatus: 200
-  })
-  try {
-    const response = await InformationSiteController.updateSite(req, res)
-    if (response.status !== 200) throw Error(response.message)
-
-    if (response.status === 200) {
-      res.status(200).json(response)
-    }
-  } catch (error) {
-    const result = (error as DOMException).message
-    res.status(500).json({ status: 500, message: result })
+    return res.status(500).json({ status: 500, message: result })
   }
 }
 
@@ -91,5 +73,16 @@ const get = async (req: NextApiRequest, res: NextApiResponse) => {
     const result = (error as DOMException).message
     console.log('result: ', result)
     res.status(500).json({ status: 500, message: result })
+  }
+}
+
+const put = async (req: NextApiRequest, res: NextApiResponse) => {
+  try {
+    const response:any = await InformationSiteController.updateSite(req, res)
+    if (response.status !== 200) throw Error(response.message)
+    return res.status(200).json(response)
+  } catch (error) {
+    const result = (error as DOMException).message
+    return res.status(500).json({ status: 500, message: result })
   }
 }

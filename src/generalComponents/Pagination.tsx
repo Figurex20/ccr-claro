@@ -9,7 +9,7 @@ import Image from 'next/image'
 import linkedin from '../styles/linkedin.svg'
 import styles from '@/styles/Home.module.css'
 import { useRouter } from 'next/router'
-import { selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
+import { informationSiteController, selectInformationSite } from '@/slices/informationSites/informationSiteSlices'
 
 export const Pagination = () => {
   const listincomes = useSelector(selectValueIncomes)
@@ -18,15 +18,15 @@ export const Pagination = () => {
 
   const dispatch = useDispatch()
 
-  const nextPage = async (page:number) => {
-    IncomesController.fetchAllIncomes(dispatch, page + 1, dateSearch)
-  }
-  const prevPage = async (page:number) => {
-    IncomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
-  }
   const router = useRouter()
 
   if (router.pathname === '/') {
+    const nextPage = async (page:number) => {
+      IncomesController.fetchAllIncomes(dispatch, page + 1, dateSearch)
+    }
+    const prevPage = async (page:number) => {
+      IncomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
+    }
     return (
       <div className='d-flex justify-content-evenly p-2 bg-dark'>
         {listincomes.saveIncomes.hasPrevPage === false
@@ -56,6 +56,10 @@ export const Pagination = () => {
             Paginas totales
           </h6>
           <Badge bg='secondary m-1'>{listincomes.saveIncomes.totalPages}</Badge>
+          <h6 className='d-inline-flex p-2 bd-highlight text-danger'>
+            Ingresos totales
+          </h6>
+          <Badge bg='secondary m-1'>{listincomes.saveIncomes.totalDocs}</Badge>
         </div>
         {listincomes.saveIncomes.hasNextPage === false
           ? (
@@ -99,6 +103,14 @@ export const Pagination = () => {
   }
 
   if (router.pathname === '/informationSites') {
+    const nextPage = async (page:number) => {
+      informationSiteController.fetchAllInformationSites(dispatch, page + 1)
+    }
+    const prevPage = async (page:number) => {
+      // IncomesController.fetchAllIncomes(dispatch, page - 1, dateSearch)
+      informationSiteController.fetchAllInformationSites(dispatch, page - 1)
+    }
+
     return (
       <div className='d-flex justify-content-evenly p-2 bg-dark'>
         {informationSites.saveInformationSite.hasPrevPage === false
@@ -128,6 +140,10 @@ export const Pagination = () => {
             Paginas totales
           </h6>
           <Badge bg='secondary m-1'>{informationSites.saveInformationSite.totalPages}</Badge>
+          <h6 className='d-inline-flex p-2 bd-highlight text-danger'>
+            Sitios totales
+          </h6>
+          <Badge bg='secondary m-1'>{informationSites.saveInformationSite.totalDocs}</Badge>
         </div>
         {informationSites.saveInformationSite.hasNextPage === false
           ? (

@@ -93,3 +93,7 @@ export const updateSites = async (req: NextApiRequest) => {
     await InformationSiteModel.findOneAndUpdate({ mnemonico: site.mnemonico }, site, { new: true })
   })
 }
+
+export const deleteInformationSites = async (req: string) => {
+  await InformationSiteModel.findByIdAndDelete(req)
+}
