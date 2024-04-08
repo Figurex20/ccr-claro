@@ -1,6 +1,6 @@
 import Form from 'react-bootstrap/Form'
 import { useForm } from 'react-hook-form'
-import { useState } from 'react'
+// import { useState } from 'react'
 
 // redux
 import { useDispatch } from 'react-redux'
@@ -15,8 +15,6 @@ import Swal from 'sweetalert2'
 
 export default function SearchIncome () {
   const dispatch = useDispatch()
-  const [dateStart, setDateStart] = useState(undefined)
-  const [dateEnd, setDateEnd] = useState(undefined)
 
   const {
     register,
@@ -25,39 +23,17 @@ export default function SearchIncome () {
   } = useForm({ mode: 'onChange' })
 
   const onSubmit = async (data: any) => {
-    data.dateStart = dateStart
-    data.dateEnd = dateEnd
-
-    if ((dateStart === undefined || dateStart === null) && (data.searchIncome.length === 0 && !data.enter && !data.exit)) {
-      data = {}
-      await DataReduxController.saveDateSearch(dispatch, data)
-      await IncomesController.fetchAllIncomes(dispatch, 1)
-      return
-    }
-
-    if ((dateStart === undefined || dateStart === null) && data.searchIncome.length >= 0) {
-      DataReduxController.saveDateSearch(dispatch, data)
-      if (data.exit === true && data.enter === true) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: 'Solo se puede selecionar salida o entrada'
-        })
-
-        return
-      }
-      await IncomesController.fetchAllIncomes(dispatch, 1, data)
+    DataReduxController.saveDateSearch(dispatch, data)
+    if (data.exit === true && data.enter === true) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Solo se puede selecionar salida o entrada'
+      })
 
       return
     }
-
-    Swal.fire({
-      icon: 'warning',
-      title: 'Se trato de hacer una consulta del sitio y la fecha',
-      text: 'Elimine los filtros'
-    })
-    setDateStart(undefined)
-    setDateEnd(undefined)
+    await IncomesController.fetchAllIncomes(dispatch, 1, data)
   }
 
   return (
@@ -86,14 +62,6 @@ export default function SearchIncome () {
           label='Entrada'
           {...register('enter')}
         />
-        {/* <div className='ms-2 '>
-          <Calendar setDate={setDateStart} />
-          <label className='text-light'>Fecha inicio</label>
-        </div>
-        <div className='ms-2'>
-          <Calendar setDate={setDateEnd} />
-          <label className='text-light'>Fecha final</label>
-        </div> */}
         <Button variant='success' type='submit' className='ms-2 h-25 d-inline-block'>
           Buscar
         </Button>

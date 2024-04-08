@@ -172,16 +172,18 @@ export default function Income () {
             <Calendar setDate={setDateStart} test={dateStart} newDate={new Date()} />
           </Form.Group>
           <div className=''>
+            <div className='d-flex'>
+              <Button className='btn-sm me-5' variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
 
-            {IdParam
-              ? (
-                <Form.Group className='mb-3' controlId='exit'>
-                  <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
-                </Form.Group>
-                )
-              : null}
+              {IdParam
+                ? (
+                  <Form.Group className='' controlId='exit'>
+                    <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
+                  </Form.Group>
+                  )
+                : null}
 
-            <Button className='btn-sm' variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
+            </div>
           </div>
 
         </Form>
