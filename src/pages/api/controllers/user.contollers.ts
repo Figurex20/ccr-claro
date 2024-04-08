@@ -5,7 +5,7 @@ import { valitadeCookies } from '../utils/valitadedToken'
 import { RoleModel } from '../models/modelRole'
 
 export class UserController {
-  static getAllUsers = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly getAllUsers = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const users = await UserModel.find()
       if (!users) throw Error('Users not found')
@@ -16,7 +16,7 @@ export class UserController {
     }
   }
 
-  static getUser = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly getUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 
@@ -31,7 +31,7 @@ export class UserController {
     }
   }
 
-  static userChangepassword = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly userChangepassword = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 
@@ -77,7 +77,7 @@ export class UserController {
     }
   }
 
-  static updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly updateUser = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 
@@ -127,7 +127,7 @@ export class UserController {
     }
   }
 
-  static deleteUser = async (req: NextApiRequest) => {
+  static readonly deleteUser = async (req: NextApiRequest) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 

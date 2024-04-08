@@ -65,7 +65,7 @@ export class InformationSiteController {
     try {
       if (req.query.id) {
         console.log('req.query.id: ', req.query.id)
-        const site = await InformationSiteModel.paginate({ mnemonico: req.query.id }, options)
+        const site = await InformationSiteModel.paginate({ siteID: req.query.id }, options)
         if (site.docs.length === 0) throw Error('There are no docs')
         return { site, status: 200 }
       }

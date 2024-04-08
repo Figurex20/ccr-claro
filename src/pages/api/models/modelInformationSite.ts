@@ -265,7 +265,7 @@ class InformationSite {
   llaveOYM: string
 
 // eslint-disable-next-line no-use-before-define
-static paginate: PaginateMethod<InformationSite>
+static readonly paginate: PaginateMethod<InformationSite>
 }
 
 const InformationSiteModel = getModelForClass(InformationSite)
