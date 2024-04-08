@@ -42,21 +42,22 @@ export class UserController {
         userFound.resetPassword = false
         const respond = await utilChangePassword.changePassword(userFound, req.body)
 
-        if (respond!.status === 200) {
-          return { message: respond!.message, status: 200 }
+        if (respond.status === 200) {
+          return { message: respond.message, status: 200 }
         } else {
-          return { status: 400, message: respond!.message }
+          return { status: 400, message: respond.message }
         }
       }
 
       if (req.body.option === 'resetPassword') {
+        console.log('req.body.option: ', req.body)
         const uniqueUser = await UserModel.findById(dataToken.token._id)
 
         const roles = await RoleModel.find({ _id: { $in: uniqueUser!.roles } })
 
         if (roles[0].name === 'admin') {
           try {
-            const userFound:any = await UserModel.findOne({ userName: dataToken.token.userName }).populate('roles')
+            const userFound:any = await UserModel.findOne({ userName: req.body.userName }).populate('roles')
             userFound.resetPassword = true
             const respond = await utilChangePassword.changePassword(userFound, req.body)
 

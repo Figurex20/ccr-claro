@@ -59,6 +59,7 @@ export const Pagination = () => {
           <h6 className='d-inline-flex p-2 bd-highlight text-danger'>
             Ingresos totales
           </h6>
+
           <Badge bg='secondary m-1'>{listincomes.saveIncomes.totalDocs}</Badge>
         </div>
         {listincomes.saveIncomes.hasNextPage === false

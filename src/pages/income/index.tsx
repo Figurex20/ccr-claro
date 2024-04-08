@@ -96,7 +96,7 @@ export default function Income () {
   }, [])
 
   return (
-    <div className='col-md-6 offset-md-3 mt-3 position-fixed '>
+    <div className='col-md-6 offset-md-3 mt-3 '>
       <div className='card card-body pb-2 '>
         <h2 className='text-center'>Nuevo Ingreso</h2>
 
@@ -171,15 +171,18 @@ export default function Income () {
             <Form.Label>{IdParam ? ('Fecha de salida') : ('Fecha de ingreso')}</Form.Label>
             <Calendar setDate={setDateStart} test={dateStart} newDate={new Date()} />
           </Form.Group>
-          {IdParam
-            ? (
-              <Form.Group className='mb-3' controlId='exit'>
-                <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
-              </Form.Group>
-              )
-            : null}
+          <div className=''>
 
-          <Button className='btn-sm' variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
+            {IdParam
+              ? (
+                <Form.Group className='mb-3' controlId='exit'>
+                  <Form.Check type='checkbox' label='Exit?' {...register('exit')} />
+                </Form.Group>
+                )
+              : null}
+
+            <Button className='btn-sm' variant={IdParam ? 'danger' : 'primary'} type='submit'>{IdParam ? 'Actualizar' : 'Guardar'}</Button>
+          </div>
 
         </Form>
 
