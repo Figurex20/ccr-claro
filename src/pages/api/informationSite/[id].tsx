@@ -1,5 +1,4 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { IncomeController } from '../controllers/income.controllers'
 import { dbConnect } from '../utils'
 import { valitadeCookies } from '../utils/valitadedToken'
 import { UserModel } from '../models/modelUser'
@@ -34,7 +33,8 @@ export default async function GET (req: NextApiRequest, res:NextApiResponse) {
 
 const get = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const response:any = await IncomeController.getIncome(req, res)
+    console.log('req')
+    const response:any = await InformationSiteController.getsite(req, res)
     if (response.status !== 200) throw Error(response.message)
     return res.status(200).json(response)
   } catch (error) {

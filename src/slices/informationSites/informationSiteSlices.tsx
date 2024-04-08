@@ -94,7 +94,7 @@ const informationSiteRedux = InformationSiteSlice.reducer
 export { informationSiteRedux }
 
 export class informationSiteController {
-  static fetchAllInformationSites = async (props:any, numberPage: number, dataProp?:any) => {
+  static readonly fetchAllInformationSites = async (props:any, numberPage: number, dataProp?:any) => {
     try {
       const nunPage: number = numberPage
       const result = await axios.get(`${BACKEND}/informationSite/?numberPage=${nunPage}`)
@@ -113,7 +113,7 @@ export class informationSiteController {
     }
   }
 
-  static createInformationSite = async (data:saveInformationSite) => {
+  static readonly createInformationSite = async (data:saveInformationSite) => {
     const headers1 = headers()
     const saveInformationSite:saveInformationSite = data
 
@@ -131,24 +131,25 @@ export class informationSiteController {
     return success
   }
 
-  static getInformationSite = async (id:string) => {
+  static readonly getInformationSite = async (props:any, id:any) => {
     try {
-      const result = await axios.get(`${BACKEND}/incomes/${id}`)
-      return result.data.incomes.docs[0]
+      console.log(id)
+      const result = await axios.get(`${BACKEND}/informationSite/?id=${id.searchIncome}`)
+      props(setiInformationSite(result.data.site))
+      const success = true
+      return success
     } catch (error) {
       const result:any = (error as AxiosError).response?.data
-      if (result.message) {
-        Swal.fire({
-          icon: 'error',
-          title: 'Oops...',
-          text: result.message,
-          footer: result.status
-        })
-      }
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: result,
+        footer: result
+      })
     }
   }
 
-  static updateDataIncome = async (data:saveInformationSite) => {
+  static readonly updateDataIncome = async (data:saveInformationSite) => {
     try {
       const headers1 = headers()
       const saveInformationSite:saveInformationSite = data
@@ -178,7 +179,7 @@ export class informationSiteController {
     }
   }
 
-  static deleteInformationSites = async (data:string) => {
+  static readonly deleteInformationSites = async (data:string) => {
     try {
       await axios.delete(`${BACKEND}/informationSite/${data}`)
       return

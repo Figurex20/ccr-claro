@@ -24,7 +24,7 @@ const dataRedux = dataSlice.reducer
 export { dataRedux }
 
 export class DataReduxController {
-  static saveDateSearch = async (dispatch:any, data:any) => {
+  static readonly saveDateSearch = async (dispatch:any, data:any) => {
     dispatch(setDateSearch(data))
   }
 }

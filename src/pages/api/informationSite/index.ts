@@ -65,8 +65,10 @@ const get = async (req: NextApiRequest, res: NextApiResponse) => {
   })
   try {
     const response = await InformationSiteController.getsite(req, res)
+
     if (response.status !== 200) throw Error(response.message)
     if (response.status === 200) {
+      console.log('response.status: ', response.status)
       res.status(200).json(response)
     }
   } catch (error) {

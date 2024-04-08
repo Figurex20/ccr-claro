@@ -37,12 +37,12 @@ const usersRedux = userSlice.reducer
 export { usersRedux }
 
 export class userController {
-  static fetchAllUsers = async (dispatch:any) => {
+  static readonly fetchAllUsers = async (dispatch:any) => {
     const users:AxiosResponse<AxiosUser> = await axios.get(`${BACKEND}/users`)
     dispatch(setUsers(users.data.message))
   }
 
-  static login = async (newLogin:Login) => {
+  static readonly login = async (newLogin:Login) => {
     try {
       newLogin.userName = newLogin.userName.toUpperCase()
       await axios.post(`${BACKEND}/auth/login`, newLogin)
@@ -64,7 +64,7 @@ export class userController {
     }
   }
 
-  static updateUser = async (data:any, userName:any, option?:any) => {
+  static readonly updateUser = async (data:any, userName:any, option?:any) => {
     try {
       const headers1 = headers()
       if (option === 'resetPassword') {

@@ -7,7 +7,7 @@ import { UserModel } from '../models/modelUser'
 import { RoleModel } from '../models/modelRole'
 
 export class InformationSiteController {
-  static createSite = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly createSite = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 
@@ -30,7 +30,7 @@ export class InformationSiteController {
     }
   }
 
-  static updateSite = async (req: NextApiRequest, res: NextApiResponse) => {
+  static readonly updateSite = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 
@@ -53,8 +53,8 @@ export class InformationSiteController {
     }
   }
 
-  static getsite = async (req: NextApiRequest, res: NextApiResponse) => {
-    const numberPage = req.query.numberPage
+  static readonly getsite = async (req: NextApiRequest, res: NextApiResponse) => {
+    const numberPage = 1
 
     const options:OpecionsPaginateIncome = {
       sort: { dateEnter: -1 },
@@ -63,6 +63,13 @@ export class InformationSiteController {
     }
 
     try {
+      if (req.query.id) {
+        console.log('req.query.id: ', req.query.id)
+        const site = await InformationSiteModel.paginate({ mnemonico: req.query.id }, options)
+        if (site.docs.length === 0) throw Error('There are no docs')
+        return { site, status: 200 }
+      }
+
       const site = await InformationSiteModel.paginate({}, options)
       if (site.docs.length === 0) throw Error('There are no docs')
       return { site, status: 200 }
@@ -72,7 +79,7 @@ export class InformationSiteController {
     }
   }
 
-  static deleteSite = async (req: NextApiRequest) => {
+  static readonly deleteSite = async (req: NextApiRequest) => {
     try {
       const dataToken: any = await valitadeCookies(req.cookies)
 

@@ -129,7 +129,7 @@ export class IncomesController {
     }
   }
 
-  static newIncome = async (data: SaveDataNewIncome) => {
+  static readonly newIncome = async (data: SaveDataNewIncome) => {
     try {
       const headers1 = headers()
 
@@ -167,7 +167,7 @@ export class IncomesController {
     }
   }
 
-  static getDataIncome = async (id:string) => {
+  static readonly getDataIncome = async (id:string) => {
     try {
       const result = await axios.get(`${BACKEND}/incomes/${id}`)
       return result.data.incomes.docs[0]
