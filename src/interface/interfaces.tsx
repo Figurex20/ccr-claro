@@ -271,13 +271,17 @@ export interface saveInformationSite{
 }
 
 /** ********************************************* Logsite ***********************************************/
-
+interface trackingComents{
+  coment: string
+  dateEnter?:string
+}
 export interface LogsiteForm{
     Incidencia_Falla:string
     site:string
     whatdo:string
-    rda:string
+    affect:string
     close:boolean
+    tracking:trackingComents[]
     comments:string
     dateEnter?:string
     dateExit?:string

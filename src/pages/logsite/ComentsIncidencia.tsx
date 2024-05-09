@@ -1,3 +1,10 @@
+import { Form } from 'react-bootstrap'
+
 export default function ComentsIncidencia () {
-  return (<div>comentarios</div>)
+  return (
+    <div>
+      <Form.Label>Seguimiento</Form.Label>
+      <Form.Control type='text' placeholder='Comentarios' />
+    </div>
+  )
 }

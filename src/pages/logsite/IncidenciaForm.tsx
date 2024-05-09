@@ -8,7 +8,6 @@ import { IncomesController } from '@/slices/incomes/incomesSlices'
 import { LogsiteForm } from '@/interface/interfaces'
 import Swal from 'sweetalert2'
 import { useRouter } from 'next/router'
-import ComentsIncidencia from './ComentsIncidencia'
 
 export default function IncidenciaForm () {
   const [dateStart, setDateStart] = useState<null | string>(null)
@@ -21,16 +20,6 @@ export default function IncidenciaForm () {
   /* +++++++++++++++++++++++++++++++++++++++++++++++++++ ++++++++++++++++++++++++++++++++++++++ +++++++++++++++++++++ */
 
   const onSubmit: SubmitHandler<LogsiteForm> = async data => {
-    if (data.affect.length !== 7) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: 'La affect debe de ser de 7 digitos'
-      })
-
-      return
-    }
-
     if (!IdParam) {
       data.dateEnter = dateStart!
       data.close = !!data.close
@@ -44,8 +33,14 @@ export default function IncidenciaForm () {
         confirmButtonText: 'Si, crear!'
       }).then(async (result) => {
         if (result.isConfirmed) {
-          console.log('/logsite/IncidenciaForm')
-          reset()
+          data.tracking = [
+            {
+              coment: data.comments,
+              dateEnter: data.dateEnter
+            }
+          ]
+          console.log(data.tracking)
+          // reset()
         }
       })
     } else {
@@ -59,7 +54,10 @@ export default function IncidenciaForm () {
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, actualizar!'
       }).then((result) => {
-        console.log('/logsite/IncidenciaForm')
+        data.tracking.push({
+          coment: data.comments,
+          dateEnter: data.dateEnter
+        })
         reset()
       })
     }
@@ -137,13 +135,13 @@ export default function IncidenciaForm () {
             {errors.affect && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Control
               type='number'
-              placeholder='affect'
+              placeholder='Afecta'
               {...register('affect', { required: true })}
             />
           </Form.Group>
 
           <Form.Group className='mb-3' controlId='affect'>
-            <ComentsIncidencia />
+            <Form.Label>Comentario</Form.Label>
             <Form.Control type='text' placeholder='Comentarios' {...register('comments')} />
           </Form.Group>
 
