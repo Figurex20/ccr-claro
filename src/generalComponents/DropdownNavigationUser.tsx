@@ -43,6 +43,11 @@ export const DropdownNavigationUser = () => {
                 Ver informacion de los sitios
               </Link>
             </Dropdown.Item>
+            <Dropdown.Item>
+              <Link className='navbar-brand ms-1 mt-2 text-dark' href='/logsite'>
+                Bitacora
+              </Link>
+            </Dropdown.Item>
           </>
           )
         : (

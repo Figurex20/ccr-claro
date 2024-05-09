@@ -269,6 +269,20 @@ export interface saveInformationSite{
   supervisorEnergia:any,
   llaveOYM:any,
 }
+
+/** ********************************************* Logsite ***********************************************/
+
+export interface LogsiteForm{
+    Incidencia_Falla:string
+    site:string
+    whatdo:string
+    rda:string
+    close:boolean
+    comments:string
+    dateEnter?:string
+    dateExit?:string
+}
+
 /** ********************************************* GENERAL ***********************************************/
 
 export interface BrowserToken {
