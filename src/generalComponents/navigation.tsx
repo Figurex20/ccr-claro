@@ -72,6 +72,11 @@ const Navigation = () => {
                       Ingresos
                     </h4>
                   </Link>
+                  <Link className='navbar-brand ms-1 mt-2 text-dark' href='/logsite'>
+                    <h4>
+                      Bitacora
+                    </h4>
+                  </Link>
                 </>
                 )}
           </div>
