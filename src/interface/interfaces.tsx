@@ -278,13 +278,71 @@ interface trackingComents{
 export interface LogsiteForm{
     Incidencia_Falla:string
     site:string
-    whatdo:string
+    cause:string
     affect:string
     close:boolean
     tracking:trackingComents[]
     comments:string
     dateEnter?:string
     dateExit?:string
+}
+
+export interface LogsiteFormState{
+  saveLogsite:{
+    docs:[
+    {
+    _id: string,
+    name: string,
+    Incidencia_Falla:string,
+    site:string,
+    cause:string,
+    affect:string,
+    close:boolean,
+    tracking:trackingComents[],
+    comments:string,
+    zone: string,
+    province: string,
+    canton: string,
+    distrito: string,
+    createdAt: string,
+    updatedAt: string,
+    __v: number,
+    dateEnter?:string,
+    dateExit?:string,
+  }
+],
+    totalDocs: number
+    limit: number
+    totalPages: number
+    page: number
+    pagingCounter: number
+    hasPrevPage:boolean
+    hasNextPage:boolean
+    prevPage:null | number
+    nextPage:null | number
+  }
+
+}
+
+export interface Logsites{
+    _id: string,
+    Incidencia_Falla:string,
+    site:string,
+    name: string,
+    cause:string,
+    affect:string,
+    close:boolean,
+    tracking:trackingComents[],
+    comments:string,
+    zone: string,
+    province: string,
+    canton: string,
+    distrito: string,
+    createdAt: string,
+    updatedAt: string,
+    __v: number,
+    dateEnter?:string,
+    dateExit?:string,
 }
 
 /** ********************************************* GENERAL ***********************************************/

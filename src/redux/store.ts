@@ -2,6 +2,7 @@ import { counterRedux } from '@/slices/conunterSlices'
 import { dataRedux } from '@/slices/incomes/dataSearch'
 import { incomeRedux } from '@/slices/incomes/incomesSlices'
 import { informationSiteRedux } from '@/slices/informationSites/informationSiteSlices'
+import { logSiteSlicesRedux } from '@/slices/logsite/logSiteSlices'
 import { usersRedux } from '@/slices/user/userSlices'
 import { configureStore } from '@reduxjs/toolkit'
 
@@ -11,7 +12,8 @@ export const store = configureStore({
     incomes: incomeRedux,
     data: dataRedux,
     users: usersRedux,
-    informationSite: informationSiteRedux
+    informationSite: informationSiteRedux,
+    logSiteSlices: logSiteSlicesRedux
   }
 })
 

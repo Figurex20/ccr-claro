@@ -22,7 +22,10 @@ export const DropdownNavigationUser = () => {
     router.replace('./')
   }
   return (
-    <DropdownButton id='Usuario' title='Usuario' variant='info' className='mb-1 ms-4 mt-2 '>
+    <DropdownButton
+      id='Usuario' title='Usuario' variant='info' className='mb-1 ms-4 mt-2 '
+      style={{ position: 'relative', zIndex: 5 }}
+    >
       <h5 className=' ms-5 mt-2'>{sessionStorage.getItem('user')}</h5>
 
       {token?.role === 'ADMIN'
@@ -51,11 +54,19 @@ export const DropdownNavigationUser = () => {
           </>
           )
         : (
-          <Dropdown.Item>
-            <Link className='navbar-brand ms-4 mt-2 text-dark' href='/user/changepassword'>
-              cambiar Contraseña
-            </Link>
-          </Dropdown.Item>
+          <>
+            <Dropdown.Item>
+              <Link className='navbar-brand ms-4 mt-2 text-dark' href='/user/changepassword'>
+                cambiar Contraseña
+              </Link>
+            </Dropdown.Item>
+            <Dropdown.Item>
+              <Link className='navbar-brand ms-1 mt-2 text-dark' href='/logsite'>
+                Bitacora
+              </Link>
+            </Dropdown.Item>
+          </>
+
           )}
 
       <Dropdown.Item>

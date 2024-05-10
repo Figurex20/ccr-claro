@@ -66,7 +66,7 @@ export default function IncidenciaForm () {
   const selectData = async (response:any) => {
     setValue('Incidencia_Falla', response.name.toUpperCase())
     setValue('site', response.site.toUpperCase())
-    setValue('whatdo', response.whatdo.toUpperCase())
+    setValue('cause', response.whatdo.toUpperCase())
     setValue('affect', response.affect.toUpperCase())
     setValue('close', response.close)
     setValue('comments', response.comments.toUpperCase())
@@ -116,17 +116,19 @@ export default function IncidenciaForm () {
 
           <Form.Group className='mb-3' controlId='whatdo'>
             <Form.Label>Causa</Form.Label>
-            {errors.whatdo && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
+            {errors.cause && <Badge className='ms-1 bg-danger'>Este campo es requerido</Badge>}
             <Form.Select
               aria-label='Default select example'
-              {...register('whatdo', { required: true })}
+              {...register('cause', { required: true })}
             >
               <option value='2G FDS'>2G FDS</option>
               <option value='3G FDS'>3G FDS</option>
               <option value='4G FDS'>4G FDS</option>
+              <option value='5G FDS'>5G FDS</option>
               <option value='SITIO FDS'>SITIO FDS</option>
               <option value='ENERGIA'>ENERGIA</option>
               <option value='CORTE DE FO'>CORTE DE FO</option>
+              <option value='ALTA TEMPERATURA'>ALTA TEMPERATURA</option>
             </Form.Select>
           </Form.Group>
 
