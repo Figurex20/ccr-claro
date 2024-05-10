@@ -24,7 +24,6 @@ export const DropdownNavigationUser = () => {
   return (
     <DropdownButton
       id='Usuario' title='Usuario' variant='info' className='mb-1 ms-4 mt-2 '
-      style={{ position: 'relative', zIndex: 5 }}
     >
       <h5 className=' ms-5 mt-2'>{sessionStorage.getItem('user')}</h5>
 
