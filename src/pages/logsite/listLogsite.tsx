@@ -37,14 +37,7 @@ export default function Logsite () {
         className='text-center border border-primary mb-5'
         style={{ fontSize: '1rem', fontWeight: 'bold' }}
       >
-        <thead style={{
-          position: 'sticky',
-          top: 0,
-          zIndex: 1,
-          backgroundColor: '#dc3545',
-          color: '#fff'
-        }}
-        >
+        <thead>
           <tr className=''>
             <th className='border border-primary bg-danger text-light align-middle'>Indidecia/Falla</th>
             <th className='border border-primary bg-danger text-light align-middle'>Sitio</th>
